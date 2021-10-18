@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Hunter : CharaBase
 {
+    Rigidbody2D m_rb;
+
     [SerializeField]
     [Tooltip("スタンする時間")]
     float m_stunTime = 3f;
@@ -16,15 +18,27 @@ public class Hunter : CharaBase
     [Tooltip("攻撃判定が発生する時間")]
     float m_attackTime = 0.5f;
     bool CanMove = true;
+
     void Start()
     {
-        
+        m_rb = GetComponent<Rigidbody2D>();
+        m_rb.gravityScale = 0;
     }
 
     void Update()
     {
-        if(CanMove)base.Move();
+        if (CanMove)
+        {
+            float h = Input.GetAxisRaw("Horizontal2");
+            float v = Input.GetAxisRaw("Vertical2");
+            Move(h, v);
+        }
         if (Input.GetButtonDown("Fire1")) StartCoroutine(nameof(Attack));
+    }
+
+    public override void Move(float h, float v)
+    {
+        m_rb.velocity = new Vector2(h, v) * Speed;
     }
 
     IEnumerator Attack()
