@@ -3,14 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Hunter : CharaBase
-{ 
+{
+    Rigidbody2D m_rb;
+
     void Start()
     {
-        
+        m_rb = GetComponent<Rigidbody2D>();
+        m_rb.gravityScale = 0;
     }
 
     void Update()
     {
-        base.Move();
+        float h = Input.GetAxisRaw("Horizontal2");
+        float v = Input.GetAxisRaw("Vertical2");
+
+        Move(h, v);
+    }
+
+    public override void Move(float h, float v)
+    {
+        m_rb.velocity = new Vector2(h, v) * Speed;
     }
 }
