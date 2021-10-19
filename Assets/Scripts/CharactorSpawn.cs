@@ -10,6 +10,11 @@ public class CharactorSpawn : MonoBehaviour
     [SerializeField] string m_witchPrefabName = "PrefabName";
     [SerializeField] int m_maxHunters;
     [SerializeField] int m_maxWitches;
+    /// <summary>
+    /// ハンターを生成するメソッド
+    /// </summary>
+    /// <param name="actorNumber">プレイヤーが入ってきた順の番号</param>
+    /// <param name="charactorPosition">キャラクターを生成する座標</param>
     public void HunterSpawn(int actorNumber,Transform[] charactorPosition)
     {
         Transform spawnPoint = charactorPosition[actorNumber - 1];
@@ -20,6 +25,11 @@ public class CharactorSpawn : MonoBehaviour
             m_maxHunters--;
         }
     }
+    /// <summary>
+    /// ウィッチを生成するメソッド
+    /// </summary>
+    /// <param name="actorNumber">プレイヤーが入ってきた順の番号</param>
+    /// <param name="charactorPosition">キャラクターを生成する座標</param>
     public void WitchSpawn(int actorNumber,Transform[] charactorPosition)
     {
         Transform spawnPoint = charactorPosition[actorNumber - 1];

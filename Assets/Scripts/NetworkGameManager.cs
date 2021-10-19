@@ -97,21 +97,19 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("Closing Room");
             PhotonNetwork.CurrentRoom.IsOpen = false;
-
             Debug.Log("Game Start");
-            RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
-            raiseEventoptions.Receivers = ReceiverGroup.All;
-            SendOptions sendOptions = new SendOptions();
-            //PhotonNetwork.RaiseEvent((byte)NetworkEvents.GameStart, null, raiseEventoptions, sendOptions);
         }
     }
     /// <summary>
-    /// キャラクター生成
+    /// クリックした時にハンターを生成する
     /// </summary>
     public void OnClickHunterSpawn()
     {
         m_charactorSpawn.HunterSpawn(m_actorNumber,m_charactorPositions);
     }
+    /// <summary>
+    /// クリックした時にウィッチを生成する
+    /// </summary>
     public void OnClickWitchesSpawn()
     {
         m_charactorSpawn.WitchSpawn(m_actorNumber,m_charactorPositions);
