@@ -8,11 +8,11 @@ using System.Collections;
 
 public class NetworkGameManager : MonoBehaviourPunCallbacks
 {
-    //ハンターは魔法使い狩り
-    [SerializeField] string m_hunterPrefabName = "PrefabName";
-    [SerializeField] string m_witchPrefabName = "PrefabName";
     [SerializeField] Transform[] m_charactorPositions;
     [SerializeField] bool m_debugMode;
+    [SerializeField] CharactorSpawn m_charactorSpawn;
+    //ActorNumberはプレイヤーが入ってきた順の番号
+    int m_actorNumber;
     private void Start()
     {
         Connect("1.0");// 1.0 はバージョン番号（同じバージョンを指定したクライアント同士が接続できる）
@@ -45,17 +45,6 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
         }
 
         yield return null;
-    }
-    void SpawnCharactor()
-    {
-        // プレイヤーをどこに spawn させるか決める
-        int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;    // 自分の ActorNumber を取得する。なお ActorNumber は「1から」入室順に振られる。
-        Debug.Log("My ActorNumber: " + actorNumber);
-        Transform spawnPoint = m_charactorPositions[actorNumber - 1];
-
-        // プレイヤーを生成し、他のクライアントと同期する
-        GameObject hunter = PhotonNetwork.Instantiate(m_hunterPrefabName, spawnPoint.position, spawnPoint.rotation);
-        GameObject wizard= PhotonNetwork.Instantiate(m_witchPrefabName, spawnPoint.position, spawnPoint.rotation);
     }
     /// <summary>
     /// ロビーに入る
@@ -116,13 +105,24 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
             //PhotonNetwork.RaiseEvent((byte)NetworkEvents.GameStart, null, raiseEventoptions, sendOptions);
         }
     }
+    /// <summary>
+    /// キャラクター生成
+    /// </summary>
+    public void OnClickHunterSpawn()
+    {
+        m_charactorSpawn.HunterSpawn(m_actorNumber,m_charactorPositions);
+    }
+    public void OnClickWitchesSpawn()
+    {
+        m_charactorSpawn.WitchSpawn(m_actorNumber,m_charactorPositions);
+    }
     /* ***********************************************
      * 
      * これ以降は Photon の Callback メソッド
      * 
      * ***********************************************/
 
-        /// <summary>Photon に接続した時</summary>
+    /// <summary>Photon に接続した時</summary>
     public override void OnConnected()
     {
         Debug.Log("OnConnected");
@@ -170,7 +170,9 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom");
-        SpawnCharactor();
+        // プレイヤーをどこに spawn させるか決める
+        m_actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;    // 自分の ActorNumber を取得する。なお ActorNumber は「1から」入室順に振られる。
+        Debug.Log("My ActorNumber: " + m_actorNumber);
         CheckPlayerCountAndStartGame();   //1人でもゲームを開始出来るため
     }
 
