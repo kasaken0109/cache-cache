@@ -8,7 +8,9 @@ using System.Collections;
 
 public class NetworkGameManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] Transform[] m_charactorPositions;
+    //ハンターとウィッチのポジションの数を足した数が部屋の最大人数
+    [SerializeField] Transform[] m_hunterPositions;
+    [SerializeField] Transform[] m_witchPositions;
     [SerializeField] bool m_debugMode;
     [SerializeField] CharactorSpawn m_charactorSpawn;
     //ActorNumberはプレイヤーが入ってきた順の番号
@@ -82,7 +84,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
              * MaxPlayers の型は byte なのでキャストしている。
              * MaxPlayers の型が byte である理由はおそらく1ルームのプレイ人数を255人に制限したいためでしょう。
              * **************************************************/
-            roomOptions.MaxPlayers = (byte)m_charactorPositions.Length;
+            roomOptions.MaxPlayers = (byte)(m_hunterPositions.Length + m_witchPositions.Length);
             PhotonNetwork.CreateRoom(null, roomOptions); // ルーム名に null を指定するとランダムなルーム名を付ける
         }
     }
@@ -98,6 +100,11 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
             Debug.Log("Closing Room");
             PhotonNetwork.CurrentRoom.IsOpen = false;
             Debug.Log("Game Start");
+            RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
+            raiseEventoptions.Receivers = ReceiverGroup.All;
+            //GameManagerにenumの状態を追加した時に使う
+            //SendOptions sendOptions = new SendOptions();
+            //PhotonNetwork.RaiseEvent(0, null, raiseEventoptions, sendOptions);
         }
     }
     /// <summary>
@@ -105,14 +112,14 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     /// </summary>
     public void OnClickHunterSpawn()
     {
-        m_charactorSpawn.HunterSpawn(m_actorNumber,m_charactorPositions);
+        m_charactorSpawn.HunterSpawn(m_actorNumber, m_hunterPositions);
     }
     /// <summary>
     /// クリックした時にウィッチを生成する
     /// </summary>
     public void OnClickWitchesSpawn()
     {
-        m_charactorSpawn.WitchSpawn(m_actorNumber,m_charactorPositions);
+        m_charactorSpawn.WitchSpawn(m_actorNumber, m_witchPositions);
     }
     /* ***********************************************
      * 
@@ -168,9 +175,9 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom");
-        // プレイヤーをどこに spawn させるか決める
-        m_actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;    // 自分の ActorNumber を取得する。なお ActorNumber は「1から」入室順に振られる。
-        Debug.Log("My ActorNumber: " + m_actorNumber);
+        //// プレイヤーをどこに spawn させるか決める
+        //m_actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;    // 自分の ActorNumber を取得する。なお ActorNumber は「1から」入室順に振られる。
+        //Debug.Log("My ActorNumber: " + m_actorNumber);
         CheckPlayerCountAndStartGame();   //1人でもゲームを開始出来るため
     }
 
