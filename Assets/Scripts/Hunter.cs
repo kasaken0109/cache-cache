@@ -16,6 +16,10 @@ public class Hunter : CharaBase
     GameObject m_attackObject = default;
 
     [SerializeField]
+    [Tooltip("向きの点")]
+    Transform[] m_directionPoints = default;
+
+    [SerializeField]
     [Tooltip("攻撃判定が発生する時間")]
     float m_attackTime = 0.5f;
     bool CanMove = true;
@@ -35,6 +39,7 @@ public class Hunter : CharaBase
             float h = Input.GetAxisRaw("Horizontal");
             float v = Input.GetAxisRaw("Vertical");
             Move(h, v);
+            SetDirection(h, v);
         }
         if (Input.GetButtonDown("Fire1")) StartCoroutine(nameof(Attack));
     }
@@ -43,12 +48,25 @@ public class Hunter : CharaBase
     {
         m_rb.velocity = new Vector2(h, v).normalized * Speed;
     }
+    int direction = 2;
+    public int SetDirection(float h, float v)
+    {
+        if (h == 0 && v == 0) return direction;
+        else if (h < 0 && v == 0) direction = 1;
+        else if (h > 0 && v == 0) direction = 2;
+        else if (h == 0 && v > 0) direction = 3;
+        else if (h == 0 && v < 0) direction = 4;
+        m_attackObject.transform.SetParent(m_directionPoints[direction - 1]);
+        m_attackObject.transform.localPosition = Vector3.zero;
+        return direction;
+    }
 
     IEnumerator Attack()
     {
         m_attackObject.SetActive(true);
         yield return new WaitForSeconds(m_attackTime);
         m_attackObject.SetActive(false);
+        yield break;
     }
 
     public void PlayStun()
@@ -62,11 +80,4 @@ public class Hunter : CharaBase
         yield return new WaitForSeconds(m_stunTime);
         CanMove = true;
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Animal")) StartCoroutine(nameof(Stun));
-        //else if (collision.CompareTag("Witch")) collision.GetComponent<Witch>().OnHit();
-    }
-
 }
