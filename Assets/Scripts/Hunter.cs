@@ -21,7 +21,7 @@ public class Hunter : CharaBase
 
     [SerializeField]
     [Tooltip("攻撃判定が発生する時間")]
-    float m_attackTime = 0.5f;
+    float m_attackTime = 0.2f;
     bool CanMove = true;
     PhotonView m_view;
 
@@ -66,7 +66,6 @@ public class Hunter : CharaBase
         m_attackObject.SetActive(true);
         yield return new WaitForSeconds(m_attackTime);
         m_attackObject.SetActive(false);
-        yield break;
     }
 
     public void PlayStun()
