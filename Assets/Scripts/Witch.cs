@@ -10,6 +10,10 @@ public class Witch : CharaBase
     [SerializeField]
     private int m_hp = 3; //魔法使いの体力
 
+    [SerializeField]
+    [Tooltip("生成するアラート")]
+    private GameObject m_alart = default;
+
     void Start()
     {
         m_view = GetComponent<PhotonView>();
@@ -38,5 +42,10 @@ public class Witch : CharaBase
         {
             Debug.Log("HPが0になった。");
         }
+    }
+
+    public void SpawnAlarm()
+    {
+        Instantiate(m_alart,transform.position,transform.rotation);
     }
 }
