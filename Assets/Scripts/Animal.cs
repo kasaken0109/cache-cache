@@ -3,20 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimalMove : MonoBehaviour
+public class Animal : CharaBase
 {
     [Header("アタリ判定用子オブジェクト")] [SerializeField]
     Collider2D m_trigger = default;
-    [Header("移動スピード")] [SerializeField] 
-    float m_speed = default;
     [Header("最大移動時間")] [SerializeField]
-    float m_maxActionTime = default;
+    float m_maxActionTime = 3f;
     [Header("最小移動時間")] [SerializeField]
-    float m_minActionTime = default;
+    float m_minActionTime = 1f;
     [Header("最大待機時間")] [SerializeField]
-    float m_maxWaitTime = 3f;
+    float m_maxWaitTime = 5f;
     [Header("最小待機時間")] [SerializeField]
-    float m_minWaitTime = 1f;
+    float m_minWaitTime = 2f;
 
     Rigidbody2D m_rb = default;
 
@@ -86,16 +84,15 @@ public class AnimalMove : MonoBehaviour
         Vector2 direction = new Vector2(UnityEngine.Random.Range(-1, 2), UnityEngine.Random.Range(-1, 2));
         m_dist = direction.normalized;
         m_trigger.transform.localPosition = m_dist;
-        AnimalMoving(direction);
+        Move(direction.x, direction.y);
     }
 
     /// <summary>
     /// 移動する
     /// </summary>
-    /// <param name="direction"></param>
-    private void AnimalMoving(Vector2 direction)
+    public override void Move(float h, float v)
     {
-        m_rb.velocity = direction * m_speed;
+        m_rb.velocity = new Vector2(h, v) * Speed;
     }
 
 
