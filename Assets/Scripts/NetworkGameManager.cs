@@ -8,11 +8,10 @@ using System.Collections;
 
 public class NetworkGameManager : MonoBehaviourPunCallbacks
 {
-    //ハンターとウィッチのポジションの数を足した数が部屋の最大人数
-    [SerializeField] Transform[] m_hunterPositions;
-    [SerializeField] Transform[] m_witchPositions;
-    [SerializeField] bool m_debugMode;
-    [SerializeField] CharactorSpawn m_charactorSpawn;
+    [SerializeField]
+    bool m_debugMode;
+    [SerializeField]
+    CharactorSpawn m_charactorSpawn;
     //ActorNumberはプレイヤーが入ってきた順の番号
     int m_actorNumber;
     private void Start()
@@ -84,7 +83,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
              * MaxPlayers の型は byte なのでキャストしている。
              * MaxPlayers の型が byte である理由はおそらく1ルームのプレイ人数を255人に制限したいためでしょう。
              * **************************************************/
-            roomOptions.MaxPlayers = (byte)(m_hunterPositions.Length + m_witchPositions.Length);
+            roomOptions.MaxPlayers = (byte)(m_charactorSpawn.HunterPositions.Length + m_charactorSpawn.WitchPositions.Length);
             PhotonNetwork.CreateRoom(null, roomOptions); // ルーム名に null を指定するとランダムなルーム名を付ける
         }
     }
@@ -103,8 +102,8 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
             RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
             raiseEventoptions.Receivers = ReceiverGroup.All;
             //GameManagerにenumの状態を追加した時に使う
-            //SendOptions sendOptions = new SendOptions();
-            //PhotonNetwork.RaiseEvent(0, null, raiseEventoptions, sendOptions);
+            SendOptions sendOptions = new SendOptions();
+            PhotonNetwork.RaiseEvent((byte)NetworkEvents.GameStart, null, raiseEventoptions, sendOptions);
         }
     }
     /// <summary>
@@ -112,14 +111,14 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     /// </summary>
     public void OnClickHunterSpawn()
     {
-        m_charactorSpawn.HunterSpawn(m_actorNumber, m_hunterPositions);
+        m_charactorSpawn.HunterSpawn(m_actorNumber, m_charactorSpawn.HunterPositions);
     }
     /// <summary>
     /// クリックした時にウィッチを生成する
     /// </summary>
     public void OnClickWitchesSpawn()
     {
-        m_charactorSpawn.WitchSpawn(m_actorNumber, m_witchPositions);
+        m_charactorSpawn.WitchSpawn(m_actorNumber, m_charactorSpawn.WitchPositions);
     }
     /* ***********************************************
      * 
