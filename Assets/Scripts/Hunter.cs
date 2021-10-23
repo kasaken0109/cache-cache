@@ -31,6 +31,10 @@ public class Hunter : CharaBase
         m_rb = GetComponent<Rigidbody2D>();
         m_rb.gravityScale = 0;
     }
+    private void Update()
+    {
+        if (Input.GetButtonDown("Fire1")) StartCoroutine(nameof(Attack));
+    }
     private void FixedUpdate()
     {
         if (!m_view || !m_view.IsMine) return;      // 自分が生成したものだけ処理する
@@ -41,7 +45,7 @@ public class Hunter : CharaBase
             Move(h, v);
             SetDirection(h, v);
         }
-        if (Input.GetButtonDown("Fire1")) StartCoroutine(nameof(Attack));
+        //if (Input.GetButtonDown("Fire1")) StartCoroutine(nameof(Attack));
     }
 
     public override void Move(float h, float v)

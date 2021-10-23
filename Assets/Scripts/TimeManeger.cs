@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
+using Photon.Pun;
 
 public class TimeManeger : MonoBehaviour
 {
@@ -37,6 +40,10 @@ public class TimeManeger : MonoBehaviour
             else if(m_minute <= 0 && m_seconds == 0)
             {
                 Stop();
+                RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
+                raiseEventoptions.Receivers = ReceiverGroup.All;
+                SendOptions sendOptions = new SendOptions();
+                PhotonNetwork.RaiseEvent((byte)NetworkEvents.Win, null, raiseEventoptions, sendOptions);
             }
         }
     }
