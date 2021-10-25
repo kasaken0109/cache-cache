@@ -24,23 +24,17 @@ public class Animal : CharaBase
 
     Vector2 m_dist = default;
     bool m_action = false;
-    void Start()
+    public void CreateStart()
     {
+        m_trigger.gameObject.SetActive(false);
         m_rb = GetComponent<Rigidbody2D>();
     }
 
-    /// <summary>
-    /// あとで消す
-    /// </summary>
-    private void Update()
-    {
-        MovingUpdate();
-    }
 
     /// <summary>
     /// 移動、行動AI
     /// </summary>
-    private void MovingUpdate()
+    public void MovingUpdate()
     {
         /// 行動中は動かない
         if (m_action) 
@@ -84,6 +78,7 @@ public class Animal : CharaBase
         Vector2 direction = new Vector2(UnityEngine.Random.Range(-1, 2), UnityEngine.Random.Range(-1, 2));
         m_dist = direction.normalized;
         m_trigger.transform.localPosition = m_dist;
+        m_trigger.gameObject.SetActive(true);
         Move(direction.x, direction.y);
     }
 
@@ -99,6 +94,7 @@ public class Animal : CharaBase
     /// 何かに当たると移動を止める
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        m_trigger.gameObject.SetActive(false);
         m_timer = 0;
         m_action = false;
         m_rb.velocity = Vector2.zero;
