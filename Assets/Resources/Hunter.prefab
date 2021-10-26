@@ -309,12 +309,6 @@ MonoBehaviour:
   m_speed: 5
   m_stunTime: 3
   m_attackObject: {fileID: 8262366189142254732}
-  m_directionPoints:
-  - {fileID: 5464727449454190491}
-  - {fileID: 8888148877671869443}
-  - {fileID: 4543220722931030673}
-  - {fileID: 2282018688562110333}
-  - {fileID: 5195288116032695252}
   m_attackTime: 0.5
 --- !u!114 &4383889082026235764
 MonoBehaviour:
