@@ -19,6 +19,10 @@ public class Hunter : CharaBase
     [Tooltip("攻撃判定が発生する時間")]
     float m_attackTime = 0.2f;
 
+    [SerializeField, Tooltip("ハンターカメラ")]
+    GameObject m_hunterCamera = default;
+    HunterCamera m_camera = default;
+
     bool CanMove = true;
     Animator m_anim;
     PhotonView m_view;
@@ -29,6 +33,9 @@ public class Hunter : CharaBase
         m_rb = GetComponent<Rigidbody2D>();
         m_anim = GetComponent<Animator>();
         m_rb.gravityScale = 0;
+
+        if (!m_view || !m_view.IsMine) return;
+        m_camera = Instantiate(m_hunterCamera).GetComponent<HunterCamera>();
     }
     private void Update()
     {
@@ -43,6 +50,7 @@ public class Hunter : CharaBase
             float v = Input.GetAxisRaw("Vertical");
             Move(h, v);
             SetDirection(h, v);
+            m_camera.Rotation(h, v);
         }
         else
         {
