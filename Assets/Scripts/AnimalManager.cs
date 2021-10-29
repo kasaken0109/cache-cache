@@ -16,7 +16,7 @@ public class AnimalManager : MonoBehaviour
     Vector2Int m_topRight = default;
     List<Vector2> m_animalPos = new List<Vector2>();
 
-    private void Start()
+    public void StartSpawn()
     {
         m_scale = new Vector2Int((int)this.transform.localScale.x, (int)this.transform.localScale.y);
         Vector2 pos = this.transform.position;
