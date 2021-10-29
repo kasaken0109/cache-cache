@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class AnimalManager : MonoBehaviour
 {
     [SerializeField, Header("出現数")]
     int m_spawnNum = default;
     [SerializeField, Header("出現させる動物")]
-    Animal m_animal = default;
+    string m_animalName = default;
 
     Animal[] animals = default;
     Vector2Int m_scale = default;
@@ -79,9 +80,8 @@ public class AnimalManager : MonoBehaviour
                 Debug.Log("not");
                 continue;
             }
-            animals[i] = Instantiate(m_animal).GetComponent<Animal>();
+            animals[i] = PhotonNetwork.Instantiate(m_animalName, pos, Quaternion.identity).GetComponent<Animal>();
             animals[i].CreateStart();
-            animals[i].transform.position = pos;
             m_animalPos.Add(pos);
             i++;
         }
