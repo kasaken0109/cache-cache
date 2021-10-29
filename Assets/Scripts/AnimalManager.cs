@@ -32,29 +32,54 @@ public class AnimalManager : MonoBehaviour
 
         animals = new Animal[m_spawnNum];
         Spawn();
+        StartCoroutine(ManagerUpdate());
     }
 
-
-    private void FixedUpdate()
+    IEnumerator ManagerUpdate()
     {
-        bool a = false;
-        foreach (var item in animals)
+        while (true)
         {
-            if (item == null)
+            bool a = false;
+            foreach (var item in animals)
             {
-                a = true;
+                if (item == null)
+                {
+                    a = true;
+                }
             }
-        }
-        if (a)
-        {
-            return;
-        }
+            if (a)
+            {
+                continue;
+            }
 
-        foreach (var animal in animals)
-        {
-            animal.MovingUpdate();
+            foreach (var animal in animals)
+            {
+                animal.MovingUpdate();
+            }
+            yield return new WaitForFixedUpdate();
         }
     }
+
+    //private void FixedUpdate()
+    //{
+    //    bool a = false;
+    //    foreach (var item in animals)
+    //    {
+    //        if (item == null)
+    //        {
+    //            a = true;
+    //        }
+    //    }
+    //    if (a)
+    //    {
+    //        return;
+    //    }
+
+    //    foreach (var animal in animals)
+    //    {
+    //        animal.MovingUpdate();
+    //    }
+    //}
 
 
     /// <summary>

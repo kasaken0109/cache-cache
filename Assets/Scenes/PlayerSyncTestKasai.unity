@@ -551,7 +551,7 @@ PrefabInstance:
     - target: {fileID: 7631717737572162538, guid: 28fd4c5853c41594d908c87965674535,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7631717737572162540, guid: 28fd4c5853c41594d908c87965674535,
         type: 3}
@@ -687,6 +687,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Roof
+      objectReference: {fileID: 0}
+    - target: {fileID: 7508041783855756848, guid: 6c286f7af8b147c40bd3d0998a73024f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7508041783855756849, guid: 6c286f7af8b147c40bd3d0998a73024f,
         type: 3}
@@ -1070,6 +1075,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Animal
       objectReference: {fileID: 0}
+    - target: {fileID: 5627154893201819255, guid: d7f29482ef37abf4285f3cb658d65ae8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5671076703628757558, guid: d7f29482ef37abf4285f3cb658d65ae8,
         type: 3}
       propertyPath: sceneViewId
@@ -1411,7 +1421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbc30a5b0de15c498c9286a33a81bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_debugMode: 0
+  m_debugMode: 1
   m_charactorSpawn: {fileID: 1457591069}
 --- !u!4 &1626993158
 Transform:
@@ -1455,7 +1465,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdb93e64bf800454f814e9db96e9f7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_charactorSpawn: {fileID: 1457591069}
 --- !u!1 &2031844730
 GameObject:
   m_ObjectHideFlags: 0
