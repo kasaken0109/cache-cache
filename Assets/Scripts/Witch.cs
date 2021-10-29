@@ -65,6 +65,7 @@ public class Witch : CharaBase
         return direction;
     }
 
+    [PunRPC]
     public void OnHit()
     {
         m_hp--; //1ずつ減らす
