@@ -9,7 +9,9 @@ public class WitchCamera : MonoBehaviour
     float m_speed = 3f;
 
     PhotonView m_view = default;
+    bool m_spectating = false;
 
+    public bool Spectating { get => m_spectating; set {m_spectating = value; } }
 
     void Start()
     {
@@ -19,7 +21,7 @@ public class WitchCamera : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!m_view || !m_view.IsMine) return;
+        if (!m_view || !m_view.IsMine || m_spectating) return;
 
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
