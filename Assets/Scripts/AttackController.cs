@@ -7,7 +7,7 @@ public class AttackController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Animal")) GetComponentInParent<Hunter>().PlayStun();
-        else if (collision.CompareTag("Witch"))
+        else if (collision.CompareTag("Witch") && IsFirst)
         {
             collision.GetComponent<Witch>().OnHit();
             Debug.Log("HunterAttack");
