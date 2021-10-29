@@ -5,24 +5,12 @@ using UnityEngine;
 public class HunterCamera : MonoBehaviour
 {
     [SerializeField]
-    Transform m_rawImage;
+    Transform m_type = default;
     [SerializeField]
-    Transform m_Image;
-
-    void Start()
-    {
-        
-    }
-    private void Update()
-    {
-
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
-        Rotation(h, v);
-    }
+    Transform m_rawImage = default;
 
 
-    void Rotation(float h, float v)
+    public void Rotation(float h, float v)
     {
         if (h == 0 && v == 0)
         {
@@ -34,7 +22,7 @@ public class HunterCamera : MonoBehaviour
         float dist = Vector3.SignedAngle(Vector3.right, d, Vector3.forward);
 
 
-        m_Image.rotation = Quaternion.Euler(0, 0, dist - 90);
+        m_type.rotation = Quaternion.Euler(0, 0, dist - 90);
         m_rawImage.localRotation = Quaternion.Euler(0, 0, -(dist - 90));
     }
 }
