@@ -42,7 +42,12 @@ public class Hunter : CharaBase
             Move(h, v);
             SetDirection(h, v);
         }
+        else
+        {
+            m_rb.velocity = Vector2.zero;
+        }
         //if (Input.GetButtonDown("Fire1")) StartCoroutine(nameof(Attack));
+        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y,-10);
     }
 
     public override void Move(float h, float v)
@@ -52,6 +57,7 @@ public class Hunter : CharaBase
 
     public void SetDirection(float h, float v)
     {
+        if (h == 0 && v == 0) return;
         m_attackObject.transform.localPosition = new Vector3(h * 1.5f,v * 1.5f,0);
     }
 
@@ -69,8 +75,15 @@ public class Hunter : CharaBase
 
     IEnumerator Stun()
     {
+        float timer = 0;
         CanMove = false;
-        yield return new WaitForSeconds(m_stunTime);
+        while (timer < m_stunTime)
+        {
+            //横に振動させる
+            m_rb.AddForce(new Vector3(Mathf.Sin(timer * 180) * 100,0,0));
+            timer += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
         CanMove = true;
     }
 }
