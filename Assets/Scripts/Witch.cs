@@ -19,6 +19,9 @@ public class Witch : CharaBase
     [SerializeField]
     [Tooltip("生成するアラート")]
     private GameObject m_alart = default;
+
+    public int Hp => m_hp;
+    HpDisplay hpDisplay = default;
     Collider2D m_change;
     SpriteRenderer m_sr;
     bool m_contactFlag = false;
@@ -28,6 +31,7 @@ public class Witch : CharaBase
         m_change = GetComponentInChildren<Collider2D>();
         m_view = GetComponent<PhotonView>();
         m_rb = GetComponent<Rigidbody2D>();
+        hpDisplay = GetComponent<HpDisplay>();
         m_rb.gravityScale = 0;
     }
     private void Update()
@@ -67,8 +71,10 @@ public class Witch : CharaBase
 
         if (m_hp < 1) //魔法使いの体力が1未満になったら呼び出す
         {
+            m_hp = 0;
             Debug.Log("HPが0になった。");
         }
+        hpDisplay.UpdateHp(m_hp);
     }
     void ChangeSprite()
     {
