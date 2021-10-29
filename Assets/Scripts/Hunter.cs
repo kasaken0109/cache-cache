@@ -20,12 +20,14 @@ public class Hunter : CharaBase
     float m_attackTime = 0.2f;
 
     bool CanMove = true;
+    Animator m_anim;
     PhotonView m_view;
 
     void Start()
     {
         m_view = GetComponent<PhotonView>();
         m_rb = GetComponent<Rigidbody2D>();
+        m_anim = GetComponent<Animator>();
         m_rb.gravityScale = 0;
     }
     private void Update()
@@ -53,6 +55,7 @@ public class Hunter : CharaBase
     public override void Move(float h, float v)
     {
         m_rb.velocity = new Vector2(h, v).normalized * Speed;
+        m_anim.SetBool("IsWalk", h + v != 0 ? true : false);
     }
 
     public void SetDirection(float h, float v)
@@ -64,6 +67,7 @@ public class Hunter : CharaBase
     IEnumerator Attack()
     {
         m_attackObject.SetActive(true);
+        m_anim.SetTrigger("Attack");
         yield return new WaitForSeconds(m_attackTime);
         m_attackObject.SetActive(false);
     }
