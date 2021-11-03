@@ -98,4 +98,47 @@ public class Hunter : CharaBase
         }
         CanMove = true;
     }
+
+    HaveItemType itemType = HaveItemType.None;
+    public enum HaveItemType
+    {
+        None,
+        Enforcealarm,
+        Trap,
+        Enforcevisibility,
+        Enforcespeed,
+    }
+
+    public HaveItemType GetHaveItem => itemType;
+
+    public void SetItem(HaveItemType haveItem)
+    {
+        itemType = haveItem;
+
+        switch (haveItem)
+        {
+            case HaveItemType.None:
+                break;
+            case HaveItemType.Enforcealarm:
+                break;
+            case HaveItemType.Trap:
+                gameObject.AddComponent<Trap>();
+                break;
+            case HaveItemType.Enforcevisibility:
+                break;
+            case HaveItemType.Enforcespeed:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Item"))
+        {
+            SetItem(collision.GetComponent<ItemTypeGetter>().ItemType);
+            PhotonNetwork.Destroy(collision.gameObject);
+        }
+    }
 }
