@@ -25,6 +25,8 @@ public class Witch : CharaBase
     Collider2D m_change;
     SpriteRenderer m_sr;
     bool m_contactFlag = false;
+
+    WitchCamera witchCamera;
     void Start()
     {
         m_sr = GetComponent<SpriteRenderer>();
@@ -73,6 +75,7 @@ public class Witch : CharaBase
         if (m_hp < 1) //魔法使いの体力が1未満になったら呼び出す
         {
             m_hp = 0;
+            Dead();
             Debug.Log("HPが0になった。");
         }
         hpDisplay.UpdateHp(m_hp);
@@ -108,5 +111,12 @@ public class Witch : CharaBase
     public void SpawnAlarm()
     {
         Instantiate(m_alart, transform.position, transform.rotation);
+    }
+
+    /// <summary>
+    /// 死んだら
+    /// </summary>
+    public void Dead() 
+    {
     }
 }
