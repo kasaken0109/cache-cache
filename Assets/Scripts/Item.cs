@@ -18,6 +18,7 @@ public class Item : MonoBehaviour
     public virtual void UseItem()
     {
         //アイテムごとの処理の関数
+        GetComponent<Hunter>().PlayWaitCoolDown(m_cooldown);
         Destroy(this);
     }
 }
