@@ -42,6 +42,9 @@ public class Witch : CharaBase,IStun
         m_rb = GetComponent<Rigidbody2D>();
         hpDisplay = GetComponent<HpDisplay>();
         m_rb.gravityScale = 0;
+
+        if (!m_view || !m_view.IsMine) return;
+        Instantiate(m_witchCamera, transform);
     }
     private void Update()
     {
