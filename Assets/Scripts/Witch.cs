@@ -62,7 +62,7 @@ public class Witch : CharaBase,IStun
             return;
         }
 
-        Move(h, v);
+        if(CanMove)Move(h, v);
         SetDirection(h, v);
     }
 
