@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
 public class Witch : CharaBase,IStun
 {
@@ -87,6 +89,10 @@ public class Witch : CharaBase,IStun
         {
             m_hp = 0;
             Debug.Log("HPが0になった。");
+            RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
+            raiseEventoptions.Receivers = ReceiverGroup.All;
+            SendOptions sendOptions = new SendOptions();
+            PhotonNetwork.RaiseEvent((byte)NetworkEvents.Die, null, raiseEventoptions, sendOptions);
             Spectating();
         }
         hpDisplay.UpdateHp(m_hp);
