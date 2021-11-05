@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Hunter : CharaBase
+public class Hunter : CharaBase,IStun
 {
     Rigidbody2D m_rb;
 
@@ -23,7 +23,7 @@ public class Hunter : CharaBase
     GameObject m_hunterCamera = default;
     HunterCamera m_camera = default;
 
-    bool CanMove = true;
+    bool CanUseItem = true;
     Animator m_anim;
     PhotonView m_view;
 
@@ -35,11 +35,12 @@ public class Hunter : CharaBase
         m_rb.gravityScale = 0;
 
         if (!m_view || !m_view.IsMine) return;
-        m_camera = Instantiate(m_hunterCamera).GetComponent<HunterCamera>();
+        m_camera = Instantiate(m_hunterCamera, this.transform).GetComponent<HunterCamera>();
     }
     private void Update()
     {
         if (Input.GetButtonDown("Fire1")) StartCoroutine(nameof(Attack));
+        if (Input.GetButtonDown("Jump") && CanUseItem) GetComponent<Item>().UseItem();
     }
     private void FixedUpdate()
     {
@@ -97,5 +98,60 @@ public class Hunter : CharaBase
             yield return new WaitForSeconds(Time.deltaTime);
         }
         CanMove = true;
+    }
+
+    public void PlayWaitCoolDown(float time)
+    {
+        StartCoroutine(CoolDown(time));
+    }
+
+    IEnumerator CoolDown(float time)
+    {
+        CanUseItem = false;
+        yield return new WaitForSeconds(time);
+        CanUseItem = true;
+    }
+
+    HaveItemType itemType = HaveItemType.None;
+    public enum HaveItemType
+    {
+        None,
+        Enforcealarm,
+        Trap,
+        Enforcevisibility,
+        Enforcespeed,
+    }
+
+    public HaveItemType GetHaveItem => itemType;
+
+    public void SetItem(HaveItemType haveItem)
+    {
+        itemType = haveItem;
+
+        switch (haveItem)
+        {
+            case HaveItemType.None:
+                break;
+            case HaveItemType.Enforcealarm:
+                break;
+            case HaveItemType.Trap:
+                gameObject.AddComponent<Trap>();
+                break;
+            case HaveItemType.Enforcevisibility:
+                break;
+            case HaveItemType.Enforcespeed:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Item"))
+        {
+            SetItem(collision.GetComponent<ItemTypeGetter>().ItemType);
+            PhotonNetwork.Destroy(collision.gameObject);
+        }
     }
 }

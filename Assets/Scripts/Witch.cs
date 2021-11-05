@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Witch : CharaBase
+public class Witch : CharaBase,IStun
 {
     Rigidbody2D m_rb;
     PhotonView m_view;
@@ -13,6 +13,10 @@ public class Witch : CharaBase
     [SerializeField]
     [Tooltip("変身範囲のコライダー")]
     GameObject m_cacheRangeObject = default;
+
+    [SerializeField]
+    [Tooltip("スタンする時間")]
+    float m_stunTime = 3f;
     [SerializeField]
     [Tooltip("向きの点")]
     Transform[] m_directionPoints = default;
@@ -86,6 +90,7 @@ public class Witch : CharaBase
             Spectating();
         }
         hpDisplay.UpdateHp(m_hp);
+
     }
 
     /// <summary>
@@ -132,5 +137,30 @@ public class Witch : CharaBase
     public void SpawnAlarm()
     {
         Instantiate(m_alart, transform.position, transform.rotation);
+    }
+
+    void Dead()
+    {
+
+    }
+
+    [PunRPC]
+    public void PlayStun()
+    {
+        StartCoroutine(nameof(Stun));
+    }
+
+    IEnumerator Stun()
+    {
+        float timer = 0;
+        CanMove = false;
+        while (timer < m_stunTime)
+        {
+            //横に振動させる
+            m_rb.AddForce(new Vector3(Mathf.Sin(timer * 180) * 100, 0, 0));
+            timer += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+        CanMove = true;
     }
 }

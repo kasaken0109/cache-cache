@@ -123,9 +123,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 5
+  m_name: 
+  CanMove: 1
   m_stunTime: 3
   m_attackObject: {fileID: 8262366189142254732}
   m_attackTime: 0.5
+  m_hunterCamera: {fileID: 3047602550159320792, guid: d5667d5451c720f41b0a38be2e4fbfdd,
+    type: 3}
 --- !u!114 &4383889082026235764
 MonoBehaviour:
   m_ObjectHideFlags: 0
