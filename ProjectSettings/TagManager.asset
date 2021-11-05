@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Witch
   - Animal
+  - Hunter
+  - Item
   layers:
   - Default
   - TransparentFX
