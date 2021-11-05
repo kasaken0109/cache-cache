@@ -163,6 +163,7 @@ public class Witch : CharaBase,IStun
     {
         float timer = 0;
         CanMove = false;
+        m_rb.velocity = Vector3.zero;
         while (timer < m_stunTime)
         {
             //横に振動させる
