@@ -340,12 +340,12 @@ PrefabInstance:
     - target: {fileID: 4682670850620864785, guid: 67a1da906a01cb6499079732b8f9a1fe,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1500
+      value: 1800
       objectReference: {fileID: 0}
     - target: {fileID: 4682670850620864785, guid: 67a1da906a01cb6499079732b8f9a1fe,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1500
+      value: 1800
       objectReference: {fileID: 0}
     - target: {fileID: 4682670850620864785, guid: 67a1da906a01cb6499079732b8f9a1fe,
         type: 3}
@@ -381,6 +381,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FovImage
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682670850903341695, guid: 67a1da906a01cb6499079732b8f9a1fe,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 4682670850903341695, guid: 67a1da906a01cb6499079732b8f9a1fe,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1080
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67a1da906a01cb6499079732b8f9a1fe, type: 3}

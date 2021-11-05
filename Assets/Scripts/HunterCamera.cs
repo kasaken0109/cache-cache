@@ -13,7 +13,7 @@ public class HunterCamera : MonoBehaviour
     float m_changeTime = default;
 
     float m_dist = default;
-    float m_fovZ = default;
+    float m_fovZ = 36;
 
 
     public void Rotation(float h, float v)
