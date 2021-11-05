@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-// Photon 用の名前空間を参照する
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -10,15 +9,21 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     bool m_debugMode;
-    [SerializeField]
-    CharactorSpawn m_charactorSpawn;
-    //ActorNumberはプレイヤーが入ってきた順の番号
-    int m_actorNumber;
+    [SerializeField, Tooltip("ハンターの最大人数")]
+    int m_hunterCapacity;
+    [SerializeField, Tooltip("ウィッチの最大人数")]
+    int m_witchCapacity;
+    public int HunterCapacity { get => m_hunterCapacity; }
+    public int WitchCapacity { get => m_witchCapacity; }
+
+    private void Awake()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
     private void Start()
     {
         Connect("1.0");// 1.0 はバージョン番号（同じバージョンを指定したクライアント同士が接続できる）
     }
-
     /// <summary>
     /// Photonに接続する
     /// </summary>
@@ -33,18 +38,15 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.Disconnect();
         }
-
         while (PhotonNetwork.IsConnected)
         {
             yield return new WaitForEndOfFrame();
         }
-
         if (!PhotonNetwork.IsConnected)
         {
             PhotonNetwork.GameVersion = gameVersion;    // 同じバージョンを指定したもの同士が接続できる
             PhotonNetwork.ConnectUsingSettings();
         }
-
         yield return null;
     }
     /// <summary>
@@ -77,14 +79,9 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
         {
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.IsVisible = true;   // 誰でも参加できるようにする
-            /* **************************************************
-             * spawPositions の配列長を最大プレイ人数とする。
-             * 無料版では最大20まで指定できる。
-             * MaxPlayers の型は byte なのでキャストしている。
-             * MaxPlayers の型が byte である理由はおそらく1ルームのプレイ人数を255人に制限したいためでしょう。
-             * **************************************************/
-            roomOptions.MaxPlayers = (byte)(m_charactorSpawn.HunterPositions.Length + m_charactorSpawn.WitchPositions.Length);
-            PhotonNetwork.CreateRoom(null, roomOptions); // ルーム名に null を指定するとランダムなルーム名を付ける
+            roomOptions.MaxPlayers = (byte)(HunterCapacity + WitchCapacity);
+            //ルーム名に null を指定するとランダムなルーム名を付ける
+            PhotonNetwork.CreateRoom(null, roomOptions); 
         }
     }
     private void CheckPlayerCountAndStartGame()
@@ -98,28 +95,9 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("Closing Room");
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            Debug.Log("Game Start");
-            RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
-            raiseEventoptions.Receivers = ReceiverGroup.All;
-            //GameManagerにenumの状態を追加した時に使う
-            SendOptions sendOptions = new SendOptions();
-            PhotonNetwork.RaiseEvent((byte)NetworkEvents.GameStart, null, raiseEventoptions, sendOptions);
         }
     }
-    /// <summary>
-    /// クリックした時にハンターを生成する
-    /// </summary>
-    public void OnClickHunterSpawn()
-    {
-        m_charactorSpawn.HunterSpawn(m_actorNumber, m_charactorSpawn.HunterPositions);
-    }
-    /// <summary>
-    /// クリックした時にウィッチを生成する
-    /// </summary>
-    public void OnClickWitchesSpawn()
-    {
-        m_charactorSpawn.WitchSpawn(m_actorNumber, m_charactorSpawn.WitchPositions);
-    }
+
     /* ***********************************************
      * 
      * これ以降は Photon の Callback メソッド
@@ -174,10 +152,6 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom");
-        //// プレイヤーをどこに spawn させるか決める
-        //m_actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;    // 自分の ActorNumber を取得する。なお ActorNumber は「1から」入室順に振られる。
-        //Debug.Log("My ActorNumber: " + m_actorNumber);
-        CheckPlayerCountAndStartGame();   //1人でもゲームを開始出来るため
     }
 
     /// <summary>指定した部屋への入室に失敗した時</summary>
