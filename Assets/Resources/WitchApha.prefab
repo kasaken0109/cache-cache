@@ -707,13 +707,13 @@ GameObject:
   - component: {fileID: 8566126618917774019}
   - component: {fileID: 8566126618917774018}
   - component: {fileID: 8566126618917774017}
-  - component: {fileID: 8566126618917774016}
   - component: {fileID: 181245493197337478}
   - component: {fileID: -2008839317392027905}
   - component: {fileID: 8438248041929454205}
   - component: {fileID: 3054268266421545437}
   - component: {fileID: 4637249377521535332}
   - component: {fileID: 342173219}
+  - component: {fileID: 4055148573714112378}
   m_Layer: 0
   m_Name: WitchApha
   m_TagString: Witch
@@ -809,33 +809,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &8566126618917774016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8566126618917774023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72359f504247ad142a89bd6ffab39487, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_speed: 5
-  m_name: 
-  CanMove: 1
-  m_hp: 3
-  m_cacheRangeObject: {fileID: 4933701410050530631}
-  m_stunTime: 3
-  m_directionPoints:
-  - {fileID: 4539313423471725849}
-  - {fileID: 4453879028951683268}
-  - {fileID: 3162377345874955512}
-  - {fileID: 4042347855858302786}
-  - {fileID: 4564687142349765251}
-  m_alart: {fileID: 5081211440213494502, guid: 49805e4a6d7e0f54d897df1f4ba42636, type: 3}
-  m_witchCamera: {fileID: 413843071826151514, guid: 1203e4926838dc543aa2869047e595e4,
-    type: 3}
 --- !u!114 &181245493197337478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -962,3 +935,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.4966667, y: 2.6666667}
   m_EdgeRadius: 0
+--- !u!114 &4055148573714112378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8566126618917774023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450de1c01d89f5d4ab240fb3a4f861b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 5
+  m_name: 
+  CanMove: 1
+  m_hp: 3
+  m_cacheRangeObject: {fileID: 4933701410050530631}
+  m_stunTime: 3
+  m_directionPoints:
+  - {fileID: 4539313423471725849}
+  - {fileID: 4453879028951683268}
+  - {fileID: 3162377345874955512}
+  - {fileID: 4042347855858302786}
+  - {fileID: 4564687142349765251}
+  m_alart: {fileID: 5081211440213494502, guid: 49805e4a6d7e0f54d897df1f4ba42636, type: 3}
+  m_witchCamera: {fileID: 413843071826151514, guid: 1203e4926838dc543aa2869047e595e4,
+    type: 3}
