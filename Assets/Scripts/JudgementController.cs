@@ -7,11 +7,10 @@ using ExitGames.Client.Photon;
 
 public class JudgementController : MonoBehaviour
 {
-    [SerializeField]
-    CharactorSpawn m_charactorSpawn;
-    public void LoseJudge(int witchDieCount)
+    bool m_readyFlag;
+    public void LoseJudge(int witchDieCount, int witchCapacity)
     {
-        if (witchDieCount >= m_charactorSpawn.WitchPositions.Length)
+        if (witchDieCount >= witchCapacity)
         {
             RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
             raiseEventoptions.Receivers = ReceiverGroup.All;
@@ -19,23 +18,31 @@ public class JudgementController : MonoBehaviour
             PhotonNetwork.RaiseEvent((byte)NetworkEvents.Lose, null, raiseEventoptions, sendOptions);
         }
     }
-    void GameStartJudge(ref int charaCount)
+    public void GameStartJudge(ref int charaCount)
     {
-        var count = m_charactorSpawn.WitchPositions.Length + m_charactorSpawn.HunterPositions.Length;
-        if (charaCount >= count)
+        if (!m_readyFlag)
+        {
+            charaCount--;
+        }
+        else
+        {
+            charaCount++;
+        }
+        if (charaCount >= PhotonNetwork.CurrentRoom.MaxPlayers)
         {
             RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
             raiseEventoptions.Receivers = ReceiverGroup.All;
             SendOptions sendOptions = new SendOptions();
             PhotonNetwork.RaiseEvent((byte)NetworkEvents.GameStart, null, raiseEventoptions, sendOptions);
         }
-        else
-        {
-            charaCount++;
-            RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
-            raiseEventoptions.Receivers = ReceiverGroup.All;
-            SendOptions sendOptions = new SendOptions();
-            PhotonNetwork.RaiseEvent((byte)NetworkEvents.Lobby, null, raiseEventoptions, sendOptions);
-        }
+        
+    }
+    public void Ready()
+    {
+        m_readyFlag = m_readyFlag? false : true;
+        RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
+        raiseEventoptions.Receivers = ReceiverGroup.All;
+        SendOptions sendOptions = new SendOptions();
+        PhotonNetwork.RaiseEvent((byte)NetworkEvents.Lobby, null, raiseEventoptions, sendOptions);
     }
 }
