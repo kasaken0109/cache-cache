@@ -15,10 +15,6 @@ public class HunterCamera : MonoBehaviour
     float m_dist = default;
     float m_fovZ = default;
 
-    private void Start()
-    {
-        StartCoroutine(FoVChange(10));
-    }
 
     public void Rotation(float h, float v)
     {
