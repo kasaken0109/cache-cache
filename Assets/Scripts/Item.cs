@@ -9,6 +9,8 @@ public class Item : MonoBehaviour
     [Tooltip("別のアイテムが使えるようになる時間")]
     private float m_cooldown = 5f;
 
+    private Hunter m_hunter = default;
+
     /// <summary>
     /// 別のアイテムが使えるようになる時間
     /// </summary>
@@ -18,7 +20,9 @@ public class Item : MonoBehaviour
     public virtual void UseItem()
     {
         //アイテムごとの処理の関数
-        GetComponent<Hunter>().PlayWaitCoolDown(m_cooldown);
+        m_hunter =  GetComponent<Hunter>();
+        m_hunter.PlayWaitCoolDown(m_cooldown);
+        m_hunter.SetItem(Hunter.HaveItemType.None);
         Destroy(this);
     }
 }
