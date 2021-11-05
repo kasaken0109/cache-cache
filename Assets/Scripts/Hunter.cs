@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Hunter : CharaBase
+public class Hunter : CharaBase,IStun
 {
     Rigidbody2D m_rb;
 
@@ -23,7 +23,7 @@ public class Hunter : CharaBase
     GameObject m_hunterCamera = default;
     HunterCamera m_camera = default;
 
-    bool CanMove = true;
+    bool CanUseItem = true;
     Animator m_anim;
     PhotonView m_view;
 
@@ -35,11 +35,12 @@ public class Hunter : CharaBase
         m_rb.gravityScale = 0;
 
         if (!m_view || !m_view.IsMine) return;
-        m_camera = Instantiate(m_hunterCamera).GetComponent<HunterCamera>();
+        m_camera = Instantiate(m_hunterCamera, this.transform).GetComponent<HunterCamera>();
     }
     private void Update()
     {
         if (Input.GetButtonDown("Fire1")) StartCoroutine(nameof(Attack));
+        if (Input.GetButtonDown("Jump") && CanUseItem) GetComponent<Item>().UseItem();
     }
     private void FixedUpdate()
     {
@@ -97,6 +98,18 @@ public class Hunter : CharaBase
             yield return new WaitForSeconds(Time.deltaTime);
         }
         CanMove = true;
+    }
+
+    public void PlayWaitCoolDown(float time)
+    {
+        StartCoroutine(CoolDown(time));
+    }
+
+    IEnumerator CoolDown(float time)
+    {
+        CanUseItem = false;
+        yield return new WaitForSeconds(time);
+        CanUseItem = true;
     }
 
     HaveItemType itemType = HaveItemType.None;
