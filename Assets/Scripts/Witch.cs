@@ -19,12 +19,15 @@ public class Witch : CharaBase
     [SerializeField]
     [Tooltip("生成するアラート")]
     private GameObject m_alart = default;
+    [SerializeField]
+    WitchCamera m_witchCamera = default;
 
     public int Hp => m_hp;
     HpDisplay hpDisplay = default;
     Collider2D m_change;
     SpriteRenderer m_sr;
     bool m_contactFlag = false;
+    bool m_specter = false;
     void Start()
     {
         m_sr = GetComponent<SpriteRenderer>();
@@ -43,6 +46,12 @@ public class Witch : CharaBase
         if (!m_view || !m_view.IsMine) return;      // 自分が生成したものだけ処理する
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
+
+        if (m_specter)
+        {
+            m_witchCamera.CameraMove(h, v);
+            return;
+        }
 
         Move(h, v);
         SetDirection(h, v);
@@ -74,9 +83,23 @@ public class Witch : CharaBase
         {
             m_hp = 0;
             Debug.Log("HPが0になった。");
+            Spectating();
         }
         hpDisplay.UpdateHp(m_hp);
     }
+
+    /// <summary>
+    /// 観戦に移る
+    /// </summary>
+    void Spectating()
+    {
+        // ここでanimationでspriteを消す
+
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        m_witchCamera.WitchT = this.transform;
+        m_specter = true;
+    }
+
     void ChangeSprite()
     {
         if (m_contactFlag)
@@ -105,6 +128,7 @@ public class Witch : CharaBase
         Debug.Log("でた");
     }
 
+    [PunRPC]
     public void SpawnAlarm()
     {
         Instantiate(m_alart, transform.position, transform.rotation);
