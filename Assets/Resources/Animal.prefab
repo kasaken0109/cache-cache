@@ -180,6 +180,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 3
+  m_name: 
+  CanMove: 1
   m_trigger: {fileID: 1066949625}
   m_maxActionTime: 3
   m_minActionTime: 1
