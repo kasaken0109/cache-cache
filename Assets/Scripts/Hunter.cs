@@ -11,6 +11,10 @@ public class Hunter : CharaBase,IStun
     [Tooltip("スタンする時間")]
     float m_stunTime = 3f;
 
+    private float m_speedUpRate = 1f;
+
+    public float SpeedUpRate { set { m_speedUpRate = value; } }
+
     [SerializeField]
     [Tooltip("攻撃のコライダー")]
     GameObject m_attackObject = default;
@@ -63,7 +67,7 @@ public class Hunter : CharaBase,IStun
 
     public override void Move(float h, float v)
     {
-        m_rb.velocity = new Vector2(h, v).normalized * Speed;
+        m_rb.velocity = new Vector2(h, v).normalized * Speed * m_speedUpRate;
         m_anim.SetBool("IsWalk", h + v != 0 ? true : false);
     }
 
@@ -141,6 +145,7 @@ public class Hunter : CharaBase,IStun
             case HaveItemType.Enforcevisibility:
                 break;
             case HaveItemType.Enforcespeed:
+                gameObject.AddComponent<SpeedUp>();
                 break;
             default:
                 break;

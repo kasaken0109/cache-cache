@@ -32,9 +32,10 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    [PunRPC]
+    //[PunRPC]
     public void SpawnItem()
     {
+        Debug.Log("spawn");
         var itemNum = Random.Range(0, m_items.Length);
         while (m_existCount[itemNum] == 0)
         {
