@@ -139,6 +139,7 @@ public class Hunter : CharaBase,IStun
             case HaveItemType.None:
                 break;
             case HaveItemType.Enforcealarm:
+                gameObject.AddComponent<PowerAlert>();
                 break;
             case HaveItemType.Trap:
                 gameObject.AddComponent<Trap>();

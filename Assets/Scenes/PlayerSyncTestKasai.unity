@@ -2772,7 +2772,7 @@ MonoBehaviour:
   - {fileID: 1599419058}
   - {fileID: 245645246}
   m_hunterPrefabName: Hunter
-  m_witchPrefabName: WitchApha
+  m_witchPrefabName: WitchAlpha
 --- !u!4 &1457591070
 Transform:
   m_ObjectHideFlags: 0
@@ -3297,10 +3297,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6321123dde8b864428842302693bc190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_timeText: {fileID: 1560232495}
   m_minute: 6
-  m_secondTime: 0
-  m_isStarted: 1
+  m_seconds: 0
+  m_timerText: {fileID: 1560232495}
 --- !u!114 &1626993160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3330,6 +3329,7 @@ MonoBehaviour:
   - {fileID: 2878033637889989447, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c, type: 3}
   - {fileID: 6010810000129148488, guid: e9b874104e11a3f44af809d155f99bd6, type: 3}
   - {fileID: 6767006890373955433, guid: 4f496bccd87e7b54388095368773ddc4, type: 3}
+  - {fileID: 6010810000129148488, guid: e0954a1990f9a6e4483d85d6dcbfeb62, type: 3}
   m_count: 2
   m_spawnPos:
   - {fileID: 1568473084}
