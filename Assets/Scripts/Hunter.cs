@@ -143,6 +143,7 @@ public class Hunter : CharaBase,IStun
                 gameObject.AddComponent<Trap>();
                 break;
             case HaveItemType.Enforcevisibility:
+                gameObject.AddComponent<EnhancedVisibility>();
                 break;
             case HaveItemType.Enforcespeed:
                 gameObject.AddComponent<SpeedUp>();
