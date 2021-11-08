@@ -5,6 +5,8 @@ using Photon.Pun;
 
 public class ItemManager : MonoBehaviour
 {
+    public static ItemManager Instance{ get; private set; }
+
     [SerializeField]
     [Tooltip("生成するアイテムの一覧")]
     private GameObject[] m_items = default;
@@ -19,6 +21,11 @@ public class ItemManager : MonoBehaviour
 
     private bool[] m_isExist;
     private int[] m_existCount;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -32,29 +39,30 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    //[PunRPC]
-    public void SpawnItem()
+    public void SpawnItem(int num)
     {
-        Debug.Log("spawn");
-        var itemNum = Random.Range(0, m_items.Length);
-        while (m_existCount[itemNum] == 0)
+        for (int i = 0; i < num; i++)
         {
-            itemNum = Random.Range(0, m_items.Length);
-        }
-        var itemObj = m_items[itemNum];
+            var itemNum = Random.Range(0, m_items.Length);
+            while (m_existCount[itemNum] == 0)
+            {
+                itemNum = Random.Range(0, m_items.Length);
+            }
+            var itemObj = m_items[itemNum];
 
-        var posNum = Random.Range(0, m_spawnPos.Length);
-        while (m_isExist[posNum] == true)
-        {
-            posNum = Random.Range(0, m_spawnPos.Length);
+            var posNum = Random.Range(0, m_spawnPos.Length);
+            while (m_isExist[posNum] == true)
+            {
+                posNum = Random.Range(0, m_spawnPos.Length);
+            }
+            var pos = m_spawnPos[posNum];
+            m_isExist[posNum] = true;
+            m_existCount[itemNum]--;
+            var g = PhotonNetwork.Instantiate(itemObj.name, pos.position, Quaternion.identity);
+            g.GetComponent<ItemTypeGetter>().ID = itemNum;
         }
-        var pos = m_spawnPos[posNum];
-        m_isExist[posNum] = true;
-        m_existCount[itemNum]--;
-        PhotonNetwork.Instantiate(itemObj.name ,pos.position,Quaternion.identity);
     }
 
-    [PunRPC]
     public void ResetItem(int category)
     {
         m_isExist[category] = false;
