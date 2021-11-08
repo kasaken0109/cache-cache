@@ -160,7 +160,6 @@ public class Hunter : CharaBase,IStun
             var item = collision.GetComponent<ItemTypeGetter>();
             SetItem(item.ItemType);
             ItemManager.Instance.ResetItem(item.ID);
-            Debug.Log($"ID:{item.ID}");
             ItemManager.Instance.SpawnItem(1);
             PhotonNetwork.Destroy(collision.gameObject);
         }
