@@ -143,6 +143,7 @@ public class Hunter : CharaBase,IStun
                 gameObject.AddComponent<Trap>();
                 break;
             case HaveItemType.Enforcevisibility:
+                gameObject.AddComponent<EnhancedVisibility>();
                 break;
             case HaveItemType.Enforcespeed:
                 gameObject.AddComponent<SpeedUp>();
@@ -154,9 +155,13 @@ public class Hunter : CharaBase,IStun
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Item"))
+        if (collision.CompareTag("Item") && GetHaveItem == HaveItemType.None)
         {
-            SetItem(collision.GetComponent<ItemTypeGetter>().ItemType);
+            var item = collision.GetComponent<ItemTypeGetter>();
+            SetItem(item.ItemType);
+            ItemManager.Instance.ResetItem(item.ID);
+            Debug.Log($"ID:{item.ID}");
+            ItemManager.Instance.SpawnItem(1);
             PhotonNetwork.Destroy(collision.gameObject);
         }
     }
