@@ -132,6 +132,7 @@ public class Hunter : CharaBase,IStun
     public void SetItem(HaveItemType haveItem)
     {
         itemType = haveItem;
+        GetComponentInChildren<ItemDisplay>().ChangeItem((int)haveItem);
 
         switch (haveItem)
         {
