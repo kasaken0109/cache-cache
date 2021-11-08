@@ -1409,6 +1409,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrapPrefab (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 2878033637889989447, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3474155445410189401, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
         type: 3}
       propertyPath: sceneViewId
@@ -1628,6 +1633,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TrapPrefab (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2878033637889989447, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3474155445410189401, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
         type: 3}
@@ -2134,6 +2144,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrapPrefab (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 2878033637889989447, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3474155445410189401, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
         type: 3}
       propertyPath: sceneViewId
@@ -2207,6 +2222,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TrapPrefab (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2878033637889989447, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3474155445410189401, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
         type: 3}
@@ -2502,6 +2522,17 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1626993161}
+        m_MethodName: SpawnItem
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -3163,6 +3194,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrapPrefab (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 2878033637889989447, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3474155445410189401, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
         type: 3}
       propertyPath: sceneViewId
@@ -3292,7 +3328,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_items:
   - {fileID: 2878033637889989447, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c, type: 3}
-  - {fileID: 2878033637889989447, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c, type: 3}
+  - {fileID: 6010810000129148488, guid: e9b874104e11a3f44af809d155f99bd6, type: 3}
+  - {fileID: 6767006890373955433, guid: 4f496bccd87e7b54388095368773ddc4, type: 3}
   m_count: 2
   m_spawnPos:
   - {fileID: 1568473084}
@@ -3477,6 +3514,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TrapPrefab (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2878033637889989447, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3474155445410189401, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
         type: 3}
@@ -4109,6 +4151,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TrapPrefab (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 2878033637889989447, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3474155445410189401, guid: 09ba2fbcd01a1f0439d6a7f2caaa5c6c,
         type: 3}
       propertyPath: sceneViewId
@@ -4206,6 +4253,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SpeedUpPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 6010810000129148488, guid: e9b874104e11a3f44af809d155f99bd6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6010810000129148491, guid: e9b874104e11a3f44af809d155f99bd6,
         type: 3}
