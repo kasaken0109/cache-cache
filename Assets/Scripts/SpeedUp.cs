@@ -19,13 +19,6 @@ public class SpeedUp : Item
     {
         m_hunter = GetComponent<Hunter>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public override void UseItem()
     {
         StopCoroutine(nameof(UpSpeed));

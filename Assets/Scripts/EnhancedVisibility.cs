@@ -15,13 +15,6 @@ public class EnhancedVisibility : Item
     {
         m_hunterCamera = GetComponentInChildren<HunterCamera>();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public override void UseItem()
     {
         StartCoroutine(nameof(Use));
