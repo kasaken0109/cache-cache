@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class FadeRoofController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class FadeRoofController : MonoBehaviour
 
     SpriteRenderer m_sr = default;
     Color m_setColor;
+    PhotonView m_view;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,7 +33,8 @@ public class FadeRoofController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Witch") || collision.CompareTag("Hunter"))
+        m_view = collision.GetComponent<PhotonView>();
+        if ((collision.CompareTag("Witch") || collision.CompareTag("Hunter")) && m_view.IsMine)
         {
             StopAllCoroutines();
             StartCoroutine(FadeRoof(0));
