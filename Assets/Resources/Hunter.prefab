@@ -388,15 +388,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7631717737572162538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1c4187f954968d4984ba4f6e614a95a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e7a151b6a790044c8fafe6e5cae3fd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 5
+  m_speed: 3
   m_name: 
   CanMove: 1
   m_stunTime: 3
   m_attackObject: {fileID: 8262366189142254732}
-  m_attackTime: 0.5
+  m_attackTime: 0.2
   m_hunterCamera: {fileID: 3047602550159320792, guid: d5667d5451c720f41b0a38be2e4fbfdd,
     type: 3}
 --- !u!114 &4383889082026235764
@@ -415,7 +415,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 1
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
   - {fileID: -4863099412025377959}
