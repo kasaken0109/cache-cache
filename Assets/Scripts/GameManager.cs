@@ -20,7 +20,6 @@ public enum NetworkEvents : byte
 }
 public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
-    //[SerializeField] NetworkGameManager m_netManager;
     [SerializeField] JudgementController m_judgement;
     /// <summary>このクラスのインスタンスが既にあるかどうか</summary>
     static bool m_isExists;
@@ -42,7 +41,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     bool m_inGame;
     private void Start()
     {
-        //SceneManager.sceneLoaded += AnimalSpawn(Scene scene,LoadSceneMode mode);
+        SceneManager.sceneLoaded += Spawn;
     }
     public void OnEvent(EventData photonEvent)
     {
@@ -57,7 +56,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 var scene = GameObject.Find("SceneLoader").GetComponent<SceneLoader>();
                 scene.LoadScene("MainScene");
                 m_inGame = true;
-                Spawn();
                 break;
             case (byte)NetworkEvents.Win:
                 Debug.Log("魔女の勝利");
@@ -76,13 +74,28 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 break;
         }
     }
-    private void Spawn()
+    private void Spawn(Scene scene, LoadSceneMode mode)
     {
         if (m_inGame && PhotonNetwork.IsMasterClient)
         {
+            Debug.Log("hai");
             var animalManager = GameObject.Find("AnimalManager").GetComponent<AnimalManager>();
             animalManager.StartSpawn();
-            //var charactorSpawn = GameObject.Find("CharactorSpawn").GetComponent<CharactorSpawn>();
+            var charactorSpawn = GameObject.FindGameObjectWithTag("CharactorSpawn").GetComponent<CharactorSpawn>();
+            for (int i = 0; i < PhotonNetwork.CurrentRoom.MaxPlayers; i++)
+            {
+                if (randomNumber != i + 1)
+                {
+                    Debug.Log("Witch");
+                    charactorSpawn.WitchSpawn(i + 1);
+                }
+                else
+                {
+                    Debug.Log("Hunter");
+                    Debug.Log(randomNumber);
+                    charactorSpawn.HunterSpawn(i + 1);
+                }
+            }
         }
     }
 }

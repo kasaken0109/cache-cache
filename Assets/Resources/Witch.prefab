@@ -287,11 +287,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
-<<<<<<< HEAD
---- !u!1 &2791077608651592565
-=======
 --- !u!1 &690566533179045916
->>>>>>> 096ea26c00460ce0bd35dc01b82f4496eca33a1d
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -299,38 +295,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< HEAD
-  - component: {fileID: 7434915881162509446}
-  - component: {fileID: 7379711762793796924}
-  - component: {fileID: 5635888807000028409}
-  m_Layer: 0
-  m_Name: WitchCamera
-=======
   - component: {fileID: 4352975824528218659}
   - component: {fileID: 3061647371041840475}
   m_Layer: 0
   m_Name: Camera
->>>>>>> 096ea26c00460ce0bd35dc01b82f4496eca33a1d
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< HEAD
---- !u!4 &7434915881162509446
-=======
 --- !u!4 &4352975824528218659
->>>>>>> 096ea26c00460ce0bd35dc01b82f4496eca33a1d
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 2791077608651592565}
-=======
   m_GameObject: {fileID: 690566533179045916}
->>>>>>> 096ea26c00460ce0bd35dc01b82f4496eca33a1d
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -338,21 +318,13 @@ Transform:
   m_Father: {fileID: 8566126618917774019}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
---- !u!20 &7379711762793796924
-=======
 --- !u!20 &3061647371041840475
->>>>>>> 096ea26c00460ce0bd35dc01b82f4496eca33a1d
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
-  m_GameObject: {fileID: 2791077608651592565}
-=======
   m_GameObject: {fileID: 690566533179045916}
->>>>>>> 096ea26c00460ce0bd35dc01b82f4496eca33a1d
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
@@ -372,11 +344,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-<<<<<<< HEAD
-  orthographic: 1
-=======
   orthographic: 0
->>>>>>> 096ea26c00460ce0bd35dc01b82f4496eca33a1d
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
@@ -393,22 +361,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
-<<<<<<< HEAD
---- !u!114 &5635888807000028409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2791077608651592565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29a4e75a198752f40ae8be42b150490d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_speed: 3
-=======
->>>>>>> 096ea26c00460ce0bd35dc01b82f4496eca33a1d
 --- !u!1 &4190228621164568516
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,11 +809,7 @@ Transform:
   - {fileID: 6969645170330568748}
   - {fileID: 1368953620563634222}
   - {fileID: 1606280504166301051}
-<<<<<<< HEAD
-  - {fileID: 7434915881162509446}
-=======
   - {fileID: 4352975824528218659}
->>>>>>> 096ea26c00460ce0bd35dc01b82f4496eca33a1d
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -945,25 +893,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 8566126618917774023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72359f504247ad142a89bd6ffab39487, type: 3}
+  m_Script: {fileID: 11500000, guid: 450de1c01d89f5d4ab240fb3a4f861b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 5
+  m_speed: 2
   m_name: 
-<<<<<<< HEAD
-=======
   CanMove: 1
->>>>>>> 096ea26c00460ce0bd35dc01b82f4496eca33a1d
   m_hp: 3
   m_cacheRangeObject: {fileID: 4933701410050530631}
+  m_stunTime: 3
   m_directionPoints:
   - {fileID: 4539313423471725849}
   - {fileID: 4453879028951683268}
   - {fileID: 3162377345874955512}
   - {fileID: 4042347855858302786}
   - {fileID: 4564687142349765251}
-  m_alart: {fileID: 5081211440213494502, guid: 49805e4a6d7e0f54d897df1f4ba42636, type: 3}
-  m_witchCamera: {fileID: 5635888807000028409}
+  m_alart:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_witchCamera: {fileID: 413843071826151514, guid: 1203e4926838dc543aa2869047e595e4,
+    type: 3}
 --- !u!114 &181245493197337478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -980,7 +930,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 1
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
   - {fileID: -2008839317392027905}

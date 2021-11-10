@@ -13,22 +13,23 @@ public class CharactorSpawn : MonoBehaviour
     [SerializeField]
     string m_witchPrefabName = "PrefabName";
     public Transform[] CharaPositions { get => m_charaPositions; }
+    public GameObject Player { get; private set; }
 
     /// <summary>ハンターを生成するメソッド</summary>
-    /// <param name="hunterPosition">キャラクターを生成する座標</param>
-    public void HunterSpawn()
+    public void HunterSpawn(int number)
     {
         Transform spawnPoint = CharaPositions[PhotonNetwork.LocalPlayer.ActorNumber - 1];
         // プレイヤーを生成し、他のクライアントと同期する
-        GameObject m_hunter = PhotonNetwork.Instantiate(m_hunterPrefabName, spawnPoint.position, spawnPoint.rotation);
+        Player = PhotonNetwork.Instantiate(m_hunterPrefabName, spawnPoint.position, spawnPoint.rotation);
+        Player.GetComponent<PhotonView>().TransferOwnership(number);
     }
 
     /// <summary>ウィッチを生成するメソッド</summary>
-    /// <param name="witchPosition">キャラクターを生成する座標</param>
-    public void WitchSpawn()
+    public void WitchSpawn(int number)
     {
         Transform spawnPoint = CharaPositions[PhotonNetwork.LocalPlayer.ActorNumber - 1];
         // プレイヤーを生成し、他のクライアントと同期する
-        GameObject m_witch = PhotonNetwork.Instantiate(m_witchPrefabName, spawnPoint.position, spawnPoint.rotation);
+        Player = PhotonNetwork.Instantiate(m_witchPrefabName, spawnPoint.position, spawnPoint.rotation);
+        Player.GetComponent<PhotonView>().TransferOwnership(number);
     }
 }
