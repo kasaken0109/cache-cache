@@ -485,11 +485,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1457591069}
         m_MethodName: WitchSpawn
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2337,7 +2337,7 @@ PrefabInstance:
     - target: {fileID: 5627154893201819255, guid: d7f29482ef37abf4285f3cb658d65ae8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5671076703628757558, guid: d7f29482ef37abf4285f3cb658d65ae8,
         type: 3}
@@ -2517,11 +2517,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1457591069}
         m_MethodName: HunterSpawn
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -2772,7 +2772,7 @@ MonoBehaviour:
   - {fileID: 1599419058}
   - {fileID: 245645246}
   m_hunterPrefabName: Hunter
-  m_witchPrefabName: WitchAlpha
+  m_witchPrefabName: WitchApha
 --- !u!4 &1457591070
 Transform:
   m_ObjectHideFlags: 0
