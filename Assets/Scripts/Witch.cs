@@ -32,11 +32,13 @@ public class Witch : CharaBase,IStun
     HpDisplay hpDisplay = default;
     Collider2D m_change;
     SpriteRenderer m_sr;
+    Animator m_anim = default;
     bool m_contactFlag = false;
     bool m_specter = false;
     void Start()
     {
         m_sr = GetComponent<SpriteRenderer>();
+        m_anim = GetComponent<Animator>();
         m_change = GetComponentInChildren<Collider2D>();
         m_view = GetComponent<PhotonView>();
         m_rb = GetComponent<Rigidbody2D>();
@@ -69,6 +71,7 @@ public class Witch : CharaBase,IStun
     public override void Move(float h, float v)
     {
         m_rb.velocity = new Vector2(h, v).normalized * Speed;
+        m_anim.SetBool("IsWalk", m_rb.velocity != Vector2.zero ? true : false);
     }
     int direction = 2;
     public int SetDirection(float h, float v)
@@ -124,6 +127,7 @@ public class Witch : CharaBase,IStun
                 if (m_change.gameObject.CompareTag("Animal"))
                 {
                     m_sr.sprite = m_change.gameObject.GetComponent<SpriteRenderer>().sprite;
+                    m_anim.runtimeAnimatorController = m_change.gameObject.GetComponent<Animator>().runtimeAnimatorController;
                     Debug.Log(m_sr.sprite);
                 }
             }
