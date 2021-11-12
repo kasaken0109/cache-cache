@@ -24,7 +24,7 @@ public class Witch : CharaBase,IStun
     Transform[] m_directionPoints = default;
     [SerializeField]
     [Tooltip("生成するアラート")]
-    private GameObject m_alart = default;
+    private GameObject[] m_alart = new GameObject[0];
     [SerializeField]
     WitchCamera m_witchCamera = default;
 
@@ -62,7 +62,7 @@ public class Witch : CharaBase,IStun
             return;
         }
 
-        Move(h, v);
+        if(CanMove)Move(h, v);
         SetDirection(h, v);
     }
 
@@ -143,10 +143,8 @@ public class Witch : CharaBase,IStun
     }
 
     [PunRPC]
-    public void SpawnAlarm()
-    {
-        Instantiate(m_alart, transform.position, transform.rotation);
-    }
+    public void SpawnAlarm(int id)
+        => Instantiate(m_alart[id], transform.position, transform.rotation);
 
     void Dead()
     {
@@ -163,6 +161,7 @@ public class Witch : CharaBase,IStun
     {
         float timer = 0;
         CanMove = false;
+        m_rb.velocity = Vector3.zero;
         while (timer < m_stunTime)
         {
             //横に振動させる

@@ -16,11 +16,6 @@ public class Trap : Item
         m_hunter = GameObject.FindGameObjectWithTag("Hunter").GetComponent<Hunter>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if (Input.GetButtonDown("Jump")) UseItem();
-    }
     GameObject[] traps;
     public override void UseItem()
     {

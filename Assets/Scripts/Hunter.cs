@@ -11,6 +11,10 @@ public class Hunter : CharaBase,IStun
     [Tooltip("スタンする時間")]
     float m_stunTime = 3f;
 
+    private float m_speedUpRate = 1f;
+
+    public float SpeedUpRate { set { m_speedUpRate = value; } }
+
     [SerializeField]
     [Tooltip("攻撃のコライダー")]
     GameObject m_attackObject = default;
@@ -63,7 +67,7 @@ public class Hunter : CharaBase,IStun
 
     public override void Move(float h, float v)
     {
-        m_rb.velocity = new Vector2(h, v).normalized * Speed;
+        m_rb.velocity = new Vector2(h, v).normalized * Speed * m_speedUpRate;
         m_anim.SetBool("IsWalk", h + v != 0 ? true : false);
     }
 
@@ -90,6 +94,7 @@ public class Hunter : CharaBase,IStun
     {
         float timer = 0;
         CanMove = false;
+        m_rb.velocity = Vector3.zero;
         while (timer < m_stunTime)
         {
             //横に振動させる
@@ -127,19 +132,23 @@ public class Hunter : CharaBase,IStun
     public void SetItem(HaveItemType haveItem)
     {
         itemType = haveItem;
+        GetComponentInChildren<ItemDisplay>().ChangeItem((int)haveItem);
 
         switch (haveItem)
         {
             case HaveItemType.None:
                 break;
             case HaveItemType.Enforcealarm:
+                gameObject.AddComponent<PowerAlert>();
                 break;
             case HaveItemType.Trap:
                 gameObject.AddComponent<Trap>();
                 break;
             case HaveItemType.Enforcevisibility:
+                gameObject.AddComponent<EnhancedVisibility>();
                 break;
             case HaveItemType.Enforcespeed:
+                gameObject.AddComponent<SpeedUp>();
                 break;
             default:
                 break;
@@ -148,9 +157,12 @@ public class Hunter : CharaBase,IStun
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Item"))
+        if (collision.CompareTag("Item") && GetHaveItem == HaveItemType.None)
         {
-            SetItem(collision.GetComponent<ItemTypeGetter>().ItemType);
+            var item = collision.GetComponent<ItemTypeGetter>();
+            SetItem(item.ItemType);
+            ItemManager.Instance.ResetItem(item.ID);
+            ItemManager.Instance.SpawnItem(1);
             PhotonNetwork.Destroy(collision.gameObject);
         }
     }
