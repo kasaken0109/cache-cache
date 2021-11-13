@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             var animalManager = GameObject.Find("AnimalManager").GetComponent<AnimalManager>();
             animalManager.StartSpawn();
             ItemManager.Instance.SpawnItem(4);
-            var charactorSpawn = GameObject.FindGameObjectWithTag("CharactorSpawn").GetComponent<CharactorSpawn>();
+            var charactorSpawn = GameObject.Find("CharactorSpawn").GetComponent<CharactorSpawn>();
             for (int i = 0; i < PhotonNetwork.CurrentRoom.MaxPlayers; i++)
             {
                 if (randomNumber != i + 1)
