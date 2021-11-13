@@ -9,6 +9,7 @@ public class Witch : CharaBase,IStun
 {
     Rigidbody2D m_rb;
     PhotonView m_view;
+    Animator m_anim;
     [SerializeField]
     private int m_hp = 3; //魔法使いの体力
 
