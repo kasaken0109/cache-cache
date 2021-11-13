@@ -34,15 +34,15 @@ public class Witch : CharaBase,IStun
     SpriteRenderer m_sr;
     bool m_contactFlag = false;
     bool m_specter = false;
-    void Start()
+    public void SetUp()
     {
         m_sr = GetComponent<SpriteRenderer>();
+        m_anim = GetComponent<Animator>();
         m_change = GetComponentInChildren<Collider2D>();
         m_view = GetComponent<PhotonView>();
         m_rb = GetComponent<Rigidbody2D>();
         hpDisplay = GetComponent<HpDisplay>();
         m_rb.gravityScale = 0;
-
         if (!m_view || !m_view.IsMine) return;
         Instantiate(m_witchCamera, transform);
     }

@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 1708651801}
   - component: {fileID: 1708651800}
   m_Layer: 0
-  m_Name: Judge
+  m_Name: JudgementController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -650,7 +650,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdb93e64bf800454f814e9db96e9f7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_judgement: {fileID: 1708651800}
 --- !u!4 &1927390991
 Transform:
   m_ObjectHideFlags: 0
@@ -679,7 +678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_debugMode: 0
   m_hunterCapacity: 1
-  m_witchCapacity: 2
+  m_witchCapacity: 1
 --- !u!1 &2134509794
 GameObject:
   m_ObjectHideFlags: 0

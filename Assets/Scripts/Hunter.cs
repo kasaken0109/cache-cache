@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Hunter : CharaBase,IStun
+public class Hunter : CharaBase, IStun
 {
     Rigidbody2D m_rb;
 
@@ -31,7 +31,7 @@ public class Hunter : CharaBase,IStun
     Animator m_anim;
     PhotonView m_view;
 
-    void Start()
+    public void SetUp()
     {
         m_view = GetComponent<PhotonView>();
         m_rb = GetComponent<Rigidbody2D>();
@@ -48,6 +48,21 @@ public class Hunter : CharaBase,IStun
     }
     private void FixedUpdate()
     {
+        //if (m_view)
+        //{
+        //    if (!m_view.IsMine)
+        //    {
+        //        Debug.Log(gameObject.GetInstanceID() + " は自分のじゃない");
+        //        return;
+        //    }
+        //}
+        //else
+        //{
+        //    Debug.Log(gameObject.GetInstanceID() + " は null です");
+        //    m_view = GetComponent<PhotonView>();
+        //    return;
+        //}
+
         if (!m_view || !m_view.IsMine) return;      // 自分が生成したものだけ処理する
         if (CanMove)
         {
@@ -62,11 +77,12 @@ public class Hunter : CharaBase,IStun
             m_rb.velocity = Vector2.zero;
         }
         //if (Input.GetButtonDown("Fire1")) StartCoroutine(nameof(Attack));
-        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y,-10);
+        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
     }
 
     public override void Move(float h, float v)
     {
+        //m_rb = GetComponent<Rigidbody2D>();
         m_rb.velocity = new Vector2(h, v).normalized * Speed * m_speedUpRate;
         m_anim.SetBool("IsWalk", h + v != 0 ? true : false);
     }
@@ -74,7 +90,7 @@ public class Hunter : CharaBase,IStun
     public void SetDirection(float h, float v)
     {
         if (h == 0 && v == 0) return;
-        m_attackObject.transform.localPosition = new Vector3(h * 1.5f,v * 1.5f,0);
+        m_attackObject.transform.localPosition = new Vector3(h * 1.5f, v * 1.5f, 0);
     }
 
     IEnumerator Attack()
@@ -98,7 +114,7 @@ public class Hunter : CharaBase,IStun
         while (timer < m_stunTime)
         {
             //横に振動させる
-            m_rb.AddForce(new Vector3(Mathf.Sin(timer * 180) * 100,0,0));
+            m_rb.AddForce(new Vector3(Mathf.Sin(timer * 180) * 100, 0, 0));
             timer += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
