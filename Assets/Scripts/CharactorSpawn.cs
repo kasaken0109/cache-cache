@@ -21,9 +21,8 @@ public class CharactorSpawn : MonoBehaviour
         Transform spawnPoint = CharaPositions[PhotonNetwork.LocalPlayer.ActorNumber - 1];
         // プレイヤーを生成し、他のクライアントと同期する
         Player = PhotonNetwork.Instantiate(m_hunterPrefabName, spawnPoint.position, spawnPoint.rotation);
-        Player.GetComponent<Hunter>().SetUp();
         Player.GetComponent<PhotonView>().TransferOwnership(number);
-        Debug.Log(number);
+        Player.GetComponent<Hunter>().SetUp();
     }
     /// <summary>ウィッチを生成するメソッド</summary>
     public void WitchSpawn(int number)
@@ -31,8 +30,7 @@ public class CharactorSpawn : MonoBehaviour
         Transform spawnPoint = CharaPositions[PhotonNetwork.LocalPlayer.ActorNumber - 1];
         // プレイヤーを生成し、他のクライアントと同期する
         Player = PhotonNetwork.Instantiate(m_witchPrefabName, spawnPoint.position, spawnPoint.rotation);
-        Player.GetComponent<Witch>().SetUp();
         Player.GetComponent<PhotonView>().TransferOwnership(number);
-        Debug.Log(number);
+        Player.GetComponent<Witch>().SetUp();
     }
 }

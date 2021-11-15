@@ -5,7 +5,7 @@ using Photon.Pun;
 
 public class Hunter : CharaBase, IStun
 {
-    Rigidbody2D m_rb;
+    [SerializeField] Rigidbody2D m_rb;
 
     [SerializeField]
     [Tooltip("スタンする時間")]
@@ -29,16 +29,24 @@ public class Hunter : CharaBase, IStun
 
     bool CanUseItem = true;
     Animator m_anim;
-    PhotonView m_view;
+    [SerializeField] PhotonView m_view;
 
     public void SetUp()
     {
-        m_view = GetComponent<PhotonView>();
-        m_rb = GetComponent<Rigidbody2D>();
-        m_anim = GetComponent<Animator>();
+        //m_view = GetComponent<PhotonView>();
+        //m_rb = GetComponent<Rigidbody2D>();
         m_rb.gravityScale = 0;
-
-        if (!m_view || !m_view.IsMine) return;
+    }
+    private void Start()
+    {
+        m_anim = GetComponent<Animator>();
+        StartCoroutine(a());
+    }
+    IEnumerator a()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (!m_view || !m_view.IsMine)yield break;
+        Debug.Log("aaa");
         m_camera = Instantiate(m_hunterCamera, this.transform).GetComponent<HunterCamera>();
     }
     private void Update()
@@ -48,21 +56,6 @@ public class Hunter : CharaBase, IStun
     }
     private void FixedUpdate()
     {
-        //if (m_view)
-        //{
-        //    if (!m_view.IsMine)
-        //    {
-        //        Debug.Log(gameObject.GetInstanceID() + " は自分のじゃない");
-        //        return;
-        //    }
-        //}
-        //else
-        //{
-        //    Debug.Log(gameObject.GetInstanceID() + " は null です");
-        //    m_view = GetComponent<PhotonView>();
-        //    return;
-        //}
-
         if (!m_view || !m_view.IsMine) return;      // 自分が生成したものだけ処理する
         if (CanMove)
         {
@@ -82,7 +75,6 @@ public class Hunter : CharaBase, IStun
 
     public override void Move(float h, float v)
     {
-        //m_rb = GetComponent<Rigidbody2D>();
         m_rb.velocity = new Vector2(h, v).normalized * Speed * m_speedUpRate;
         m_anim.SetBool("IsWalk", h + v != 0 ? true : false);
     }

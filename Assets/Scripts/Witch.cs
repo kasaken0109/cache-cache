@@ -5,10 +5,10 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 
-public class Witch : CharaBase,IStun
+public class Witch : CharaBase, IStun
 {
-    Rigidbody2D m_rb;
-    PhotonView m_view;
+    [SerializeField] Rigidbody2D m_rb;
+    [SerializeField] PhotonView m_view;
     Animator m_anim;
     [SerializeField]
     private int m_hp = 3; //魔法使いの体力
@@ -35,18 +35,30 @@ public class Witch : CharaBase,IStun
     SpriteRenderer m_sr;
     bool m_contactFlag = false;
     bool m_specter = false;
+    GameObject m_camera = null;
+
+    private void Start()
+    {
+        StartCoroutine(a());
+    }
+    IEnumerator a()
+    {
+        yield return new WaitForSeconds(1);
+        if (!m_view || !m_view.IsMine)yield break;
+        Debug.Log("9999");
+        Instantiate(m_witchCamera, transform);
+    }
     public void SetUp()
     {
         m_sr = GetComponent<SpriteRenderer>();
         m_anim = GetComponent<Animator>();
         m_change = GetComponentInChildren<Collider2D>();
-        m_view = GetComponent<PhotonView>();
-        m_rb = GetComponent<Rigidbody2D>();
+        //m_view = GetComponent<PhotonView>();
+        //m_rb = GetComponent<Rigidbody2D>();
         hpDisplay = GetComponent<HpDisplay>();
         m_rb.gravityScale = 0;
-        if (!m_view || !m_view.IsMine) return;
-        Instantiate(m_witchCamera, transform);
     }
+
     private void Update()
     {
         ChangeSprite();
@@ -63,7 +75,7 @@ public class Witch : CharaBase,IStun
             return;
         }
 
-        if(CanMove)Move(h, v);
+        if (CanMove) Move(h, v);
         SetDirection(h, v);
     }
 
@@ -121,7 +133,6 @@ public class Witch : CharaBase,IStun
         {
             if (Input.GetButtonDown("Use"))
             {
-                Debug.Log("押された");
                 if (m_change.gameObject.CompareTag("Animal"))
                 {
                     m_sr.sprite = m_change.gameObject.GetComponent<SpriteRenderer>().sprite;
@@ -134,13 +145,11 @@ public class Witch : CharaBase,IStun
     {
         m_change = other;
         m_contactFlag = true;
-        Debug.Log("入った");
     }
     private void OnTriggerExit2D()//Collider2D other)
     {
         m_change = null;
         m_contactFlag = false;
-        Debug.Log("でた");
     }
 
     [PunRPC]
