@@ -825,7 +825,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 1
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
   - {fileID: -2008839317392027905}
@@ -950,6 +950,8 @@ MonoBehaviour:
   m_speed: 5
   m_name: 
   CanMove: 1
+  m_rb: {fileID: 8566126618917774017}
+  m_view: {fileID: 181245493197337478}
   m_hp: 3
   m_cacheRangeObject: {fileID: 4933701410050530631}
   m_stunTime: 3
@@ -959,6 +961,9 @@ MonoBehaviour:
   - {fileID: 3162377345874955512}
   - {fileID: 4042347855858302786}
   - {fileID: 4564687142349765251}
-  m_alart: {fileID: 5081211440213494502, guid: 49805e4a6d7e0f54d897df1f4ba42636, type: 3}
+  m_alart:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   m_witchCamera: {fileID: 413843071826151514, guid: 1203e4926838dc543aa2869047e595e4,
     type: 3}
