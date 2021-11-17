@@ -30,7 +30,6 @@ public class Animal : CharaBase
         m_trigger.gameObject.SetActive(false);
         m_rb = GetComponent<Rigidbody2D>();
         m_anim = GetComponent<Animator>();
-
     }
 
 

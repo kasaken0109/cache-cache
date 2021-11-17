@@ -714,6 +714,8 @@ GameObject:
   - component: {fileID: 4637249377521535332}
   - component: {fileID: 342173219}
   - component: {fileID: 4055148573714112378}
+  - component: {fileID: 2437268625325387253}
+  - component: {fileID: 4475252423130314369}
   m_Layer: 0
   m_Name: WitchApha
   m_TagString: Witch
@@ -962,8 +964,42 @@ MonoBehaviour:
   - {fileID: 4042347855858302786}
   - {fileID: 4564687142349765251}
   m_alart:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5081211440213494502, guid: 49805e4a6d7e0f54d897df1f4ba42636, type: 3}
+  - {fileID: 5081211440213494502, guid: f82bf7eadcf585b4182c0598f20ad30e, type: 3}
   m_witchCamera: {fileID: 413843071826151514, guid: 1203e4926838dc543aa2869047e595e4,
     type: 3}
+--- !u!95 &2437268625325387253
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8566126618917774023}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4475252423130314369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8566126618917774023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters: []
+  m_SynchronizeLayers: []
