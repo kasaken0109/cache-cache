@@ -17,6 +17,7 @@ public class Animal : CharaBase
     float m_minWaitTime = 2f;
 
     Rigidbody2D m_rb = default;
+    Animator m_anim = default;
 
     float m_timer = 0f;
     float m_actionTimer = 0f;
@@ -28,6 +29,8 @@ public class Animal : CharaBase
     {
         m_trigger.gameObject.SetActive(false);
         m_rb = GetComponent<Rigidbody2D>();
+        m_anim = GetComponent<Animator>();
+
     }
 
 
@@ -88,6 +91,7 @@ public class Animal : CharaBase
     public override void Move(float h, float v)
     {
         m_rb.velocity = new Vector2(h, v) * Speed;
+        m_anim.SetBool("IsWalk", true);
     }
 
 
@@ -98,5 +102,6 @@ public class Animal : CharaBase
         m_timer = 0;
         m_action = false;
         m_rb.velocity = Vector2.zero;
+        m_anim.SetBool("IsWalk", false);
     }
 }

@@ -39,6 +39,13 @@ public class Witch : CharaBase, IStun
 
     private void Start()
     {
+        m_sr = GetComponent<SpriteRenderer>();
+        m_anim = GetComponent<Animator>();
+        m_change = GetComponentInChildren<Collider2D>();
+        //m_view = GetComponent<PhotonView>();
+        //m_rb = GetComponent<Rigidbody2D>();
+        hpDisplay = GetComponent<HpDisplay>();
+        m_rb.gravityScale = 0;
         StartCoroutine(a());
     }
     IEnumerator a()
@@ -50,18 +57,12 @@ public class Witch : CharaBase, IStun
     }
     public void SetUp()
     {
-        m_sr = GetComponent<SpriteRenderer>();
-        m_anim = GetComponent<Animator>();
-        m_change = GetComponentInChildren<Collider2D>();
-        //m_view = GetComponent<PhotonView>();
-        //m_rb = GetComponent<Rigidbody2D>();
-        hpDisplay = GetComponent<HpDisplay>();
-        m_rb.gravityScale = 0;
+        
     }
 
     private void Update()
     {
-        ChangeSprite();
+        m_view.RPC("ChangeSprite",RpcTarget.All);
     }
     private void FixedUpdate()
     {
@@ -82,6 +83,8 @@ public class Witch : CharaBase, IStun
     public override void Move(float h, float v)
     {
         m_rb.velocity = new Vector2(h, v).normalized * Speed;
+        m_anim = GetComponent<Animator>();
+        m_anim.SetBool("IsWalk", h == 0 && v == 0 ? false : true);
     }
     int direction = 2;
     public int SetDirection(float h, float v)
@@ -127,19 +130,26 @@ public class Witch : CharaBase, IStun
         m_specter = true;
     }
 
+    [PunRPC]
     void ChangeSprite()
     {
         if (m_contactFlag)
         {
-            if (Input.GetButtonDown("Use"))
+            if (Input.GetButtonDown("Use") && m_view.IsMine)
             {
                 if (m_change.gameObject.CompareTag("Animal"))
                 {
-                    m_sr.sprite = m_change.gameObject.GetComponent<SpriteRenderer>().sprite;
+                    m_view.RPC("SetAnimator", RpcTarget.All);
                     Debug.Log(m_sr.sprite);
                 }
             }
         }
+    }
+
+    [PunRPC]
+    void SetAnimator()
+    {
+        m_anim.runtimeAnimatorController = m_change.gameObject.GetComponent<Animator>().runtimeAnimatorController;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
