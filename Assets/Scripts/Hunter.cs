@@ -35,11 +35,12 @@ public class Hunter : CharaBase, IStun
     {
         //m_view = GetComponent<PhotonView>();
         //m_rb = GetComponent<Rigidbody2D>();
-        m_rb.gravityScale = 0;
+        
     }
     private void Start()
     {
         m_anim = GetComponent<Animator>();
+        m_rb.gravityScale = 0;
         StartCoroutine(a());
     }
     IEnumerator a()
@@ -48,6 +49,7 @@ public class Hunter : CharaBase, IStun
         if (!m_view || !m_view.IsMine)yield break;
         Debug.Log("aaa");
         m_camera = Instantiate(m_hunterCamera, this.transform).GetComponent<HunterCamera>();
+        m_camera.Rotation(0,1);
     }
     private void Update()
     {
@@ -171,6 +173,7 @@ public class Hunter : CharaBase, IStun
             SetItem(item.ItemType);
             ItemManager.Instance.ResetItem(item.ID);
             ItemManager.Instance.SpawnItem(1);
+            collision.gameObject.GetComponent<PhotonView>().TransferOwnership(m_view.OwnerActorNr);
             PhotonNetwork.Destroy(collision.gameObject);
         }
     }
