@@ -14,8 +14,9 @@ public class TrapController : MonoBehaviour
             if (view)
             {
                 view.RPC("PlayStun", RpcTarget.All);
+                IsFirst = false;
+                PhotonNetwork.Destroy(this.gameObject);
             }
-            IsFirst = false;
         }
     }
     bool IsFirst = true;
