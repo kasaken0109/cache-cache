@@ -15,9 +15,15 @@ public class EnhancedVisibility : Item
     {
         m_hunterCamera = GetComponentInChildren<HunterCamera>();
     }
+
+    bool IsUsed = false;
     public override void UseItem()
     {
-        StartCoroutine(nameof(Use));
+        if (!IsUsed)
+        {
+            StartCoroutine(nameof(Use));
+            IsUsed = true;
+        }
     }
 
     IEnumerator Use()
