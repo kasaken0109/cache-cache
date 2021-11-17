@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class FadeRoofController : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class FadeRoofController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Witch") || collision.CompareTag("Hunter"))
+        if ((collision.CompareTag("Witch") || collision.CompareTag("Hunter")) && collision.gameObject.GetComponent<PhotonView>().IsMine)
         {
             StopAllCoroutines();
             StartCoroutine(FadeRoof(0));
@@ -40,7 +41,7 @@ public class FadeRoofController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Witch") || collision.CompareTag("Hunter"))
+        if ((collision.CompareTag("Witch") || collision.CompareTag("Hunter")) && collision.gameObject.GetComponent<PhotonView>().IsMine)
         {
             StopAllCoroutines();
             StartCoroutine(FadeRoof(1));
