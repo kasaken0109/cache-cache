@@ -91,7 +91,6 @@ public class Animal : CharaBase
     {
         m_rb.velocity = new Vector2(h, v) * Speed;
         m_anim.SetBool("IsWalk", true);
-        
     }
 
 
