@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             case (byte)NetworkEvents.Die:
                 Debug.Log("魔女が死んだ");
                 judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
-                var netManager = GameObject.Find("NetworkGameManager").GetComponent<NetworkGameManager>();
+                var netManager = GameObject.Find("GameManager").GetComponent<NetworkGameManager>();
                 m_witchDieCount++;
                 judge.LoseJudge(m_witchDieCount, netManager.WitchCapacity);
                 break;

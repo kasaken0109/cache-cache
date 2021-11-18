@@ -52,7 +52,7 @@ public class ShowTextCtrl
         if (obj.CompareTag("Witch") && get == NetworkEvents.Win || 
             obj.CompareTag("Hunter") && get == NetworkEvents.Lose) _log = "Win";
        
-        else if (obj.CompareTag("Witch") && get != NetworkEvents.Win  || 
+        else if (obj.CompareTag("Witch") && get != NetworkEvents.Lose  || 
             obj.CompareTag("Hunter") && get == NetworkEvents.Win) _log = "Lose";
        
         _isName = PhotonNetwork.LocalPlayer.NickName;
