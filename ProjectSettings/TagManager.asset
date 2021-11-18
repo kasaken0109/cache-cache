@@ -8,6 +8,8 @@ TagManager:
   - Animal
   - Hunter
   - Item
+  - CharactorSpawn
+  - Trap
   layers:
   - Default
   - TransparentFX

@@ -11,7 +11,6 @@ public class FadeRoofController : MonoBehaviour
 
     SpriteRenderer m_sr = default;
     Color m_setColor;
-    PhotonView m_view;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,8 +32,7 @@ public class FadeRoofController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        m_view = collision.GetComponent<PhotonView>();
-        if ((collision.CompareTag("Witch") || collision.CompareTag("Hunter")) && m_view.IsMine)
+        if ((collision.CompareTag("Witch") || collision.CompareTag("Hunter")) && collision.gameObject.GetComponent<PhotonView>().IsMine)
         {
             StopAllCoroutines();
             StartCoroutine(FadeRoof(0));
@@ -43,7 +41,7 @@ public class FadeRoofController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Witch") || collision.CompareTag("Hunter"))
+        if ((collision.CompareTag("Witch") || collision.CompareTag("Hunter")) && collision.gameObject.GetComponent<PhotonView>().IsMine)
         {
             StopAllCoroutines();
             StartCoroutine(FadeRoof(1));

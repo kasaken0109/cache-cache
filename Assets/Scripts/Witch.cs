@@ -33,7 +33,6 @@ public class Witch : CharaBase, IStun
     HpDisplay hpDisplay = default;
     Collider2D m_change;
     SpriteRenderer m_sr;
-    Animator m_anim = default;
     bool m_contactFlag = false;
     bool m_specter = false;
     GameObject m_camera = null;

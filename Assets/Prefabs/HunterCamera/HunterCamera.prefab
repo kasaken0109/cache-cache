@@ -264,7 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_fov: {fileID: 1223926065325921658}
   m_rawImage: {fileID: 1223926065079621140}
-  m_changeTime: 0
+  m_changeTime: 0.5
 --- !u!1001 &5764732943465639019
 PrefabInstance:
   m_ObjectHideFlags: 0

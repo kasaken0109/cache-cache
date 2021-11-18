@@ -714,8 +714,8 @@ GameObject:
   - component: {fileID: 4637249377521535332}
   - component: {fileID: 342173219}
   - component: {fileID: 4055148573714112378}
-  - component: {fileID: 2437268625325387253}
-  - component: {fileID: 4475252423130314369}
+  - component: {fileID: 873485114908393525}
+  - component: {fileID: 4926173883809168689}
   m_Layer: 0
   m_Name: WitchApha
   m_TagString: Witch
@@ -805,7 +805,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -832,6 +832,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: -2008839317392027905}
   - {fileID: 8438248041929454205}
+  - {fileID: 4926173883809168689}
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -968,7 +969,7 @@ MonoBehaviour:
   - {fileID: 5081211440213494502, guid: f82bf7eadcf585b4182c0598f20ad30e, type: 3}
   m_witchCamera: {fileID: 413843071826151514, guid: 1203e4926838dc543aa2869047e595e4,
     type: 3}
---- !u!95 &2437268625325387253
+--- !u!95 &873485114908393525
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -978,7 +979,7 @@ Animator:
   m_GameObject: {fileID: 8566126618917774023}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7553598658e19ae458e25047680d9194, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -987,7 +988,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &4475252423130314369
+--- !u!114 &4926173883809168689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1001,5 +1002,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: IsWalk
+  m_SynchronizeLayers:
+  - SynchronizeType: 2
+    LayerIndex: 0
