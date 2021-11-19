@@ -91,6 +91,7 @@ public class Animal : CharaBase
     public override void Move(float h, float v)
     {
         m_rb.velocity = new Vector2(h, v) * Speed;
+        m_rb.constraints = m_rb.velocity == Vector2.zero? RigidbodyConstraints2D.FreezePosition : RigidbodyConstraints2D.None;
         m_anim.SetBool("IsWalk", true);
     }
 
