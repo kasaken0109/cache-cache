@@ -58,7 +58,7 @@ public class ShowTextCtrl
         _isName = PhotonNetwork.LocalPlayer.NickName;
         if (_isName.Length <= 0) _isName = "My";
 
-        SceneManager.LoadScene("TestResult");
+        //SceneManager.LoadScene("TestResult");
     }
 
     public static string GetLogData() => Instance._log;
