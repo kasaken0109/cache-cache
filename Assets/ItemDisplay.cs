@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class ItemDisplay : MonoBehaviour
 {
@@ -9,10 +10,28 @@ public class ItemDisplay : MonoBehaviour
     [Tooltip("表示するアイテム画像")]
     Sprite[] m_itemImages = default;
 
+    [SerializeField]
+    [Tooltip("表示するアイテムオブジェクト")]
+    GameObject m_itemdisplay = default;
+
+    PhotonView m_view = null;
     Image m_image = default;
-    private void Start()
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        StartCoroutine(WaitSet());
+    }
+
+    IEnumerator WaitSet()
     {
         m_image = GetComponent<Image>();
+        m_itemdisplay.SetActive(false);
+        yield return new WaitUntil(() => GetComponent<PhotonView>());
+        Debug.Log("CanGet");
+        m_view = GetComponent<PhotonView>();
+        yield return new WaitForSeconds(2f);
+        m_itemdisplay.SetActive(m_view.IsMine);
     }
     // Start is called before the first frame update
     public void ChangeItem(int type)
