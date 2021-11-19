@@ -35,7 +35,7 @@ public class FadeRoofController : MonoBehaviour
         if ((collision.CompareTag("Witch") || collision.CompareTag("Hunter")) && collision.gameObject.GetComponent<PhotonView>().IsMine)
         {
             StopAllCoroutines();
-            StartCoroutine(FadeRoof(0));
+            StartCoroutine(FadeRoof(0.5f));
         }
     }
 
