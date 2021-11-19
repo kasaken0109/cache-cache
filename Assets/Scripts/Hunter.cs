@@ -112,6 +112,7 @@ public class Hunter : CharaBase, IStun
             timer += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
+        m_rb.velocity = Vector3.zero;
         CanMove = true;
     }
 
