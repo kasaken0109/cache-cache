@@ -53,6 +53,7 @@ public class Hunter : CharaBase, IStun
     }
     private void Update()
     {
+        if (!m_view || !m_view.IsMine) return;
         if (Input.GetButtonDown("Fire1")) StartCoroutine(nameof(Attack));
         if (Input.GetButtonDown("Jump") && CanUseItem) GetComponent<Item>().UseItem();
     }
