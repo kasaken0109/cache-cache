@@ -83,7 +83,8 @@ public class Witch : CharaBase, IStun
     public override void Move(float h, float v)
     {
         m_rb.velocity = new Vector2(h, v).normalized * Speed;
-        m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition : RigidbodyConstraints2D.None;
+        m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition 
+            | RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeRotation;
         m_anim = GetComponent<Animator>();
         m_anim.SetBool("IsWalk", h == 0 && v == 0 ? false : true);
     }
