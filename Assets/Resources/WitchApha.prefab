@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 329091928}
   - component: {fileID: 329091930}
   - component: {fileID: 329091929}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: HP3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 434194081}
   - component: {fileID: 434194082}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: HPDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 475972841}
   - component: {fileID: 475972843}
   - component: {fileID: 475972842}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: HP1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -224,7 +224,7 @@ GameObject:
   - component: {fileID: 1507417320}
   - component: {fileID: 1507417322}
   - component: {fileID: 1507417321}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: HP2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +296,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3162377345874955512}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: up
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 8151059691345737997}
   - component: {fileID: 2747191772866285953}
   - component: {fileID: 3819796131950514532}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1368953620563634222}
   - component: {fileID: 2263109694237099273}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ChangeCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,7 +472,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4453879028951683268}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: right
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
@@ -502,7 +502,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6969645170330568748}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: DirectionPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -537,7 +537,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4539313423471725849}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: left
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
@@ -567,7 +567,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4564687142349765251}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: center
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
@@ -599,7 +599,7 @@ GameObject:
   - component: {fileID: 6471663377948300449}
   - component: {fileID: 2817280014535831208}
   - component: {fileID: 388091169651997837}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -675,7 +675,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4042347855858302786}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: down
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
@@ -716,7 +716,7 @@ GameObject:
   - component: {fileID: 4055148573714112378}
   - component: {fileID: 873485114908393525}
   - component: {fileID: 4926173883809168689}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WitchApha
   m_TagString: Witch
   m_Icon: {fileID: 0}

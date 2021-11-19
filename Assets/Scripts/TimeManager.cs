@@ -40,8 +40,18 @@ public class TimeManager : MonoBehaviour
 		//if (!m_cehck) return;
 
 		//　制限時間が0秒以下なら何もしない
-		if (m_totalTime <= 0f) return;
 
+		if (m_totalTime <= 0f)
+		{
+			Debug.Log("制限時間終了");
+
+			RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
+			raiseEventoptions.Receivers = ReceiverGroup.All;
+			SendOptions sendOptions = new SendOptions();
+			PhotonNetwork.RaiseEvent((byte)NetworkEvents.Win, null, raiseEventoptions, sendOptions);
+		}
+
+		if (m_totalTime <= 0f) return;
 		//　一旦トータルの制限時間を計測；
 		m_totalTime = m_minute * 60 + m_seconds;
 		m_totalTime -= Time.deltaTime;
@@ -62,15 +72,6 @@ public class TimeManager : MonoBehaviour
 
 		m_oldSeconds = m_seconds;
 		//　制限時間以下になったらコンソールに『制限時間終了』という文字列を表示する
-		if (m_totalTime <= 0f)
-		{
-			Debug.Log("制限時間終了");
-
-			RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
-			raiseEventoptions.Receivers = ReceiverGroup.All;
-			SendOptions sendOptions = new SendOptions();
-			PhotonNetwork.RaiseEvent((byte)NetworkEvents.Win, null, raiseEventoptions, sendOptions);
-		}
 	}
 
 	void RingAlert()

@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     }
     int randomNumber;
     bool m_inGame;
+    bool IsFirst = true;
     private void Start()
     {
         SceneManager.sceneLoaded += Spawn;
@@ -59,11 +60,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 break;
             case (byte)NetworkEvents.Win:
                 Debug.Log("魔女の勝利");
-                StartCoroutine(ShowResult(NetworkEvents.Win));
+                if(IsFirst)StartCoroutine(ShowResult(NetworkEvents.Win));
                 break;
             case (byte)NetworkEvents.Lose:
                 Debug.Log("魔女の負け");
-                StartCoroutine(ShowResult(NetworkEvents.Win));
+                if(IsFirst)StartCoroutine(ShowResult(NetworkEvents.Lose));
                 break;
             case (byte)NetworkEvents.Die:
                 Debug.Log("魔女が死んだ");
@@ -77,6 +78,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     IEnumerator ShowResult(NetworkEvents events)
     {
+        IsFirst = false;
+        ShowTextCtrl.Show(events);
         yield return new WaitForSeconds(2f);
         yield return new WaitUntil(() => ShowTextCtrl.GetLogData() != null);
         SceneManager.LoadScene("TestResult");
