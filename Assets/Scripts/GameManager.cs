@@ -36,9 +36,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             DontDestroyOnLoad(this.gameObject);
         }
     }
+    JudgementController judge;
+    NetworkGameManager netManager;
     int randomNumber;
     bool m_inGame;
     bool IsFirst = true;
+    bool FirstDeath = true;
     private void Start()
     {
         SceneManager.sceneLoaded += Spawn;
@@ -48,7 +51,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         switch (photonEvent.Code)
         {
             case (byte)NetworkEvents.Lobby:
-                var judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
+                judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
                 judge.GameStartJudge(ref m_charaCount);
                 int hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers + 1;
                 randomNumber = Random.Range(1, hunterNumber);
@@ -67,13 +70,21 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 if(IsFirst)StartCoroutine(ShowResult(NetworkEvents.Lose));
                 break;
             case (byte)NetworkEvents.Die:
-                Debug.Log("魔女が死んだ");
-                judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
-                var netManager = GameObject.Find("GameManager").GetComponent<NetworkGameManager>();
-                m_witchDieCount++;
-                judge.LoseJudge(m_witchDieCount, netManager.WitchCapacity);
+                if (FirstDeath) StartCoroutine(DieCount());
                 break;
         }
+    }
+
+    IEnumerator DieCount()
+    {
+        FirstDeath = false;
+        yield return new WaitForSeconds(0.2f);
+        judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
+        netManager = GameObject.Find("GameManager").GetComponent<NetworkGameManager>();
+        m_witchDieCount++;
+        judge.LoseJudge(m_witchDieCount, netManager.WitchCapacity);
+        Debug.Log("魔女が死んだ");
+        FirstDeath = true;
     }
 
     IEnumerator ShowResult(NetworkEvents events)

@@ -86,7 +86,6 @@ GameObject:
   - component: {fileID: 1705301706}
   - component: {fileID: 1705301709}
   - component: {fileID: 1705301708}
-  - component: {fileID: 1705301707}
   m_Layer: 10
   m_Name: Image (1)
   m_TagString: Untagged
@@ -150,24 +149,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1705301707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1705301705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75416359adbd25f459dc068251e60405, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_itemImages:
-  - {fileID: 0}
-  - {fileID: 21300000, guid: b8792f092cdd38149a2f062f9b5d4b2e, type: 3}
-  - {fileID: 21300000, guid: a79fb392a34e5c74b811ba4087c1d001, type: 3}
-  - {fileID: 21300000, guid: 56bbc6b42271d4177ac313247f47ac1f, type: 3}
-  - {fileID: 21300000, guid: f00feafcf0675cd47a48f83ae42b06d4, type: 3}
 --- !u!1 &1936979950
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,6 +266,7 @@ GameObject:
   - component: {fileID: 2063405629}
   - component: {fileID: 634069721}
   - component: {fileID: -6913077383126312926}
+  - component: {fileID: 2696471642720516161}
   m_Layer: 10
   m_Name: Hunter
   m_TagString: Hunter
@@ -528,6 +510,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 3.5}
   m_EdgeRadius: 0
+--- !u!114 &2696471642720516161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7631717737572162538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75416359adbd25f459dc068251e60405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_itemImages:
+  - {fileID: 0}
+  - {fileID: 21300000, guid: b8792f092cdd38149a2f062f9b5d4b2e, type: 3}
+  - {fileID: 21300000, guid: a79fb392a34e5c74b811ba4087c1d001, type: 3}
+  - {fileID: 21300000, guid: 56bbc6b42271d4177ac313247f47ac1f, type: 3}
+  - {fileID: 21300000, guid: f00feafcf0675cd47a48f83ae42b06d4, type: 3}
+  m_itemdisplay: {fileID: 1681868032}
 --- !u!1 &8262366189142254732
 GameObject:
   m_ObjectHideFlags: 0
