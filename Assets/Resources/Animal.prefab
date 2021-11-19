@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1066949624}
   - component: {fileID: 1066949625}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 2710830815886755765}
   - component: {fileID: 8360320640788414884}
   - component: {fileID: 4817491220609586436}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Animal
   m_TagString: Animal
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &8888512868276873145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7004a26732858404db988e69c346aed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 3
+  m_speed: 5
   m_name: 
   CanMove: 1
   m_trigger: {fileID: 1066949625}
