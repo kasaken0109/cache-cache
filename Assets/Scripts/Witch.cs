@@ -99,12 +99,13 @@ public class Witch : CharaBase, IStun
         return direction;
     }
 
+    bool IsDead = false;
     [PunRPC]
     public void OnHit()
     {
         m_hp--; //1ずつ減らす
 
-        if (m_hp < 1) //魔法使いの体力が1未満になったら呼び出す
+        if (m_hp < 1 && !IsDead) //魔法使いの体力が1未満になったら呼び出す
         {
             m_hp = 0;
             Debug.Log("HPが0になった。");
@@ -113,6 +114,7 @@ public class Witch : CharaBase, IStun
             SendOptions sendOptions = new SendOptions();
             PhotonNetwork.RaiseEvent((byte)NetworkEvents.Die, null, raiseEventoptions, sendOptions);
             Spectating();
+            IsDead = true;
         }
         hpDisplay.UpdateHp(m_hp);
 

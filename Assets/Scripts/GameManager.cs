@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     IEnumerator ShowResult(NetworkEvents events)
     {
+        yield return new WaitForSeconds(2f);
         yield return new WaitUntil(() => ShowTextCtrl.GetLogData() != null);
         SceneManager.LoadScene("TestResult");
     }
