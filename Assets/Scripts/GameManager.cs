@@ -20,7 +20,6 @@ public enum NetworkEvents : byte
 }
 public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
-    [SerializeField] JudgementController m_judgement;
     /// <summary>このクラスのインスタンスが既にあるかどうか</summary>
     static bool m_isExists;
     int m_witchDieCount;
@@ -37,8 +36,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             DontDestroyOnLoad(this.gameObject);
         }
     }
+    JudgementController judge;
+    NetworkGameManager netManager;
     int randomNumber;
     bool m_inGame;
+    bool IsFirst = true;
+    bool FirstDeath = true;
     private void Start()
     {
         SceneManager.sceneLoaded += Spawn;
@@ -48,40 +51,58 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         switch (photonEvent.Code)
         {
             case (byte)NetworkEvents.Lobby:
-                m_judgement.GameStartJudge(ref m_charaCount);
-                int m_hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers + 1;
-                randomNumber = Random.Range(1, m_hunterNumber);
+                judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
+                judge.GameStartJudge(ref m_charaCount);
+                int hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers + 1;
+                randomNumber = Random.Range(1, hunterNumber);
                 break;
             case (byte)NetworkEvents.GameStart:
                 var scene = GameObject.Find("SceneLoader").GetComponent<SceneLoader>();
-                scene.LoadScene("MainScene");
+                scene.LoadScene("PlayerSyncTestKasai");
                 m_inGame = true;
                 break;
             case (byte)NetworkEvents.Win:
                 Debug.Log("魔女の勝利");
-
+                if(IsFirst)StartCoroutine(ShowResult(NetworkEvents.Win));
                 break;
             case (byte)NetworkEvents.Lose:
                 Debug.Log("魔女の負け");
-
+                if(IsFirst)StartCoroutine(ShowResult(NetworkEvents.Lose));
                 break;
             case (byte)NetworkEvents.Die:
-                Debug.Log("魔女が死んだ");
-                var judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
-                var netManager = GameObject.Find("NetworkGameManager").GetComponent<NetworkGameManager>();
-                m_witchDieCount++;
-                judge.LoseJudge(m_witchDieCount, netManager.WitchCapacity);
+                if (FirstDeath) StartCoroutine(DieCount());
                 break;
         }
     }
+
+    IEnumerator DieCount()
+    {
+        FirstDeath = false;
+        yield return new WaitForSeconds(0.2f);
+        judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
+        netManager = GameObject.Find("GameManager").GetComponent<NetworkGameManager>();
+        m_witchDieCount++;
+        judge.LoseJudge(m_witchDieCount, netManager.WitchCapacity);
+        Debug.Log("魔女が死んだ");
+        FirstDeath = true;
+    }
+
+    IEnumerator ShowResult(NetworkEvents events)
+    {
+        IsFirst = false;
+        ShowTextCtrl.Show(events);
+        yield return new WaitForSeconds(2f);
+        yield return new WaitUntil(() => ShowTextCtrl.GetLogData() != null);
+        SceneManager.LoadScene("TestResult");
+    }
     private void Spawn(Scene scene, LoadSceneMode mode)
     {
-        if (m_inGame && PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
-            Debug.Log("hai");
             var animalManager = GameObject.Find("AnimalManager").GetComponent<AnimalManager>();
             animalManager.StartSpawn();
-            var charactorSpawn = GameObject.FindGameObjectWithTag("CharactorSpawn").GetComponent<CharactorSpawn>();
+            ItemManager.Instance.SpawnItem(4);
+            var charactorSpawn = GameObject.Find("CharactorSpawn").GetComponent<CharactorSpawn>();
             for (int i = 0; i < PhotonNetwork.CurrentRoom.MaxPlayers; i++)
             {
                 if (randomNumber != i + 1)
@@ -92,7 +113,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 else
                 {
                     Debug.Log("Hunter");
-                    Debug.Log(randomNumber);
                     charactorSpawn.HunterSpawn(i + 1);
                 }
             }

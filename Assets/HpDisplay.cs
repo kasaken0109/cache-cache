@@ -23,7 +23,16 @@ public class HpDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(WaitSet());
+    }
+
+    IEnumerator WaitSet()
+    {
+        m_display.SetActive(false);
+        yield return new WaitUntil(() => GetComponent<PhotonView>());
+        Debug.Log("CanGet");
         m_view = GetComponent<PhotonView>();
+        yield return new WaitForSeconds(2f);
         m_display.SetActive(m_view.IsMine);
     }
 

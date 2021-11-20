@@ -5,10 +5,11 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 
-public class Witch : CharaBase,IStun
+public class Witch : CharaBase, IStun
 {
-    Rigidbody2D m_rb;
-    PhotonView m_view;
+    [SerializeField] Rigidbody2D m_rb;
+    [SerializeField] PhotonView m_view;
+    Animator m_anim;
     [SerializeField]
     private int m_hp = 3; //魔法使いの体力
 
@@ -34,21 +35,34 @@ public class Witch : CharaBase,IStun
     SpriteRenderer m_sr;
     bool m_contactFlag = false;
     bool m_specter = false;
-    void Start()
+    GameObject m_camera = null;
+
+    private void Start()
     {
         m_sr = GetComponent<SpriteRenderer>();
+        m_anim = GetComponent<Animator>();
         m_change = GetComponentInChildren<Collider2D>();
-        m_view = GetComponent<PhotonView>();
-        m_rb = GetComponent<Rigidbody2D>();
+        //m_view = GetComponent<PhotonView>();
+        //m_rb = GetComponent<Rigidbody2D>();
         hpDisplay = GetComponent<HpDisplay>();
         m_rb.gravityScale = 0;
-
-        if (!m_view || !m_view.IsMine) return;
+        StartCoroutine(a());
+    }
+    IEnumerator a()
+    {
+        yield return new WaitForSeconds(1);
+        if (!m_view || !m_view.IsMine)yield break;
+        Debug.Log("9999");
         Instantiate(m_witchCamera, transform);
     }
+    public void SetUp()
+    {
+        
+    }
+
     private void Update()
     {
-        ChangeSprite();
+        m_view.RPC("ChangeSprite",RpcTarget.All);
     }
     private void FixedUpdate()
     {
@@ -62,13 +76,17 @@ public class Witch : CharaBase,IStun
             return;
         }
 
-        if(CanMove)Move(h, v);
+        if (CanMove) Move(h, v);
         SetDirection(h, v);
     }
 
     public override void Move(float h, float v)
     {
         m_rb.velocity = new Vector2(h, v).normalized * Speed;
+        m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition 
+            | RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeRotation;
+        m_anim = GetComponent<Animator>();
+        m_anim.SetBool("IsWalk", h == 0 && v == 0 ? false : true);
     }
     int direction = 2;
     public int SetDirection(float h, float v)
@@ -83,12 +101,14 @@ public class Witch : CharaBase,IStun
         return direction;
     }
 
+    bool IsDead = false;
     [PunRPC]
     public void OnHit()
     {
+        if (!m_view.IsMine) return;
         m_hp--; //1ずつ減らす
 
-        if (m_hp < 1) //魔法使いの体力が1未満になったら呼び出す
+        if (m_hp < 1 && !IsDead) //魔法使いの体力が1未満になったら呼び出す
         {
             m_hp = 0;
             Debug.Log("HPが0になった。");
@@ -97,6 +117,7 @@ public class Witch : CharaBase,IStun
             SendOptions sendOptions = new SendOptions();
             PhotonNetwork.RaiseEvent((byte)NetworkEvents.Die, null, raiseEventoptions, sendOptions);
             Spectating();
+            IsDead = true;
         }
         hpDisplay.UpdateHp(m_hp);
 
@@ -114,32 +135,36 @@ public class Witch : CharaBase,IStun
         m_specter = true;
     }
 
+    [PunRPC]
     void ChangeSprite()
     {
         if (m_contactFlag)
         {
-            if (Input.GetButtonDown("Use"))
+            if (Input.GetButtonDown("Use") && m_view.IsMine)
             {
-                Debug.Log("押された");
                 if (m_change.gameObject.CompareTag("Animal"))
                 {
-                    m_sr.sprite = m_change.gameObject.GetComponent<SpriteRenderer>().sprite;
+                    m_view.RPC("SetAnimator", RpcTarget.All);
                     Debug.Log(m_sr.sprite);
                 }
             }
         }
     }
+
+    [PunRPC]
+    void SetAnimator()
+    {
+        m_anim.runtimeAnimatorController = m_change.gameObject.GetComponent<Animator>().runtimeAnimatorController;
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         m_change = other;
         m_contactFlag = true;
-        Debug.Log("入った");
     }
     private void OnTriggerExit2D()//Collider2D other)
     {
         m_change = null;
         m_contactFlag = false;
-        Debug.Log("でた");
     }
 
     [PunRPC]
@@ -169,6 +194,7 @@ public class Witch : CharaBase,IStun
             timer += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
+        m_rb.velocity = Vector3.zero;
         CanMove = true;
     }
 }

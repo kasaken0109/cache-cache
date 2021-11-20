@@ -49,16 +49,18 @@ public class ShowTextCtrl
             }
         }
 
-        if (obj.CompareTag("Witch") && get == NetworkEvents.Win || 
+        if (obj.CompareTag("Witch") && get == NetworkEvents.Win ||
             obj.CompareTag("Hunter") && get == NetworkEvents.Lose) _log = "Win";
-       
-        else if (obj.CompareTag("Witch") && get != NetworkEvents.Win  || 
-            obj.CompareTag("Hunter") && get == NetworkEvents.Win) _log = "Lose";
+
+        else
+        {
+            _log = "Lose";
+        }
        
         _isName = PhotonNetwork.LocalPlayer.NickName;
         if (_isName.Length <= 0) _isName = "My";
 
-        SceneManager.LoadScene("TestResult");
+        //SceneManager.LoadScene("TestResult");
     }
 
     public static string GetLogData() => Instance._log;

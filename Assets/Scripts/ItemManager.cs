@@ -25,10 +25,6 @@ public class ItemManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
         m_isExist = new bool[m_spawnPos.Length];
         m_existCount = new int[m_spawnPos.Length];
 
@@ -41,6 +37,8 @@ public class ItemManager : MonoBehaviour
 
     public void SpawnItem(int num)
     {
+        
+        //
         for (int i = 0; i < num; i++)
         {
             var itemNum = Random.Range(0, m_items.Length);
