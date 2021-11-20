@@ -678,7 +678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_debugMode: 0
   m_hunterCapacity: 1
-  m_witchCapacity: 4
+  m_witchCapacity: 2
 --- !u!1 &2134509794
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,8 +14,12 @@ public class ItemDisplay : MonoBehaviour
     [Tooltip("表示するアイテムオブジェクト")]
     GameObject m_itemdisplay = default;
 
-    PhotonView m_view = null;
+    [SerializeField]
+    [Tooltip("imagecomponent")]
     Image m_image = default;
+
+    PhotonView m_view = null;
+    
     
     // Start is called before the first frame update
     void Start()
@@ -25,7 +29,6 @@ public class ItemDisplay : MonoBehaviour
 
     IEnumerator WaitSet()
     {
-        m_image = GetComponent<Image>();
         m_itemdisplay.SetActive(false);
         yield return new WaitUntil(() => GetComponent<PhotonView>());
         Debug.Log("CanGet");
