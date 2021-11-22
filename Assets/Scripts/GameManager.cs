@@ -23,7 +23,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     /// <summary>このクラスのインスタンスが既にあるかどうか</summary>
     static bool m_isExists;
     int m_witchDieCount;
-    int m_charaCount;
+    public int m_charaCount;
+    public bool m_readyCheck;
+    PhotonView m_view;
     void Awake()
     {
         if (m_isExists)
@@ -39,7 +41,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     JudgementController judge;
     NetworkGameManager netManager;
     int randomNumber;
-    bool m_inGame;
     bool IsFirst = true;
     bool FirstDeath = true;
     private void Start()
@@ -51,30 +52,27 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         switch (photonEvent.Code)
         {
             case (byte)NetworkEvents.Lobby:
-                judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
-                judge.GameStartJudge(ref m_charaCount);
+                //judge.GameStartJudge(ref m_charaCount);
                 int hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers + 1;
                 randomNumber = Random.Range(1, hunterNumber);
                 break;
             case (byte)NetworkEvents.GameStart:
                 var scene = GameObject.Find("SceneLoader").GetComponent<SceneLoader>();
                 scene.LoadScene("PlayerSyncTestKasai");
-                m_inGame = true;
                 break;
             case (byte)NetworkEvents.Win:
                 Debug.Log("魔女の勝利");
-                if(IsFirst)StartCoroutine(ShowResult(NetworkEvents.Win));
+                if (IsFirst) StartCoroutine(ShowResult(NetworkEvents.Win));
                 break;
             case (byte)NetworkEvents.Lose:
                 Debug.Log("魔女の負け");
-                if(IsFirst)StartCoroutine(ShowResult(NetworkEvents.Lose));
+                if (IsFirst) StartCoroutine(ShowResult(NetworkEvents.Lose));
                 break;
             case (byte)NetworkEvents.Die:
                 if (FirstDeath) StartCoroutine(DieCount());
                 break;
         }
     }
-
     IEnumerator DieCount()
     {
         FirstDeath = false;
@@ -94,6 +92,26 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         yield return new WaitForSeconds(2f);
         yield return new WaitUntil(() => ShowTextCtrl.GetLogData() != null);
         SceneManager.LoadScene("TestResult");
+    }
+    public void OnReady()
+    {
+        if (!judge && !m_view)
+        {
+            judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
+            m_view = judge.GetComponent<PhotonView>();
+        }
+        if (!m_readyCheck)
+        {
+            m_view.RPC("Check", RpcTarget.All);
+            m_readyCheck = true;
+        }
+        else
+        {
+            //var methodName = ((System.Action<int>)judge.UncChecked).Method.Name;
+            //Debug.Log(methodName);
+            m_view.RPC("UncChecked", RpcTarget.All);
+            m_readyCheck = false;
+        }
     }
     private void Spawn(Scene scene, LoadSceneMode mode)
     {
