@@ -4,45 +4,43 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
+using UnityEngine.UI;
 
 public class JudgementController : MonoBehaviour
 {
-    bool m_readyFlag;
+    [SerializeField] Image m_checkImage;
+    public int m_charaCount;
     public void LoseJudge(int witchDieCount, int witchCapacity)
     {
         if (witchDieCount >= witchCapacity)
         {
+            Debug.Log(witchDieCount);
             RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
             raiseEventoptions.Receivers = ReceiverGroup.All;
             SendOptions sendOptions = new SendOptions();
             PhotonNetwork.RaiseEvent((byte)NetworkEvents.Lose, null, raiseEventoptions, sendOptions);
         }
     }
-    public void GameStartJudge(ref int charaCount)
+    [PunRPC]
+    public void Check()
     {
-        if (!m_readyFlag)
+        m_charaCount++;
+        m_checkImage.gameObject.SetActive(true);
+        if (PhotonNetwork.IsMasterClient)
         {
-            charaCount--;
+            if (PhotonNetwork.CurrentRoom.MaxPlayers == m_charaCount)
+            {
+                RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
+                raiseEventoptions.Receivers = ReceiverGroup.All;
+                SendOptions sendOptions = new SendOptions();
+                PhotonNetwork.RaiseEvent((byte)NetworkEvents.GameStart, null, raiseEventoptions, sendOptions);
+            }
         }
-        else
-        {
-            charaCount++;
-        }
-        if (charaCount >= PhotonNetwork.CurrentRoom.MaxPlayers)
-        {
-            RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
-            raiseEventoptions.Receivers = ReceiverGroup.All;
-            SendOptions sendOptions = new SendOptions();
-            PhotonNetwork.RaiseEvent((byte)NetworkEvents.GameStart, null, raiseEventoptions, sendOptions);
-        }
-        
     }
-    public void Ready()
+    [PunRPC]
+    public void UncChecked()
     {
-        m_readyFlag = m_readyFlag? false : true;
-        RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
-        raiseEventoptions.Receivers = ReceiverGroup.All;
-        SendOptions sendOptions = new SendOptions();
-        PhotonNetwork.RaiseEvent((byte)NetworkEvents.Lobby, null, raiseEventoptions, sendOptions);
+        m_charaCount--;
+        m_checkImage.gameObject.SetActive(false);
     }
 }

@@ -13,8 +13,11 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     int m_hunterCapacity;
     [SerializeField, Tooltip("ウィッチの最大人数")]
     int m_witchCapacity;
+    [SerializeField]
+    GameObject m_checkButtn;
     public int HunterCapacity { get => m_hunterCapacity; }
     public int WitchCapacity { get => m_witchCapacity; }
+
 
     private void Awake()
     {
@@ -81,7 +84,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
             roomOptions.IsVisible = true;   // 誰でも参加できるようにする
             roomOptions.MaxPlayers = (byte)(HunterCapacity + WitchCapacity);
             //ルーム名に null を指定するとランダムなルーム名を付ける
-            PhotonNetwork.CreateRoom(null, roomOptions); 
+            PhotonNetwork.CreateRoom(null, roomOptions);
         }
     }
     private void CheckPlayerCountAndStartGame()
@@ -95,6 +98,10 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("Closing Room");
             PhotonNetwork.CurrentRoom.IsOpen = false;
+            RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
+            raiseEventoptions.Receivers = ReceiverGroup.MasterClient;
+            SendOptions sendOptions = new SendOptions();
+            PhotonNetwork.RaiseEvent((byte)NetworkEvents.Lobby, null, raiseEventoptions, sendOptions);
         }
     }
 
@@ -152,6 +159,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom");
+        m_checkButtn.SetActive(true);
     }
 
     /// <summary>指定した部屋への入室に失敗した時</summary>
@@ -214,35 +222,5 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     public override void OnPlayerPropertiesUpdate(Player target, ExitGames.Client.Photon.Hashtable changedProps)
     {
         Debug.Log("OnPlayerPropertiesUpdate");
-    }
-
-    /// <summary>フレンドリストに更新があった時</summary>
-    public override void OnFriendListUpdate(List<FriendInfo> friendList)
-    {
-        Debug.Log("OnFriendListUpdate");
-    }
-
-    /// <summary>地域リストを受け取った時</summary>
-    public override void OnRegionListReceived(RegionHandler regionHandler)
-    {
-        Debug.Log("OnRegionListReceived");
-    }
-
-    /// <summary>WebRpcのレスポンスがあった時</summary>
-    public override void OnWebRpcResponse(OperationResponse response)
-    {
-        Debug.Log("OnWebRpcResponse");
-    }
-
-    /// <summary>カスタム認証のレスポンスがあった時</summary>
-    public override void OnCustomAuthenticationResponse(Dictionary<string, object> data)
-    {
-        Debug.Log("OnCustomAuthenticationResponse");
-    }
-
-    /// <summary>カスタム認証が失敗した時</summary>
-    public override void OnCustomAuthenticationFailed(string debugMessage)
-    {
-        Debug.Log("OnCustomAuthenticationFailed");
     }
 }
