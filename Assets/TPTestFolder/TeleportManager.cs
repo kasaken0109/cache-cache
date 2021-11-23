@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
-public class TeleportCreater : MonoBehaviour
+public class TeleportManager : MonoBehaviour
 {
     private enum ColliderType
     {
@@ -12,13 +11,11 @@ public class TeleportCreater : MonoBehaviour
 
         None,
     }
-
+    [SerializeField] float m_moveZ = 20;
     [SerializeField] bool m_debug = false;
     [SerializeField] ColliderType m_type = ColliderType.None;
-    [Tooltip("Circle基準の半径")]
-    [SerializeField] float m_radius = 1;
-    [Header("Pointerのデータ群. size内は個別のData")]
-    [SerializeField] List<Setter> _setters = new List<Setter>();
+    [SerializeField, Tooltip("Circle基準の半径")] float m_radius = 1;
+    [SerializeField, Header("Pointerのデータ群. size内は個別のData")] List<Setter> _setters = new List<Setter>();
 
     int m_groupID = 0;
     int m_individualID;
@@ -80,6 +77,26 @@ public class TeleportCreater : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 階層移動
+    /// </summary>
+    /// <param name="v">Virtical</param>
+    /// <param name="target">移動させるObject</param>
+    public void HierarchyTP(float v, Transform target)
+    {
+        Vector3 set = target.position;
+        if (v < 0)
+        {
+            if (set.z + m_moveZ * -1 < -40) return;
+            target.position = new Vector3(set.x, set.y,set.z + m_moveZ * -1);
+        }
+        else
+        {
+            if (set.z + m_moveZ > 0) return;
+            target.position = new Vector3(set.x, set.y, set.z + m_moveZ);
+        }
+    }
+
     IEnumerator CoolTime()
     {
         yield return new WaitForSeconds(0.2f);
@@ -103,6 +120,7 @@ public class TeleportCreater : MonoBehaviour
     void CreateTrigger(Vector3 setPos, Dictionary<int, Transform> key)
     {
         GameObject p = new GameObject($"TPPoint No.{m_groupID} : MyID.{m_individualID}");
+        
         p.transform.position = setPos;
         Teleporter t = p.AddComponent<Teleporter>();
         t.GroupID = m_groupID;

@@ -6,11 +6,11 @@ public class Teleporter : MonoBehaviour
 {
     int m_myID;
     int m_groupID;
-    TeleportCreater m_creater;
+    TeleportManager m_creater;
 
     public int MyID { set { m_myID = value; } }
     public int GroupID { set { m_groupID = value; } }
-    public TeleportCreater Creater { set { m_creater = value; } }
+    public TeleportManager Creater { set { m_creater = value; } }
 
     bool m_isStay = false;
     GameObject m_target = null;
