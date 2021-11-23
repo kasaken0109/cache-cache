@@ -18,6 +18,9 @@ public class Witch : CharaBase, IStun
     GameObject m_cacheRangeObject = default;
 
     [SerializeField]
+    [Tooltip("攻撃のコライダー")]
+    GameObject m_attackObject = default;
+    [SerializeField]
     [Tooltip("スタンする時間")]
     float m_stunTime = 3f;
     [SerializeField]
@@ -46,13 +49,13 @@ public class Witch : CharaBase, IStun
         //m_rb = GetComponent<Rigidbody2D>();
         hpDisplay = GetComponent<HpDisplay>();
         m_rb.gravityScale = 0;
-        StartCoroutine(a());
+        //StartCoroutine(CameraCreate());
     }
-    IEnumerator a()
+
+    IEnumerator CameraCreate()
     {
         yield return new WaitForSeconds(1);
         if (!m_view || !m_view.IsMine)yield break;
-        Debug.Log("9999");
         Instantiate(m_witchCamera, transform);
     }
     public void SetUp()
@@ -68,37 +71,31 @@ public class Witch : CharaBase, IStun
     {
         if (!m_view || !m_view.IsMine) return;      // 自分が生成したものだけ処理する
         float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        //float v = Input.GetAxisRaw("Vertical");
 
-        if (m_specter)
-        {
-            m_witchCamera.CameraMove(h, v);
-            return;
-        }
+        //if (m_specter)
+        //{
+        //    m_witchCamera.CameraMove(h);
+        //    return;
+        //}
 
-        if (CanMove) Move(h, v);
-        SetDirection(h, v);
+        if (CanMove) Move(h);
+        SetDirection(h);
     }
 
-    public override void Move(float h, float v)
+    public override void Move(float h)
     {
-        m_rb.velocity = new Vector2(h, v).normalized * Speed;
+        m_rb.velocity = new Vector2(h, 0).normalized * Speed;
         m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition 
             | RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeRotation;
         m_anim = GetComponent<Animator>();
-        m_anim.SetBool("IsWalk", h == 0 && v == 0 ? false : true);
+        m_anim.SetBool("IsWalk", h == 0 ? false : true);
     }
-    int direction = 2;
-    public int SetDirection(float h, float v)
+
+    public void SetDirection(float h)
     {
-        if (h == 0 && v == 0) return direction;
-        else if (h < 0 && v == 0) direction = 1;
-        else if (h > 0 && v == 0) direction = 2;
-        else if (h == 0 && v > 0) direction = 3;
-        else if (h == 0 && v < 0) direction = 4;
-        m_cacheRangeObject.transform.SetParent(m_directionPoints[direction - 1]);
-        m_cacheRangeObject.transform.localPosition = Vector3.zero;
-        return direction;
+        if (h == 0) return;
+        m_attackObject.transform.localPosition = new Vector3(h * 1.5f, 0, 0);
     }
 
     bool IsDead = false;
@@ -131,7 +128,7 @@ public class Witch : CharaBase, IStun
         // ここでanimationでspriteを消す
 
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
-        m_witchCamera.WitchT = this.transform;
+        //m_witchCamera.WitchT = this.transform;
         m_specter = true;
     }
 

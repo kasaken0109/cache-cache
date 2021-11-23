@@ -10,11 +10,13 @@ public class WitchCamera : MonoBehaviour
 
     Transform m_witch = default;
     public Transform WitchT { get => m_witch; set { m_witch = value; } }
-    public void CameraMove(float h, float v)
+
+
+    public void CameraMove(float h)
     {
-        if (h != 0|| v != 0)
+        if (h != 0)
         {
-            m_witch.position += new Vector3(h / 10, v / 10);
+            m_witch.position += new Vector3(h / 10, 0);
         }
     }
 }

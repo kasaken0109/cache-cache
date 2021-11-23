@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Animal : CharaBase
+public class Animal : MonoBehaviour
 {
     [Header("アタリ判定用子オブジェクト")] [SerializeField]
     Collider2D m_trigger = default;
@@ -19,6 +19,8 @@ public class Animal : CharaBase
     Rigidbody2D m_rb = default;
     Animator m_anim = default;
 
+    [SerializeField]
+    float m_speed = 0f;
     float m_timer = 0f;
     float m_actionTimer = 0f;
     float m_waitTime = 0f;
@@ -30,7 +32,6 @@ public class Animal : CharaBase
         m_trigger.gameObject.SetActive(false);
         m_rb = GetComponent<Rigidbody2D>();
         m_anim = GetComponent<Animator>();
-
     }
 
 
@@ -48,7 +49,6 @@ public class Animal : CharaBase
             }
             else
             {
-
                 m_timer = 0;
                 m_action = false;
                 m_rb.velocity = Vector2.zero;
@@ -78,19 +78,18 @@ public class Animal : CharaBase
     /// </summary>
     void Run()
     {
-        Vector2 direction = new Vector2(UnityEngine.Random.Range(-1, 2), UnityEngine.Random.Range(-1, 2));
-        m_dist = direction.normalized;
+        int direction = UnityEngine.Random.Range(-1, 2);
         m_trigger.transform.localPosition = m_dist;
         m_trigger.gameObject.SetActive(true);
-        Move(direction.x, direction.y);
+        Move(direction);
     }
 
     /// <summary>
     /// 移動する
     /// </summary>
-    public override void Move(float h, float v)
+    public void Move(float h)
     {
-        m_rb.velocity = new Vector2(h, v) * Speed;
+        m_rb.velocity = new Vector2(h, 0) * m_speed;
         m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition 
             | RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeRotation;
         m_anim.SetBool("IsWalk", true);

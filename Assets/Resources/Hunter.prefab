@@ -265,7 +265,6 @@ GameObject:
   - component: {fileID: 1036953466909245406}
   - component: {fileID: 2063405629}
   - component: {fileID: 634069721}
-  - component: {fileID: -6913077383126312926}
   - component: {fileID: 2696471642720516161}
   m_Layer: 10
   m_Name: Hunter
@@ -484,32 +483,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &-6913077383126312926
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7631717737572162538}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.5, y: 3.5}
-    newSize: {x: 2.4966667, y: 2.6666667}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 2.5, y: 3.5}
-  m_EdgeRadius: 0
 --- !u!114 &2696471642720516161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,6 +502,7 @@ MonoBehaviour:
   - {fileID: -4115439610729684787, guid: a88abe0ca7ddddc4f945116d092ac048, type: 3}
   - {fileID: 3591012416601061280, guid: 270845fb660c9744cbd42af04af77b71, type: 3}
   m_itemdisplay: {fileID: 1681868032}
+  m_image: {fileID: 0}
 --- !u!1 &8262366189142254732
 GameObject:
   m_ObjectHideFlags: 0
