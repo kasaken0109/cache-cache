@@ -13,17 +13,18 @@ public class TeleportCreater : MonoBehaviour
         None,
     }
 
-    [SerializeField] bool _callStart = false;
-    [SerializeField] ColliderType _type = ColliderType.None;
-    [SerializeField] float _radius = 1;
+    [SerializeField] bool m_debug = false;
+    [SerializeField] ColliderType m_type = ColliderType.None;
+    [Tooltip("Circle基準の半径")]
+    [SerializeField] float m_radius = 1;
     [Header("Pointerのデータ群. size内は個別のData")]
     [SerializeField] List<Setter> _setters = new List<Setter>();
 
-    int _groupID = 0;
-    int _individualID = 0;
-    bool _setUp = false;
+    int m_groupID = 0;
+    int m_individualID = 0;
+    bool m_setUp = false;
 
-    List<Dictionary<int, Transform>> _tGroupID = new List<Dictionary<int, Transform>>();
+    List<Dictionary<int, Transform>> m_tGroupID = new List<Dictionary<int, Transform>>();
     
     [System.Serializable]
     class Setter
@@ -35,7 +36,7 @@ public class TeleportCreater : MonoBehaviour
 
     void Start()
     {
-        if (_callStart) Create();
+        if (m_debug) Create();
     }
 
     /// <summary>
@@ -43,13 +44,13 @@ public class TeleportCreater : MonoBehaviour
     /// </summary>
     public void Create()
     {
-        if (_setUp) return;
-        if (_type == ColliderType.None)
+        if (m_setUp) return;
+        if (m_type == ColliderType.None)
         {
             Debug.LogError("ColliderTypeの指定をして下さい");
             return;
         }
-        _setUp = true;
+        m_setUp = true;
         _setters.ForEach(s => SetPointer(s));
     }
 
@@ -61,7 +62,7 @@ public class TeleportCreater : MonoBehaviour
     /// <param name="target">移動するObject</param>
     public void TPRequest(int key, int individualID, GameObject target)
     {
-        List<Transform> targets = new List<Transform>(_tGroupID[key].Values);
+        List<Transform> targets = new List<Transform>(m_tGroupID[key].Values);
         bool set = false;
        
         while (!set)
@@ -84,34 +85,34 @@ public class TeleportCreater : MonoBehaviour
         if (s.OthersPointer.Length > 0) 
             new List<Vector2>(s.OthersPointer).ForEach(o => CreateTrigger(o, tPDic));
 
-        _tGroupID.Add(tPDic);
-        _groupID++;
+        m_tGroupID.Add(tPDic);
+        m_groupID++;
     }
 
     void CreateTrigger(Vector2 setPos, Dictionary<int, Transform> key)
     {
-        GameObject p = new GameObject($"TPPoint No.{_groupID} : MyID.{_individualID}");
+        GameObject p = new GameObject($"TPPoint No.{m_groupID} : MyID.{m_individualID}");
         p.transform.position = setPos;
         Teleporter t = p.AddComponent<Teleporter>();
-        t.GroupID = _groupID;
-        t.MyID = _individualID;
+        t.GroupID = m_groupID;
+        t.MyID = m_individualID;
         t.Creater = this;
-        key.Add(_individualID, p.transform);
+        key.Add(m_individualID, p.transform);
 
-        switch (_type)
+        switch (m_type)
         {
             case ColliderType.Box:
                 BoxCollider2D bCol = p.AddComponent<BoxCollider2D>();
                 bCol.isTrigger = true;
-                bCol.size = Vector2.one * (_radius * 2);
+                bCol.size = Vector2.one * (m_radius * 2);
                 break;
             case ColliderType.Circle:
                 CircleCollider2D cCol = p.AddComponent<CircleCollider2D>();
                 cCol.isTrigger = true;
-                cCol.radius = _radius;
+                cCol.radius = m_radius;
                 break;
         }
 
-        _individualID++;
+        m_individualID++;
     }
 }

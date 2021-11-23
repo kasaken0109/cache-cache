@@ -4,24 +4,24 @@ using Photon.Pun;
 // こっちはいじる必要なし、多分
 public class Teleporter : MonoBehaviour
 {
-    int _myID;
-    int _groupID;
-    TeleportCreater _creater;
+    int m_myID;
+    int m_groupID;
+    TeleportCreater m_creater;
 
-    public int MyID { set { _myID = value; } }
-    public int GroupID { set { _groupID = value; } }
-    public TeleportCreater Creater { set { _creater = value; } }
+    public int MyID { set { m_myID = value; } }
+    public int GroupID { set { m_groupID = value; } }
+    public TeleportCreater Creater { set { m_creater = value; } }
 
-    bool _isStay = false;
-    GameObject _target = null;
+    bool m_isStay = false;
+    GameObject m_target = null;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Witch")
             && collision.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            _target = collision.gameObject;
-            _isStay = true;
+            m_target = collision.gameObject;
+            m_isStay = true;
         }
     }
 
@@ -30,14 +30,14 @@ public class Teleporter : MonoBehaviour
         if (collision.gameObject.CompareTag("Witch")
             && collision.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            _target = null;
-            _isStay = false;
+            m_target = null;
+            m_isStay = false;
         }
     }
 
     void Update()
     {
-        if (_isStay && Input.GetKeyDown(KeyCode.Space))
-            _creater.TPRequest(_groupID, _myID, _target);
+        if (m_isStay && Input.GetKeyDown(KeyCode.Space))
+            m_creater.TPRequest(m_groupID, m_myID, m_target);
     }
 }
