@@ -41,15 +41,14 @@ public class Hunter : CharaBase, IStun
     {
         m_anim = GetComponent<Animator>();
         m_rb.gravityScale = 0;
-        StartCoroutine(a());
+        //StartCoroutine(CameraCreate());
     }
-    IEnumerator a()
+    IEnumerator CameraCreate()
     {
         yield return new WaitForSeconds(0.5f);
         if (!m_view || !m_view.IsMine)yield break;
-        Debug.Log("aaa");
         m_camera = Instantiate(m_hunterCamera, this.transform).GetComponent<HunterCamera>();
-        m_camera.Rotation(0,1);
+        m_camera.Rotation(0, 1);
     }
     private void Update()
     {
@@ -63,31 +62,30 @@ public class Hunter : CharaBase, IStun
         if (CanMove)
         {
             float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
-            Move(h, v);
-            SetDirection(h, v);
-            m_camera.Rotation(h, v);
+            //float v = Input.GetAxisRaw("Vertical");
+            Move(h);
+            SetDirection(h);
+            //m_camera.Rotation(h, v);
         }
         else
         {
             m_rb.velocity = Vector2.zero;
         }
-        //if (Input.GetButtonDown("Fire1")) StartCoroutine(nameof(Attack));
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
     }
 
-    public override void Move(float h, float v)
+    public override void Move(float h)
     {
-        m_rb.velocity = new Vector2(h, v).normalized * Speed * m_speedUpRate;
+        m_rb.velocity = new Vector2(h, 0).normalized * Speed * m_speedUpRate;
         m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition 
             | RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeRotation;
-        m_anim.SetBool("IsWalk", h + v != 0 ? true : false);
+        m_anim.SetBool("IsWalk", h != 0 ? true : false);
     }
 
-    public void SetDirection(float h, float v)
+    public void SetDirection(float h)
     {
-        if (h == 0 && v == 0) return;
-        m_attackObject.transform.localPosition = new Vector3(h * 1.5f, v * 1.5f, 0);
+        if (h == 0 ) return;
+        m_attackObject.transform.localPosition = new Vector3(h * 1.5f, 0, 0);
     }
 
     IEnumerator Attack()
