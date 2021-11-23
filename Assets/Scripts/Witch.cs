@@ -31,6 +31,8 @@ public class Witch : CharaBase, IStun
     private GameObject[] m_alart = new GameObject[0];
     [SerializeField]
     WitchCamera m_witchCamera = default;
+    [SerializeField]
+    float m_setTPTime;
 
     public int Hp => m_hp;
     HpDisplay hpDisplay = default;
@@ -39,6 +41,8 @@ public class Witch : CharaBase, IStun
     bool m_contactFlag = false;
     bool m_specter = false;
     GameObject m_camera = null;
+
+    float m_time = 0;
 
     private void Start()
     {
@@ -71,8 +75,18 @@ public class Witch : CharaBase, IStun
     {
         if (!m_view || !m_view.IsMine) return;      // 自分が生成したものだけ処理する
         float h = Input.GetAxisRaw("Horizontal");
-        //float v = Input.GetAxisRaw("Vertical");
-
+        float v = Input.GetAxisRaw("Vertical");
+        if (v != 0)
+        {
+            m_time += Time.fixedDeltaTime;
+            if (m_time > m_setTPTime)
+            {
+                m_time = 0;
+                FindObjectOfType<TeleportManager>().HierarchyTP(v, transform);
+            }
+        }
+        else
+            m_time = 0;
         //if (m_specter)
         //{
         //    m_witchCamera.CameraMove(h);
