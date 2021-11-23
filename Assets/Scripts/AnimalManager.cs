@@ -5,9 +5,16 @@ using Photon.Pun;
 
 public class AnimalManager : MonoBehaviour
 {
+    enum AnimalList
+    {
+        くま, うし, きつね, にわとり, animal
+    }
+
     [SerializeField, Header("出現数")]
     int m_spawnNum = default;
     [SerializeField, Header("出現させる動物")]
+    AnimalList m_animalList = AnimalList.animal;
+
     string m_animalName = default;
 
     Animal[] animals = default;
@@ -16,8 +23,10 @@ public class AnimalManager : MonoBehaviour
     Vector2Int m_topRight = default;
     List<Vector2> m_animalPos = new List<Vector2>();
 
+
     public void StartSpawn()
     {
+        m_animalName = m_animalList.ToString();
         m_scale = new Vector2Int((int)this.transform.localScale.x, (int)this.transform.localScale.y);
         Vector2 pos = this.transform.position;
         m_bottomLeft = new Vector2Int((int)pos.x - m_scale.x / 2, (int)pos.y - m_scale.y / 2);
@@ -39,19 +48,6 @@ public class AnimalManager : MonoBehaviour
     {
         while (true)
         {
-            bool a = false;
-            foreach (var item in animals)
-            {
-                if (item == null)
-                {
-                    a = true;
-                }
-            }
-            if (a)
-            {
-                continue;
-            }
-
             foreach (var animal in animals)
             {
                 animal.MovingUpdate();
@@ -59,27 +55,6 @@ public class AnimalManager : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
     }
-
-    //private void FixedUpdate()
-    //{
-    //    bool a = false;
-    //    foreach (var item in animals)
-    //    {
-    //        if (item == null)
-    //        {
-    //            a = true;
-    //        }
-    //    }
-    //    if (a)
-    //    {
-    //        return;
-    //    }
-
-    //    foreach (var animal in animals)
-    //    {
-    //        animal.MovingUpdate();
-    //    }
-    //}
 
 
     /// <summary>
