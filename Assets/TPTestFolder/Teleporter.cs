@@ -37,7 +37,16 @@ public class Teleporter : MonoBehaviour
 
     void Update()
     {
-        if (m_isStay && Input.GetKeyDown(KeyCode.Space))
-            m_creater.TPRequest(m_groupID, m_myID, m_target);
+        if (m_isStay && Input.GetKeyUp(KeyCode.Space) && transform.position.z == m_target.transform.position.z)
+        {
+            Debug.Log("押した");
+            Request();
+        }
+    }
+
+    void Request()
+    {
+        Debug.Log($"MyCol {transform.position.z} Target {m_target.transform.position.z}");
+        m_creater.TPRequest(m_groupID, m_myID, m_target);
     }
 }
