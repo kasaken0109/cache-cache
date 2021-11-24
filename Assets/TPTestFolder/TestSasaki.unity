@@ -181,6 +181,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4055148573714112378, guid: f2a4714b60b9f9844a25ad47bbb9a39a,
+        type: 3}
+      propertyPath: m_setTPTime
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6471663377948300449, guid: f2a4714b60b9f9844a25ad47bbb9a39a,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -5483,6 +5488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4361d23c82574704db2f1d8487282bca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_moveZ: 20
   m_debug: 1
   m_type: 1
   m_radius: 1

@@ -87,12 +87,20 @@ public class TeleportManager : MonoBehaviour
         Vector3 set = target.position;
         if (v < 0)
         {
-            if (set.z + m_moveZ * -1 < -40) return;
+            if (set.z + m_moveZ * -1 < -40)
+            {
+                target.position = new Vector3(set.x, set.y, 0);
+                return;
+            }
             target.position = new Vector3(set.x, set.y,set.z + m_moveZ * -1);
         }
         else
         {
-            if (set.z + m_moveZ > 0) return;
+            if (set.z + m_moveZ > 0)
+            {
+                target.position = new Vector3(set.x, set.y, -40);
+                return;
+            }
             target.position = new Vector3(set.x, set.y, set.z + m_moveZ);
         }
     }
