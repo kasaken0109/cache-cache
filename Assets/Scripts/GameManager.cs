@@ -23,9 +23,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     /// <summary>このクラスのインスタンスが既にあるかどうか</summary>
     static bool m_isExists;
     int m_witchDieCount;
-    public int m_charaCount;
-    public bool m_readyCheck;
+    bool m_readyCheck;
     PhotonView m_view;
+    [SerializeField]
+    GameObject m_checkImage;
+
     void Awake()
     {
         if (m_isExists)
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             DontDestroyOnLoad(this.gameObject);
         }
     }
+    SceneLoader scene;
     JudgementController judge;
     NetworkGameManager netManager;
     int randomNumber;
@@ -52,13 +55,15 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         switch (photonEvent.Code)
         {
             case (byte)NetworkEvents.Lobby:
-                //judge.GameStartJudge(ref m_charaCount);
                 int hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers + 1;
                 randomNumber = Random.Range(1, hunterNumber);
                 break;
             case (byte)NetworkEvents.GameStart:
-                var scene = GameObject.Find("SceneLoader").GetComponent<SceneLoader>();
-                scene.LoadScene("PlayerSyncTestKasai");
+                scene = GameObject.Find("SceneLoader").GetComponent<SceneLoader>();
+                StartCoroutine(scene.LoadScene(1));
+                //scene.LoadScene(1);
+                Debug.Log(scene);
+                //SceneManager.LoadScene(1);
                 break;
             case (byte)NetworkEvents.Win:
                 Debug.Log("魔女の勝利");
@@ -91,26 +96,28 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         ShowTextCtrl.Show(events);
         yield return new WaitForSeconds(2f);
         yield return new WaitUntil(() => ShowTextCtrl.GetLogData() != null);
-        SceneManager.LoadScene("TestResult");
+        //SceneManager.LoadScene(2);
+        //scene.LoadScene(2);
+        scene = GameObject.Find("SceneLoader").GetComponent<SceneLoader>();
+        StartCoroutine(scene.LoadScene(2));
     }
     public void OnReady()
     {
-        if (!judge && !m_view)
+        if (!m_view)
         {
-            judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
-            m_view = judge.GetComponent<PhotonView>();
+            m_view = GameObject.Find("JudgementController").GetComponent<PhotonView>();
         }
         if (!m_readyCheck)
         {
             m_view.RPC("Check", RpcTarget.All);
             m_readyCheck = true;
+            m_checkImage.SetActive(true);
         }
         else
         {
-            //var methodName = ((System.Action<int>)judge.UncChecked).Method.Name;
-            //Debug.Log(methodName);
             m_view.RPC("UncChecked", RpcTarget.All);
             m_readyCheck = false;
+            m_checkImage.SetActive(false);
         }
     }
     private void Spawn(Scene scene, LoadSceneMode mode)

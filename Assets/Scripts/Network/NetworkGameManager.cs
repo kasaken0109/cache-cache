@@ -14,7 +14,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     [SerializeField, Tooltip("ウィッチの最大人数")]
     int m_witchCapacity;
     [SerializeField]
-    GameObject m_checkButtn;
+    GameObject m_checkButton;
     public int HunterCapacity { get => m_hunterCapacity; }
     public int WitchCapacity { get => m_witchCapacity; }
 
@@ -159,7 +159,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom");
-        m_checkButtn.SetActive(true);
+        m_checkButton.SetActive(true);
     }
 
     /// <summary>指定した部屋への入室に失敗した時</summary>
