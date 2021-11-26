@@ -26,7 +26,7 @@ public class AnimalManager : MonoBehaviour
     }
     List<Animal> animals = new List<Animal>();
 
-    [SerializeField, Header("出現するz座標")]
+    [SerializeField, Header("mapのz座標")]
     int[] m_mapPos = new int[] { 0, -20, -40};
 
     [SerializeField, Header("出現させる動物")]
