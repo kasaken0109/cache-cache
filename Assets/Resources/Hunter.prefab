@@ -259,13 +259,14 @@ GameObject:
   - component: {fileID: 7631717737572162540}
   - component: {fileID: 7631717737572162539}
   - component: {fileID: 7631717737572162542}
-  - component: {fileID: 7631717737572162541}
   - component: {fileID: 4383889082026235764}
   - component: {fileID: -4863099412025377959}
   - component: {fileID: 1036953466909245406}
   - component: {fileID: 2063405629}
   - component: {fileID: 634069721}
   - component: {fileID: 2696471642720516161}
+  - component: {fileID: 2253411981199273106}
+  - component: {fileID: 8845560971829952352}
   m_Layer: 10
   m_Name: Hunter
   m_TagString: Hunter
@@ -360,28 +361,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &7631717737572162541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7631717737572162538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e7a151b6a790044c8fafe6e5cae3fd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_speed: 5
-  m_name: 
-  CanMove: 1
-  m_rb: {fileID: 7631717737572162542}
-  m_stunTime: 3
-  m_attackObject: {fileID: 8262366189142254732}
-  m_attackTime: 0.2
-  m_hunterCamera: {fileID: 3047602550159320792, guid: d5667d5451c720f41b0a38be2e4fbfdd,
-    type: 3}
-  m_view: {fileID: 4383889082026235764}
 --- !u!114 &4383889082026235764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,7 +481,42 @@ MonoBehaviour:
   - {fileID: -4115439610729684787, guid: a88abe0ca7ddddc4f945116d092ac048, type: 3}
   - {fileID: 3591012416601061280, guid: 270845fb660c9744cbd42af04af77b71, type: 3}
   m_itemdisplay: {fileID: 1681868032}
-  m_image: {fileID: 0}
+  m_image: {fileID: 1705301708}
+--- !u!114 &2253411981199273106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7631717737572162538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b391b4ea4bc6946b787aa1e90b5b56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_setChara: {fileID: 8845560971829952352}
+--- !u!114 &8845560971829952352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7631717737572162538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7a151b6a790044c8fafe6e5cae3fd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 5
+  m_name: 
+  CanMove: 1
+  m_rb: {fileID: 7631717737572162542}
+  m_stunTime: 3
+  m_attackObject: {fileID: 8262366189142254732}
+  m_attackTime: 0.2
+  m_hunterCamera: {fileID: 3047602550159320792, guid: d5667d5451c720f41b0a38be2e4fbfdd,
+    type: 3}
+  m_view: {fileID: 4383889082026235764}
 --- !u!1 &8262366189142254732
 GameObject:
   m_ObjectHideFlags: 0
