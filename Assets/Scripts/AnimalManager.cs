@@ -57,27 +57,30 @@ public class AnimalManager : MonoBehaviour
     private void Spawn()
     {
         bool samePos = false;
-        int pos = 0;
-        for (int i = 0; i < m_spownAnimals.Length; samePos = false)
+        int pos;
+        for (int i = 0; i < m_spownAnimals.Length; i++)
         {
             if (m_spownAnimals[i].spownNum > m_spownAnimals[i].right - m_spownAnimals[i].left) 
             {
-                Debug.LogError("設定している数を生成できません");
-                break;
+                Debug.LogError(m_spownAnimals[i].animal.ToString() + ": 設定している数を生成できません");
+                continue;
             }
 
-            pos = Random.Range(m_spownAnimals[i].left, m_spownAnimals[i].right);
-            // 同じ位置にならないようにする
-            for (int k = 0; k < animals.Count; k++)
+            // spownNumの数spownさせる
+            for (int n = 0; n < m_spownAnimals[i].spownNum; samePos = false)
             {
-                if (animals[k].gameObject.transform.position.z == m_mapPos[m_spownAnimals[i].mapNum] &&
-                    pos == animals[k].gameObject.transform.position.x) samePos = true;
+                pos = Random.Range(m_spownAnimals[i].left, m_spownAnimals[i].right);
+                // 同じ位置にならないようにする
+                for (int k = 0; k < animals.Count; k++)
+                {
+                    if (animals[k].gameObject.transform.position.z == m_mapPos[m_spownAnimals[i].mapNum] &&
+                        pos == animals[k].gameObject.transform.position.x) samePos = true;
+                }
+                if (samePos) continue;
+
+                animals.Add(PhotonNetwork.Instantiate(m_spownAnimals[i].animal.ToString(), new Vector3(pos, 0, m_mapPos[m_spownAnimals[i].mapNum]), Quaternion.identity).GetComponent<Animal>());
+                n++;
             }
-            if (samePos) continue;
-
-            animals.Add(PhotonNetwork.Instantiate(m_spownAnimals[i].animal.ToString(), new Vector3(pos, 0, m_mapPos[m_spownAnimals[i].mapNum]), Quaternion.identity).GetComponent<Animal>());
-
-            i++;
         }
     } 
 }
