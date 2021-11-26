@@ -144,14 +144,14 @@ public class Hunter : CharaBase, IStun
     public void SetItem(HaveItemType haveItem)
     {
         itemType = haveItem;
-        GetComponentInChildren<ItemDisplay>().ChangeItem((int)haveItem);
+        GetComponent<ItemDisplay>().ChangeItem((int)haveItem);
 
         switch (haveItem)
         {
             case HaveItemType.None:
                 break;
             case HaveItemType.Enforcealarm:
-                gameObject.AddComponent<PowerAlert>();
+                gameObject.AddComponent<AlartSet>();
                 break;
             case HaveItemType.Trap:
                 gameObject.AddComponent<Trap>();
