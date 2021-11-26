@@ -597,7 +597,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1572489785
 RectTransform:
   m_ObjectHideFlags: 0
@@ -702,8 +702,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5f7498234227c340a371e5df8b7e526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_checkImage: {fileID: 2093191171}
-  m_charaCount: 0
 --- !u!4 &1708651801
 Transform:
   m_ObjectHideFlags: 0
@@ -770,8 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdb93e64bf800454f814e9db96e9f7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_charaCount: 0
-  m_readyCheck: 0
+  m_checkImage: {fileID: 2093191169}
 --- !u!4 &1927390991
 Transform:
   m_ObjectHideFlags: 0
@@ -801,7 +798,7 @@ MonoBehaviour:
   m_debugMode: 0
   m_hunterCapacity: 1
   m_witchCapacity: 1
-  m_checkButtn: {fileID: 1567684922}
+  m_checkButton: {fileID: 1567684922}
 --- !u!1 &2093191169
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,6 +902,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd910a5f98e985042807f2a4ccab512b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_sceneName: 
+  m_sceneIndex: 0
 --- !u!4 &2134509796
 Transform:
   m_ObjectHideFlags: 0

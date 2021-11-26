@@ -527,9 +527,10 @@ GameObject:
   - component: {fileID: 8438248041929454205}
   - component: {fileID: 3054268266421545437}
   - component: {fileID: 4637249377521535332}
-  - component: {fileID: 4055148573714112378}
   - component: {fileID: 873485114908393525}
   - component: {fileID: 4926173883809168689}
+  - component: {fileID: 8622314484844405071}
+  - component: {fileID: 7874194240975109586}
   m_Layer: 9
   m_Name: WitchApha
   m_TagString: Witch
@@ -725,38 +726,6 @@ MonoBehaviour:
   - {fileID: 329091929}
   m_speed: 3
   m_display: {fileID: 434194080}
---- !u!114 &4055148573714112378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8566126618917774023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 450de1c01d89f5d4ab240fb3a4f861b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_speed: 5
-  m_name: 
-  CanMove: 1
-  m_rb: {fileID: 8566126618917774017}
-  m_view: {fileID: 181245493197337478}
-  m_hp: 3
-  m_cacheRangeObject: {fileID: 4933701410050530631}
-  m_attackObject: {fileID: 0}
-  m_stunTime: 3
-  m_directionPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  m_alart:
-  - {fileID: 5081211440213494502, guid: 49805e4a6d7e0f54d897df1f4ba42636, type: 3}
-  - {fileID: 5081211440213494502, guid: f82bf7eadcf585b4182c0598f20ad30e, type: 3}
-  m_witchCamera: {fileID: 413843071826151514, guid: 1203e4926838dc543aa2869047e595e4,
-    type: 3}
 --- !u!95 &873485114908393525
 Animator:
   serializedVersion: 3
@@ -797,3 +766,49 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
+--- !u!114 &8622314484844405071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8566126618917774023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0b391b4ea4bc6946b787aa1e90b5b56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_setChara: {fileID: 7874194240975109586}
+--- !u!114 &7874194240975109586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8566126618917774023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450de1c01d89f5d4ab240fb3a4f861b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 5
+  m_name: 
+  CanMove: 1
+  m_rb: {fileID: 8566126618917774017}
+  m_view: {fileID: 181245493197337478}
+  m_hp: 3
+  m_cacheRangeObject: {fileID: 4933701410050530631}
+  m_attackObject: {fileID: 4933701410050530631}
+  m_stunTime: 3
+  m_directionPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_alart:
+  - {fileID: 5081211440213494502, guid: 49805e4a6d7e0f54d897df1f4ba42636, type: 3}
+  - {fileID: 5081211440213494502, guid: f82bf7eadcf585b4182c0598f20ad30e, type: 3}
+  m_witchCamera: {fileID: 413843071826151514, guid: 1203e4926838dc543aa2869047e595e4,
+    type: 3}
+  m_setTPTime: 2

@@ -11,9 +11,11 @@ public class TeleportManager : MonoBehaviour
 
         None,
     }
+
     [SerializeField] float m_moveZ = 20;
-    [SerializeField] bool m_debug = false;
     [SerializeField] ColliderType m_type = ColliderType.None;
+    [SerializeField] GameObject m_paticleObj = null;
+    [SerializeField] Material m_defM = default;
     [SerializeField, Tooltip("Circle基準の半径")] float m_radius = 1;
     [SerializeField, Header("Pointerのデータ群. size内は個別のData")] List<Setter> _setters = new List<Setter>();
 
@@ -32,10 +34,7 @@ public class TeleportManager : MonoBehaviour
         public Vector3[] OthersPointer;
     }
 
-    void Start()
-    {
-        if (m_debug) Create();
-    }
+    void Start() => Create();
 
     /// <summary>
     /// 任意での呼び出し
@@ -87,12 +86,20 @@ public class TeleportManager : MonoBehaviour
         Vector3 set = target.position;
         if (v < 0)
         {
-            if (set.z + m_moveZ * -1 < -40) return;
+            if (set.z + m_moveZ * -1 < -40)
+            {
+                target.position = new Vector3(set.x, set.y, 0);
+                return;
+            }
             target.position = new Vector3(set.x, set.y,set.z + m_moveZ * -1);
         }
         else
         {
-            if (set.z + m_moveZ > 0) return;
+            if (set.z + m_moveZ > 0)
+            {
+                target.position = new Vector3(set.x, set.y, -40);
+                return;
+            }
             target.position = new Vector3(set.x, set.y, set.z + m_moveZ);
         }
     }
@@ -122,6 +129,8 @@ public class TeleportManager : MonoBehaviour
         GameObject p = new GameObject($"TPPoint No.{m_groupID} : MyID.{m_individualID}");
         
         p.transform.position = setPos;
+        CreateParticle(setPos).transform.SetParent(p.transform);
+
         Teleporter t = p.AddComponent<Teleporter>();
         t.GroupID = m_groupID;
         t.MyID = m_individualID;
@@ -143,5 +152,32 @@ public class TeleportManager : MonoBehaviour
         }
 
         m_individualID++;
+    }
+
+    GameObject CreateParticle(Vector3 setPos)
+    {
+        GameObject obj = default;
+
+        if (m_paticleObj != null)
+        {
+            obj = Instantiate(m_paticleObj);
+            obj.transform.position = setPos;
+            return obj;
+        }
+
+        obj = new GameObject("Particle");
+        obj.transform.position = setPos;
+        ParticleSystem p = obj.AddComponent<ParticleSystem>();
+        p.Stop();
+        ParticleSystem.MainModule main = p.main;
+        main.duration = 0.05f;
+        main.startLifetime = 2f;
+        main.startSpeed = 0.5f;
+
+        ParticleSystem.ShapeModule s = p.shape;
+        s.shapeType = ParticleSystemShapeType.Circle;
+        p.GetComponent<ParticleSystemRenderer>().material = m_defM;
+        p.Play();
+        return obj;
     }
 }

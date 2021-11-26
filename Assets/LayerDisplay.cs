@@ -8,19 +8,23 @@ public class LayerDisplay : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("階層を表示するUI")]
-    Text m_display = default;
+    private Text m_display = default;
 
     [SerializeField]
     [Tooltip("デバッグモード")]
-    bool m_debug = false;
+    private bool m_debug = false;
+
+    [SerializeField]
+    [Tooltip("レイヤー番号")]
+    private int m_layerNum = default;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if ((collision.CompareTag("Hunter") || collision.CompareTag("Witch")) 
-            && (m_debug || collision.GetComponent<PhotonView>().IsMine) && collision.transform.position.z == transform.position.z)
+            && (m_debug || !collision.GetComponent<PhotonView>().IsMine) && collision.transform.position.z == transform.position.z)
         {
-            Debug.Log("Enter");
-            m_display.text = gameObject.name;
+            collision.GetComponent<PositionIndicator>().MyLayerNum = m_layerNum;
+            m_display.text = "Layer" + m_layerNum;
         }
     }
 
@@ -30,7 +34,9 @@ public class LayerDisplay : MonoBehaviour
         if ((collision.CompareTag("Hunter") || collision.CompareTag("Witch")) 
             && (m_debug || collision.GetComponent<PhotonView>().IsMine) && collision.transform.position.z == transform.position.z && IsFirst)
         {
-            m_display.text = gameObject.name;
+            Debug.Log("Hit");
+            collision.GetComponent<PositionIndicator>().MyLayerNum = m_layerNum;
+            m_display.text = "Layer" + m_layerNum;
         }
     }
 
