@@ -53,7 +53,7 @@ public class Witch : CharaBase, IStun
         //m_rb = GetComponent<Rigidbody2D>();
         hpDisplay = GetComponent<HpDisplay>();
         m_rb.gravityScale = 0;
-        //StartCoroutine(CameraCreate());
+        StartCoroutine(CameraCreate());
     }
 
     IEnumerator CameraCreate()

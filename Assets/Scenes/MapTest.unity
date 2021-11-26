@@ -4734,6 +4734,61 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3897017893785380599, guid: 9402113461e41be48be6862ccdb019db,
+        type: 3}
+      propertyPath: m_spownAnimals.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897017893785380599, guid: 9402113461e41be48be6862ccdb019db,
+        type: 3}
+      propertyPath: m_animalList
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897017893785380599, guid: 9402113461e41be48be6862ccdb019db,
+        type: 3}
+      propertyPath: m_spownAnimals.Array.data[1].animal
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897017893785380599, guid: 9402113461e41be48be6862ccdb019db,
+        type: 3}
+      propertyPath: m_spownAnimals.Array.data[0].mapNum
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897017893785380599, guid: 9402113461e41be48be6862ccdb019db,
+        type: 3}
+      propertyPath: m_spownAnimals.Array.data[1].mapNum
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897017893785380599, guid: 9402113461e41be48be6862ccdb019db,
+        type: 3}
+      propertyPath: m_spownAnimals.Array.data[0].right
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897017893785380599, guid: 9402113461e41be48be6862ccdb019db,
+        type: 3}
+      propertyPath: m_spownAnimals.Array.data[0].left
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897017893785380599, guid: 9402113461e41be48be6862ccdb019db,
+        type: 3}
+      propertyPath: m_spownAnimals.Array.data[0].spownNum
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897017893785380599, guid: 9402113461e41be48be6862ccdb019db,
+        type: 3}
+      propertyPath: m_spownAnimals.Array.data[1].right
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897017893785380599, guid: 9402113461e41be48be6862ccdb019db,
+        type: 3}
+      propertyPath: m_spownAnimals.Array.data[1].left
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897017893785380599, guid: 9402113461e41be48be6862ccdb019db,
+        type: 3}
+      propertyPath: m_spownAnimals.Array.data[1].spownNum
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3897017893996780452, guid: 9402113461e41be48be6862ccdb019db,
         type: 3}
       propertyPath: m_timerText
