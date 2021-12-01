@@ -12,6 +12,6 @@ public abstract class CharaBase : MonoBehaviour
 
     public float Speed { get => m_speed; private set { m_speed = value; } }
     public string Name { get => m_name; set { m_name = value; } }
-    public abstract void Move(float h);
+    public abstract void Move(float h, float v);
 
 }

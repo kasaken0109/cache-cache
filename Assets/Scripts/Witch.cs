@@ -18,9 +18,6 @@ public class Witch : CharaBase, IStun
     GameObject m_cacheRangeObject = default;
 
     [SerializeField]
-    [Tooltip("攻撃のコライダー")]
-    GameObject m_attackObject = default;
-    [SerializeField]
     [Tooltip("スタンする時間")]
     float m_stunTime = 3f;
     [SerializeField]
@@ -36,7 +33,7 @@ public class Witch : CharaBase, IStun
 
     public int Hp => m_hp;
     HpDisplay hpDisplay = default;
-    Collider2D m_change;
+    Collider m_change;
     SpriteRenderer m_sr;
     bool m_contactFlag = false;
     bool m_specter = false;
@@ -48,7 +45,7 @@ public class Witch : CharaBase, IStun
     {
         m_sr = GetComponent<SpriteRenderer>();
         m_anim = GetComponent<Animator>();
-        m_change = GetComponentInChildren<Collider2D>();
+        m_change = GetComponentInChildren<Collider>();
         //m_view = GetComponent<PhotonView>();
         //m_rb = GetComponent<Rigidbody2D>();
         hpDisplay = GetComponent<HpDisplay>();
@@ -93,23 +90,22 @@ public class Witch : CharaBase, IStun
         //    return;
         //}
 
-        if (CanMove) Move(h);
-        SetDirection(h);
+        if (CanMove) Move(h, v);
+        SetDirection(h, v);
     }
 
-    public override void Move(float h)
+    public override void Move(float h, float v)
     {
-        m_rb.velocity = new Vector2(h, 0).normalized * Speed;
+        m_rb.velocity = new Vector2(h, v).normalized * Speed;
         m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition 
             | RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeRotation;
-        m_anim = GetComponent<Animator>();
-        m_anim.SetBool("IsWalk", h == 0 ? false : true);
+        m_anim.SetBool("IsWalk", h == 0 && v == 0 ? false : true);
     }
 
-    public void SetDirection(float h)
+    public void SetDirection(float h, float v)
     {
-        if (h == 0) return;
-        m_attackObject.transform.localPosition = new Vector3(h * 1.5f, 0, 0);
+        if (h == 0 && v == 0) return;
+        m_cacheRangeObject.transform.localPosition = new Vector3(h * 1.5f, v * 1.5f, 0);
     }
 
     bool IsDead = false;
@@ -167,7 +163,7 @@ public class Witch : CharaBase, IStun
     {
         m_anim.runtimeAnimatorController = m_change.gameObject.GetComponent<Animator>().runtimeAnimatorController;
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
         m_change = other;
         m_contactFlag = true;
