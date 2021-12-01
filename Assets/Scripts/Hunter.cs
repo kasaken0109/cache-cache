@@ -151,7 +151,7 @@ public class Hunter : CharaBase, IStun
             case HaveItemType.None:
                 break;
             case HaveItemType.Enforcealarm:
-                gameObject.AddComponent<AlartSet>();
+                gameObject.AddComponent<PowerAlert>();
                 break;
             case HaveItemType.Trap:
                 gameObject.AddComponent<Trap>();
@@ -167,7 +167,7 @@ public class Hunter : CharaBase, IStun
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.CompareTag("Item") && GetHaveItem == HaveItemType.None)
         {
