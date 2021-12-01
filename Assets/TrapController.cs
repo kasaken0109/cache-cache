@@ -5,11 +5,11 @@ using Photon.Pun;
 
 public class TrapController : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.CompareTag("Witch") && IsFirst)
+        if (other.CompareTag("Witch") && IsFirst)
         {
-            PhotonView view = collision.gameObject.GetComponent<PhotonView>();
+            PhotonView view = other.gameObject.GetComponent<PhotonView>();
 
             if (view)
             {
