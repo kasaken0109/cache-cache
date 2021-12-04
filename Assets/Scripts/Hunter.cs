@@ -5,7 +5,7 @@ using Photon.Pun;
 
 public class Hunter : CharaBase, IStun
 {
-    [SerializeField] Rigidbody2D m_rb;
+    [SerializeField] Rigidbody m_rb;
 
     [SerializeField]
     [Tooltip("スタンする時間")]
@@ -40,7 +40,6 @@ public class Hunter : CharaBase, IStun
     private void Start()
     {
         m_anim = GetComponent<Animator>();
-        m_rb.gravityScale = 0;
         //StartCoroutine(CameraCreate());
     }
     IEnumerator CameraCreate()
@@ -69,23 +68,23 @@ public class Hunter : CharaBase, IStun
         }
         else
         {
-            m_rb.velocity = Vector2.zero;
+            m_rb.velocity = Vector3.zero;
         }
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
     }
 
     public override void Move(float h, float v)
     {
-        m_rb.velocity = new Vector2(h, v).normalized * Speed * m_speedUpRate;
-        m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition
-            | RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeRotation;
-        m_anim.SetBool("IsWalk", h + v != 0 ? true : false);
+        m_rb.velocity = new Vector3(h,0, v).normalized * Speed * m_speedUpRate;
+        //m_rb.constraints = m_rb.velocity == Vector3.zero ? RigidbodyConstraints.FreezePosition
+        //    | RigidbodyConstraints.FreezeRotation : RigidbodyConstraints.FreezeRotation;
+        //m_anim.SetBool("IsWalk", h + v != 0 ? true : false);
     }
 
     public void SetDirection(float h, float v)
     {
         if (h == 0 && v == 0) return;
-        m_attackObject.transform.localPosition = new Vector3(h * 1.5f, v * 1.5f, 0);
+        m_attackObject.transform.localPosition = new Vector3(h * 1.5f, 0, v * 1.5f);
     }
 
     IEnumerator Attack()

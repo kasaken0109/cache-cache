@@ -5,7 +5,7 @@ using Photon.Pun;
 
 public class AttackController : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.CompareTag("Animal")) GetComponentInParent<Hunter>().PlayStun();
         else if (collision.CompareTag("Witch") && IsFirst)
