@@ -1,17 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 
 public class Witch : CharaBase, IStun
 {
-    [SerializeField] Rigidbody2D m_rb;
+    [SerializeField] Rigidbody m_rb;
     [SerializeField] PhotonView m_view;
     Animator m_anim;
     [SerializeField]
     private int m_hp = 3; //魔法使いの体力
+
+    [SerializeField]
+    [Tooltip("魔女の魔力")]
+    private float m_mp = 100;
+
+    [SerializeField]
+    [Tooltip("魔力が変動するスピード")]
+    private float m_mpSpeed = 0.2f;
+
+    [SerializeField]
+    [Tooltip("魔力の表示UI")]
+    private Image m_mpUI = default;
 
     [SerializeField]
     [Tooltip("変身範囲のコライダー")]
@@ -26,6 +39,8 @@ public class Witch : CharaBase, IStun
     [SerializeField]
     [Tooltip("生成するアラート")]
     private GameObject[] m_alart = new GameObject[0];
+
+    private RuntimeAnimatorController m_origin = default;
     [SerializeField]
     WitchCamera m_witchCamera = default;
     [SerializeField]
@@ -40,17 +55,17 @@ public class Witch : CharaBase, IStun
     GameObject m_camera = null;
 
     float m_time = 0;
+    float mp;
 
     private void Start()
     {
         m_sr = GetComponent<SpriteRenderer>();
         m_anim = GetComponent<Animator>();
         m_change = GetComponentInChildren<Collider>();
-        //m_view = GetComponent<PhotonView>();
-        //m_rb = GetComponent<Rigidbody2D>();
         hpDisplay = GetComponent<HpDisplay>();
-        m_rb.gravityScale = 0;
-        StartCoroutine(CameraCreate());
+        m_origin = m_anim.runtimeAnimatorController;
+        mp = m_mp;
+        //StartCoroutine(CameraCreate());
     }
 
     IEnumerator CameraCreate()
@@ -66,6 +81,13 @@ public class Witch : CharaBase, IStun
 
     private void Update()
     {
+        mp = IsChangerd ? (mp - m_mpSpeed > 0 ? mp - m_mpSpeed : 0) : (mp + m_mpSpeed < m_mp ? mp + m_mpSpeed : m_mp);
+        if (mp <= 0.01f)
+        {
+            SetAnimator(false);
+            IsChangerd = false;
+        }
+        m_mpUI.fillAmount = mp / m_mp;
         m_view.RPC("ChangeSprite",RpcTarget.All);
     }
     private void FixedUpdate()
@@ -96,16 +118,16 @@ public class Witch : CharaBase, IStun
 
     public override void Move(float h, float v)
     {
-        m_rb.velocity = new Vector2(h, v).normalized * Speed;
-        m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition 
-            | RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeRotation;
+        m_rb.velocity = new Vector3(h,0, v).normalized * Speed;
+        //m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition 
+        //    | RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeRotation;
         m_anim.SetBool("IsWalk", h == 0 && v == 0 ? false : true);
     }
 
     public void SetDirection(float h, float v)
     {
         if (h == 0 && v == 0) return;
-        m_cacheRangeObject.transform.localPosition = new Vector3(h * 1.5f, v * 1.5f, 0);
+        m_cacheRangeObject.transform.localPosition = new Vector3(h * 1.5f, 0, v * 1.5f);
     }
 
     bool IsDead = false;
@@ -142,33 +164,38 @@ public class Witch : CharaBase, IStun
         m_specter = true;
     }
 
+    bool IsChangerd = false;
+
     [PunRPC]
     void ChangeSprite()
     {
-        if (m_contactFlag)
+        if (!m_view.IsMine) return;
+        if (Input.GetButtonDown("Use"))
         {
-            if (Input.GetButtonDown("Use") && m_view.IsMine)
+            if (m_contactFlag && m_change.gameObject.CompareTag("Animal") && !IsChangerd)
             {
-                if (m_change.gameObject.CompareTag("Animal"))
-                {
-                    m_view.RPC("SetAnimator", RpcTarget.All);
-                    Debug.Log(m_sr.sprite);
-                }
+                m_view.RPC("SetAnimator", RpcTarget.All, true);
+                IsChangerd = true;
+            }
+            else if (IsChangerd)
+            {
+                m_view.RPC("SetAnimator", RpcTarget.All, false);
+                IsChangerd = false;
             }
         }
     }
 
     [PunRPC]
-    void SetAnimator()
+    void SetAnimator(bool change)
     {
-        m_anim.runtimeAnimatorController = m_change.gameObject.GetComponent<Animator>().runtimeAnimatorController;
+        m_anim.runtimeAnimatorController = change? m_change.gameObject.GetComponentInParent<Animator>().runtimeAnimatorController : m_origin;
     }
     private void OnTriggerEnter(Collider other)
     {
         m_change = other;
         m_contactFlag = true;
     }
-    private void OnTriggerExit2D()//Collider2D other)
+    private void OnTriggerExit()//Collider2D other)
     {
         m_change = null;
         m_contactFlag = false;

@@ -6,7 +6,7 @@ using UnityEngine;
 public class Animal : MonoBehaviour
 {
     [Header("アタリ判定用子オブジェクト")] [SerializeField]
-    Collider2D m_trigger = default;
+    Collider m_trigger = default;
     [Header("最大移動時間")] [SerializeField]
     float m_maxActionTime = 3f;
     [Header("最小移動時間")] [SerializeField]
@@ -16,7 +16,7 @@ public class Animal : MonoBehaviour
     [Header("最小待機時間")] [SerializeField]
     float m_minWaitTime = 2f;
 
-    Rigidbody2D m_rb = default;
+    [SerializeField]Rigidbody m_rb = default;
     Animator m_anim = default;
 
     [SerializeField]
@@ -25,12 +25,12 @@ public class Animal : MonoBehaviour
     float m_actionTimer = 0f;
     float m_waitTime = 0f;
 
-    Vector2 m_dist = default;
+    Vector3 m_dist = default;
     bool m_action = false;
     public void CreateStart()
     {
         m_trigger.gameObject.SetActive(false);
-        m_rb = GetComponent<Rigidbody2D>();
+        m_rb = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
     }
 
@@ -51,7 +51,7 @@ public class Animal : MonoBehaviour
             {
                 m_timer = 0;
                 m_action = false;
-                m_rb.velocity = Vector2.zero;
+                m_rb.velocity = Vector3.zero;
             }
 
             return;
@@ -89,9 +89,9 @@ public class Animal : MonoBehaviour
     /// </summary>
     public void Move(float h)
     {
-        m_rb.velocity = new Vector2(h, 0) * m_speed;
-        m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition 
-            | RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeRotation;
+        m_rb.velocity = new Vector3(h, 0,0) * m_speed;
+        //m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition 
+        //    | RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeRotation;
         m_anim.SetBool("IsWalk", true);
     }
 
@@ -102,7 +102,7 @@ public class Animal : MonoBehaviour
         m_trigger.gameObject.SetActive(false);
         m_timer = 0;
         m_action = false;
-        m_rb.velocity = Vector2.zero;
+        m_rb.velocity = Vector3.zero;
         m_anim.SetBool("IsWalk", false);
     }
 }

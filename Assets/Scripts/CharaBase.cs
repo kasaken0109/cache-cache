@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(PositionIndicator))]
+[RequireComponent(typeof(Rigidbody))]
 public abstract class CharaBase : MonoBehaviour
 {
     [SerializeField] float m_speed;
