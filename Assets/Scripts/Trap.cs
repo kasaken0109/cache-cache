@@ -21,8 +21,8 @@ public class Trap : Item
     {
         traps = GameObject.FindGameObjectsWithTag("Trap");
         StartCoroutine(nameof(WaitCharge));
-        GameObject trap = PhotonNetwork.Instantiate(m_trap, m_hunter.transform.position, m_hunter.transform.rotation);
-        trap.transform.position = new Vector3(m_hunter.transform.position.x,0,m_hunter.transform.position.z);
+        Vector3 pos = new Vector3(m_hunter.transform.position.x, 0, m_hunter.transform.position.z);
+        GameObject trap = PhotonNetwork.Instantiate(m_trap, pos, m_hunter.transform.rotation);
         if (traps.Length > 2)
         {
             PhotonNetwork.Destroy(GameObject.Find("trap1"));
