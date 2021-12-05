@@ -31,12 +31,6 @@ public class Hunter : CharaBase, IStun
     Animator m_anim;
     [SerializeField] PhotonView m_view;
 
-    public void SetUp()
-    {
-        //m_view = GetComponent<PhotonView>();
-        //m_rb = GetComponent<Rigidbody2D>();
-
-    }
     private void Start()
     {
         m_anim = GetComponent<Animator>();

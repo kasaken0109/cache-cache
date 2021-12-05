@@ -17,8 +17,8 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     GameObject m_checkButton;
     public int HunterCapacity { get => m_hunterCapacity; }
     public int WitchCapacity { get => m_witchCapacity; }
-
-
+    RaiseEventOptions raiseEventoptions;
+    SendOptions sendOptions;
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -98,9 +98,9 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("Closing Room");
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
+            raiseEventoptions = new RaiseEventOptions();
             raiseEventoptions.Receivers = ReceiverGroup.MasterClient;
-            SendOptions sendOptions = new SendOptions();
+            sendOptions = new SendOptions();
             PhotonNetwork.RaiseEvent((byte)NetworkEvents.Lobby, null, raiseEventoptions, sendOptions);
         }
     }
@@ -178,6 +178,32 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     /// <summary>部屋から退室した時</summary>
     public override void OnLeftRoom()
     {
+        //自分がハンターかウィッチかの判定と自分が死んだかの判定をかく
+        var chara = new List<CharaBase>(FindObjectsOfType<CharaBase>());
+        PhotonView view;
+        foreach (var item in chara)
+        {
+            view = item.gameObject.GetComponent<PhotonView>();
+            if (view.IsMine)
+            {
+                if (item.CompareTag("Witch"))
+                {
+                    var witch = FindObjectOfType<Witch>();
+                    if (witch.IsDead)
+                    {
+                        GameManager gameManager = GetComponent<GameManager>();
+                        gameManager.WitchDieCount++;
+                    }
+                }
+                else
+                {
+                    raiseEventoptions = new RaiseEventOptions();
+                    raiseEventoptions.Receivers = ReceiverGroup.All;
+                    sendOptions = new SendOptions();
+                    PhotonNetwork.RaiseEvent((byte)NetworkEvents.Win, null, raiseEventoptions, sendOptions);
+                }
+            }
+        }
         Debug.Log("OnLeftRoom");
     }
 

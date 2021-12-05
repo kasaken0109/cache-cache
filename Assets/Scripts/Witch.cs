@@ -47,6 +47,7 @@ public class Witch : CharaBase, IStun
     float m_setTPTime;
 
     public int Hp => m_hp;
+    public bool IsDead { get; set; }
     HpDisplay hpDisplay = default;
     Collider m_change;
     SpriteRenderer m_sr;
@@ -71,12 +72,8 @@ public class Witch : CharaBase, IStun
     IEnumerator CameraCreate()
     {
         yield return new WaitForSeconds(1);
-        if (!m_view || !m_view.IsMine)yield break;
+        if (!m_view || !m_view.IsMine) yield break;
         Instantiate(m_witchCamera, transform);
-    }
-    public void SetUp()
-    {
-        
     }
 
     private void Update()
@@ -88,7 +85,7 @@ public class Witch : CharaBase, IStun
             IsChangerd = false;
         }
         m_mpUI.fillAmount = mp / m_mp;
-        m_view.RPC("ChangeSprite",RpcTarget.All);
+        m_view.RPC("ChangeSprite", RpcTarget.All);
     }
     private void FixedUpdate()
     {
@@ -118,7 +115,7 @@ public class Witch : CharaBase, IStun
 
     public override void Move(float h, float v)
     {
-        m_rb.velocity = new Vector3(h,0, v).normalized * Speed;
+        m_rb.velocity = new Vector3(h, 0, v).normalized * Speed;
         //m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition 
         //    | RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeRotation;
         m_anim.SetBool("IsWalk", h == 0 && v == 0 ? false : true);
@@ -130,7 +127,6 @@ public class Witch : CharaBase, IStun
         m_cacheRangeObject.transform.localPosition = new Vector3(h * 1.5f, 0, v * 1.5f);
     }
 
-    bool IsDead = false;
     [PunRPC]
     public void OnHit()
     {
@@ -188,7 +184,7 @@ public class Witch : CharaBase, IStun
     [PunRPC]
     void SetAnimator(bool change)
     {
-        m_anim.runtimeAnimatorController = change? m_change.gameObject.GetComponentInParent<Animator>().runtimeAnimatorController : m_origin;
+        m_anim.runtimeAnimatorController = change ? m_change.gameObject.GetComponentInParent<Animator>().runtimeAnimatorController : m_origin;
     }
     private void OnTriggerEnter(Collider other)
     {
