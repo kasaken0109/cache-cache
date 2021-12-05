@@ -34,7 +34,6 @@ public class LayerDisplay : MonoBehaviour
         if ((collision.CompareTag("Hunter") || collision.CompareTag("Witch")) 
             && (m_debug || collision.GetComponent<PhotonView>().IsMine) && collision.transform.position.z == transform.position.z && IsFirst)
         {
-            Debug.Log("Hit");
             collision.GetComponent<PositionIndicator>().MyLayerNum = m_layerNum;
             m_display.text = "Layer" + m_layerNum;
         }

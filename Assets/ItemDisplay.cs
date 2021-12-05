@@ -31,7 +31,6 @@ public class ItemDisplay : MonoBehaviour
     {
         m_itemdisplay.SetActive(false);
         yield return new WaitUntil(() => GetComponent<PhotonView>());
-        Debug.Log("CanGet");
         m_view = GetComponent<PhotonView>();
         yield return new WaitForSeconds(2f);
         m_itemdisplay.SetActive(m_view.IsMine);
