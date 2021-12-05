@@ -198,7 +198,6 @@ public class Witch : CharaBase, IStun
     }
     private void OnTriggerExit()
     {
-        if (other.CompareTag("Untagged")) return;
         m_change = null;
         m_contactFlag = false;
     }
