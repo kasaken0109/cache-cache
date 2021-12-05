@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
     /// <summary>このクラスのインスタンスが既にあるかどうか</summary>
     static bool m_isExists;
-    int m_witchDieCount;
+    public int WitchDieCount { get; set; }
     bool m_readyCheck;
     PhotonView m_view;
     [SerializeField]
@@ -55,10 +55,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         switch (photonEvent.Code)
         {
             case (byte)NetworkEvents.Lobby:
-                int hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers + 1;
-                randomNumber = Random.Range(1, hunterNumber);
                 break;
             case (byte)NetworkEvents.GameStart:
+                int hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers + 1;
+                randomNumber = Random.Range(1, hunterNumber);
                 scene = GameObject.Find("SceneLoader").GetComponent<SceneLoader>();
                 StartCoroutine(scene.LoadScene(1));
                 //scene.LoadScene(1);
@@ -84,8 +84,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         yield return new WaitForSeconds(0.2f);
         judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
         netManager = GameObject.Find("GameManager").GetComponent<NetworkGameManager>();
-        m_witchDieCount++;
-        judge.LoseJudge(m_witchDieCount, netManager.WitchCapacity);
+        WitchDieCount++;
+        judge.LoseJudge(WitchDieCount, netManager.WitchCapacity);
         Debug.Log("魔女が死んだ");
         FirstDeath = true;
     }
