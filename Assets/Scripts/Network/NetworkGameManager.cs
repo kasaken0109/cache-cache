@@ -178,12 +178,12 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     /// <summary>部屋から退室した時</summary>
     public override void OnLeftRoom()
     {
-        //自分がハンターかウィッチかの判定と自分が死んだかの判定をかく
         var chara = new List<CharaBase>(FindObjectsOfType<CharaBase>());
         PhotonView view;
         foreach (var item in chara)
         {
             view = item.gameObject.GetComponent<PhotonView>();
+            view.RPC("Disconnected", RpcTarget.All);
             if (view.IsMine)
             {
                 if (item.CompareTag("Witch"))
@@ -193,6 +193,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
                     {
                         GameManager gameManager = GetComponent<GameManager>();
                         gameManager.WitchDieCount++;
+                        witch.gameObject.SetActive(false);
                     }
                 }
                 else
@@ -217,6 +218,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     /// <summary>自分のいる部屋から他のプレイヤーが退室した時</summary>
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
+        //自分がハンターかウィッチかの判定と自分が死んだかの判定をかく
         Debug.Log("OnPlayerLeftRoom: " + otherPlayer.NickName);
     }
 

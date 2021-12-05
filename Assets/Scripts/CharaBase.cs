@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Pun;
 [RequireComponent(typeof(Rigidbody))]
 public abstract class CharaBase : MonoBehaviour
 {
@@ -12,5 +12,10 @@ public abstract class CharaBase : MonoBehaviour
     public float Speed { get => m_speed; private set { m_speed = value; } }
     public string Name { get => m_name; set { m_name = value; } }
     public abstract void Move(float h, float v);
+    [PunRPC]
+    public void Disconnected()
+    {
+        Debug.Log("抜けた");
+    }
 
 }
