@@ -189,7 +189,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
                 if (item.CompareTag("Witch"))
                 {
                     var witch = FindObjectOfType<Witch>();
-                    if (witch.IsDead)
+                    if (!witch.IsDead)
                     {
                         GameManager gameManager = GetComponent<GameManager>();
                         gameManager.WitchDieCount++;
