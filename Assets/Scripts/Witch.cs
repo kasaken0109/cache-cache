@@ -159,7 +159,7 @@ public class Witch : CharaBase, IStun
     {
         // ここでanimationでspriteを消す
 
-        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        gameObject.GetComponent<BoxCollider>().enabled = false;
         //m_witchCamera.WitchT = this.transform;
         m_specter = true;
     }
@@ -195,7 +195,7 @@ public class Witch : CharaBase, IStun
         m_change = other;
         m_contactFlag = true;
     }
-    private void OnTriggerExit()//Collider2D other)
+    private void OnTriggerExit()
     {
         m_change = null;
         m_contactFlag = false;
