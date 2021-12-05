@@ -13,12 +13,12 @@ public class Cinema : MonoBehaviour
         m_camera = GetComponent<CinemachineVirtualCamera>();
         m_camera.m_Lens.NearClipPlane = -12;
         m_view = GetComponentInParent<PhotonView>();
-        m_camera.Priority = m_view.IsMine ? 15 : 10;
+        StartCoroutine(nameof(SetPriority));
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator SetPriority()
     {
-        
+        yield return new WaitForSeconds(1f);
+        m_camera.Priority = m_view.IsMine ? 15 : 10;
     }
 }
