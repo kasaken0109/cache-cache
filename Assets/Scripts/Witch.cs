@@ -31,6 +31,10 @@ public class Witch : CharaBase, IStun
     GameObject m_cacheRangeObject = default;
 
     [SerializeField]
+    [Tooltip("ライト範囲のコライダー")]
+    GameObject m_lightObject = default;
+
+    [SerializeField]
     [Tooltip("スタンする時間")]
     float m_stunTime = 3f;
     [SerializeField]
@@ -81,7 +85,7 @@ public class Witch : CharaBase, IStun
         mp = IsChangerd ? (mp - m_mpSpeed > 0 ? mp - m_mpSpeed : 0) : (mp + m_mpSpeed < m_mp ? mp + m_mpSpeed : m_mp);
         if (mp <= 0.01f)
         {
-            SetAnimator(false);
+            m_view.RPC("SetAnimator", RpcTarget.All, false);
             IsChangerd = false;
         }
         m_mpUI.fillAmount = mp / m_mp;
@@ -92,6 +96,10 @@ public class Witch : CharaBase, IStun
         if (!m_view || !m_view.IsMine) return;      // 自分が生成したものだけ処理する
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
+        if (Input.GetButtonDown("Fire1") && mp == m_mp)
+        {
+            StartCoroutine(nameof(UseLight));
+        }
         if (v != 0)
         {
             m_time += Time.fixedDeltaTime;
@@ -111,6 +119,17 @@ public class Witch : CharaBase, IStun
 
         if (CanMove) Move(h, v);
         SetDirection(h, v);
+    }
+
+    IEnumerator UseLight()
+    {
+        while (mp > 0)
+        {
+            m_lightObject.SetActive(true);
+            mp -= m_mpSpeed * 2f;
+            yield return null;
+        }
+        m_lightObject.SetActive(false);
     }
 
     public override void Move(float h, float v)

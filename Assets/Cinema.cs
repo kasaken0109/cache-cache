@@ -11,7 +11,7 @@ public class Cinema : MonoBehaviour
     void Start()
     {
         m_camera = GetComponent<CinemachineVirtualCamera>();
-        m_camera.m_Lens.NearClipPlane = -12;
+        //m_camera.m_Lens.NearClipPlane = -12;
         m_view = GetComponentInParent<PhotonView>();
         StartCoroutine(nameof(SetPriority));
     }
