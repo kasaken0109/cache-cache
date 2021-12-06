@@ -5,9 +5,11 @@ using Photon.Pun;
 
 public class AttackController : MonoBehaviour
 {
+    [SerializeField] bool m_isHunter = true;
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.CompareTag("Animal")) GetComponentInParent<Hunter>().PlayStun();
+        if (collision.CompareTag("Animal") && m_isHunter) GetComponentInParent<Hunter>().PlayStun();
+        else if (collision.CompareTag("Hunter") && !m_isHunter)collision.GetComponentInParent<Hunter>().PlayStun();
         else if (collision.CompareTag("Witch") && IsFirst)
         {
             //collision.GetComponent<Witch>().OnHit();
