@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class FadeRoofController : MonoBehaviour
+public class FadeObjectController : MonoBehaviour
 {
     [SerializeField]
     [Tooltip("フェードするスピード")]
     float m_speed = 1f;
+
+    [SerializeField]
+    [Tooltip("フェードする距離")]
+    float m_fadeDistance = 3f;
 
     SpriteRenderer m_sr = default;
     Color m_setColor;
@@ -30,16 +34,30 @@ public class FadeRoofController : MonoBehaviour
         m_sr.color = m_setColor;
 
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+
+    private void Update()
+    {
+        if(Camera.main.transform.position.z   > transform.position.z - m_fadeDistance)
+        {
+            StopAllCoroutines();
+            StartCoroutine(FadeRoof(0.2f));
+        }
+        else
+        {
+            StopAllCoroutines();
+            StartCoroutine(FadeRoof(1));
+        }
+    }
+    private void OnTriggerEnter(Collider collision)
     {
         if ((collision.CompareTag("Witch") || collision.CompareTag("Hunter")) && collision.gameObject.GetComponent<PhotonView>().IsMine)
         {
             StopAllCoroutines();
-            StartCoroutine(FadeRoof(0.5f));
+            StartCoroutine(FadeRoof(0.2f));
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         if ((collision.CompareTag("Witch") || collision.CompareTag("Hunter")) && collision.gameObject.GetComponent<PhotonView>().IsMine)
         {
