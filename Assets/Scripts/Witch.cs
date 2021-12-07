@@ -46,9 +46,7 @@ public class Witch : CharaBase, IStun
 
     private RuntimeAnimatorController m_origin = default;
     [SerializeField]
-    WitchCamera m_witchCamera = default;
-    [SerializeField]
-    float m_setTPTime;
+    WitchCamera m_witchCamera = default;    
 
     public int Hp => m_hp;
     public bool IsDead { get; set; }
@@ -59,7 +57,6 @@ public class Witch : CharaBase, IStun
     bool m_specter = false;
     GameObject m_camera = null;
 
-    float m_time = 0;
     float mp;
 
     private void Start()
@@ -100,17 +97,7 @@ public class Witch : CharaBase, IStun
         {
             StartCoroutine("UseLight");
         }
-        if (v != 0)
-        {
-            m_time += Time.fixedDeltaTime;
-            if (m_time > m_setTPTime)
-            {
-                m_time = 0;
-                FindObjectOfType<TeleportManager>().HierarchyTP(v, transform);
-            }
-        }
-        else
-            m_time = 0;
+        
         //if (m_specter)
         //{
         //    m_witchCamera.CameraMove(h);

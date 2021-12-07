@@ -15,7 +15,7 @@ public class Teleporter : MonoBehaviour
     bool m_isStay = false;
     GameObject m_target = null;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Witch")
             && collision.gameObject.GetComponent<PhotonView>().IsMine)
@@ -25,7 +25,7 @@ public class Teleporter : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.CompareTag("Witch")
             && collision.gameObject.GetComponent<PhotonView>().IsMine)
@@ -37,16 +37,13 @@ public class Teleporter : MonoBehaviour
 
     void Update()
     {
-        if (m_isStay && Input.GetKeyUp(KeyCode.Space) && transform.position.z == m_target.transform.position.z)
+        if (m_isStay && Input.GetKeyUp(KeyCode.Space))
         {
             Debug.Log("押した");
+            Debug.Log($"MYID {m_myID} GroupID {m_groupID}");
             Request();
         }
     }
 
-    void Request()
-    {
-        Debug.Log($"MyCol {transform.position.z} Target {m_target.transform.position.z}");
-        m_creater.TPRequest(m_groupID, m_myID, m_target);
-    }
+    void Request() => m_creater.TPRequest(m_groupID, m_myID, m_target);
 }
