@@ -98,7 +98,7 @@ public class Witch : CharaBase, IStun
         float v = Input.GetAxisRaw("Vertical");
         if (Input.GetButtonDown("Fire1") && mp == m_mp)
         {
-            StartCoroutine(nameof(UseLight));
+            StartCoroutine("UseLight");
         }
         if (v != 0)
         {
@@ -125,11 +125,17 @@ public class Witch : CharaBase, IStun
     {
         while (mp > 0)
         {
-            m_lightObject.SetActive(true);
+            m_view.RPC(nameof(PunSetActive),RpcTarget.All,true);
             mp -= m_mpSpeed * 2f;
             yield return null;
         }
-        m_lightObject.SetActive(false);
+        m_view.RPC(nameof(PunSetActive), RpcTarget.All, false);
+    }
+
+    [PunRPC]
+    void PunSetActive(bool value)
+    {
+        m_lightObject.SetActive(value);
     }
 
     public override void Move(float h, float v)
