@@ -38,6 +38,14 @@ public class Witch : CharaBase, IStun
     [Tooltip("スタンする時間")]
     float m_stunTime = 3f;
     [SerializeField]
+    [Tooltip("魔力を転送するスピード")]
+    float m_chargeSpeed = 0.5f;
+
+    [SerializeField]
+    [Tooltip("MPがないときにチャージするスピード")]
+    private float m_emptySpeed = 0.2f;
+
+    [SerializeField]
     [Tooltip("向きの点")]
     Transform[] m_directionPoints = default;
     [SerializeField]
@@ -50,6 +58,7 @@ public class Witch : CharaBase, IStun
     [SerializeField]
     float m_setTPTime;
 
+    public float GetMpSpeed => mp < 1f? m_emptySpeed : m_chargeSpeed;
     public int Hp => m_hp;
     public bool IsDead { get; set; }
     HpDisplay hpDisplay = default;
@@ -57,6 +66,8 @@ public class Witch : CharaBase, IStun
     SpriteRenderer m_sr;
     bool m_contactFlag = false;
     bool m_specter = false;
+    bool m_useTask = false;
+    public bool UseTask { set { m_useTask = value; } }
     GameObject m_camera = null;
 
     float m_time = 0;
@@ -82,7 +93,8 @@ public class Witch : CharaBase, IStun
 
     private void Update()
     {
-        mp = IsChangerd ? (mp - m_mpSpeed > 0 ? mp - m_mpSpeed : 0) : (mp + m_mpSpeed < m_mp ? mp + m_mpSpeed : m_mp);
+        var speed = m_useTask ? m_mpSpeed + m_chargeSpeed : m_mpSpeed;
+        mp = IsChangerd ? (mp - speed > 0 ? mp - speed : 0) : (m_useTask ? mp - m_chargeSpeed : (mp + m_mpSpeed < m_mp ? mp + m_mpSpeed : m_mp));
         if (mp <= 0.01f)
         {
             m_view.RPC("SetAnimator", RpcTarget.All, false);
