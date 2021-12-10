@@ -77,6 +77,7 @@ public class PortalGimmicController : MonoBehaviour
     {
         if (other.CompareTag("Witch"))
         {
+            witch = other.GetComponent<Witch>();
             if (other.GetComponent<PhotonView>().IsMine)
             {
                 witch.UseTask = false;
