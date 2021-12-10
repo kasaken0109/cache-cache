@@ -19,7 +19,7 @@ public class Animal : MonoBehaviour
 
     Rigidbody m_rb = default;
     Animator m_anim = default;
-    Animator m_shadowAnim = default;
+    //Animator m_shadowAnim = default;
 
     [SerializeField]
     float m_speed = 0f;
@@ -39,7 +39,7 @@ public class Animal : MonoBehaviour
         m_rb = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
         m_halfSize = GetComponent<BoxCollider>().size / 2;
-        m_shadowAnim = transform.GetChild(0).GetComponent<Animator>();
+        //m_shadowAnim = transform.GetChild(0).GetComponent<Animator>();
 
         if (SelfSupport)
         {
@@ -135,7 +135,7 @@ public class Animal : MonoBehaviour
         m_timer = 0;
         m_action = false;
         m_anim.SetBool("IsWalk", false);
-        m_shadowAnim.SetBool("IsWalk", false);
+        //m_shadowAnim.SetBool("IsWalk", false);
         m_rb.velocity = Vector2.zero;
     }
 
