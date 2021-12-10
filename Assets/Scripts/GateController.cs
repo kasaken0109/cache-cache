@@ -16,14 +16,16 @@ public class GateController : MonoBehaviour
         CheckGate();
     }
 
+    bool IsFirst = true;
     private void CheckGate()
     {
-        if (PhotonNetwork.CurrentRoom.MaxPlayers - 1 == eacapeNum)
+        if (PhotonNetwork.CurrentRoom.MaxPlayers - GameObject.FindObjectOfType<GameManager>().WitchDieCount - 1 == eacapeNum && IsFirst)
         {
             RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
             raiseEventoptions.Receivers = ReceiverGroup.All;
             SendOptions sendOptions = new SendOptions();
             PhotonNetwork.RaiseEvent((byte)NetworkEvents.Win, null, raiseEventoptions, sendOptions);
+            IsFirst = false;
         }
     }
 

@@ -31,6 +31,10 @@ public class Witch : CharaBase, IStun
     GameObject m_cacheRangeObject = default;
 
     [SerializeField]
+    [Tooltip("スタンエフェクト")]
+    GameObject m_stunEffectObject = default;
+
+    [SerializeField]
     [Tooltip("ライト範囲のコライダー")]
     GameObject m_lightObject = default;
 
@@ -224,7 +228,7 @@ public class Witch : CharaBase, IStun
 
     [PunRPC]
     public void SpawnAlarm(int id)
-        => Instantiate(m_alart[id], transform.position, transform.rotation);
+        => Instantiate(m_alart[id], transform.position, transform.rotation,transform);
 
     void Dead()
     {
@@ -241,15 +245,9 @@ public class Witch : CharaBase, IStun
     {
         float timer = 0;
         CanMove = false;
-        m_rb.velocity = Vector3.zero;
-        while (timer < m_stunTime)
-        {
-            //横に振動させる
-            m_rb.AddForce(new Vector3(Mathf.Sin(timer * 180) * 100, 0, 0));
-            timer += Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
-        }
-        m_rb.velocity = Vector3.zero;
+        m_stunEffectObject.SetActive(true);
+        yield return new WaitForSeconds(m_stunTime);
+        m_stunEffectObject.SetActive(false);
         CanMove = true;
     }
 }

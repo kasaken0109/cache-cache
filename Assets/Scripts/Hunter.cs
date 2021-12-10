@@ -23,6 +23,10 @@ public class Hunter : CharaBase, IStun
     [Tooltip("攻撃判定が発生する時間")]
     float m_attackTime = 0.2f;
 
+    [SerializeField]
+    [Tooltip("スタンエフェクト")]
+    private GameObject m_stunEffectObject;
+
     [SerializeField, Tooltip("ハンターカメラ")]
     GameObject m_hunterCamera = default;
     HunterCamera m_camera = default;
@@ -98,15 +102,9 @@ public class Hunter : CharaBase, IStun
     {
         float timer = 0;
         CanMove = false;
-        m_rb.velocity = Vector3.zero;
-        while (timer < m_stunTime)
-        {
-            //横に振動させる
-            m_rb.AddForce(new Vector3(Mathf.Sin(timer * 180) * 100, 0, 0));
-            timer += Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
-        }
-        m_rb.velocity = Vector3.zero;
+        m_stunEffectObject.SetActive(true);
+        yield return new WaitForSeconds(m_stunTime);
+        m_stunEffectObject.SetActive(false);
         CanMove = true;
     }
 
@@ -123,6 +121,8 @@ public class Hunter : CharaBase, IStun
     }
 
     HaveItemType itemType = HaveItemType.None;
+    
+
     public enum HaveItemType
     {
         None,
