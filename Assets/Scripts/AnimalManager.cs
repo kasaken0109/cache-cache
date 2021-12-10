@@ -65,7 +65,6 @@ public class AnimalManager : MonoBehaviour
                 Debug.LogError(m_spownAnimals[i].animal.ToString() + ": 設定している数を生成できません");
                 continue;
             }
-
             // spownNumの数spownさせる
             for (int n = 0; n < m_spownAnimals[i].spownNum; samePos = false)
             {
