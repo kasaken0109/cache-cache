@@ -62,9 +62,7 @@ public class Witch : CharaBase, IStun
 
     private RuntimeAnimatorController m_origin = default;
     [SerializeField]
-    WitchCamera m_witchCamera = default;
-    [SerializeField]
-    float m_setTPTime;
+    WitchCamera m_witchCamera = default;    
 
     public float GetMpSpeed => mp < 1f? m_emptySpeed : m_chargeSpeed;
     public int Hp => m_hp;
@@ -78,7 +76,6 @@ public class Witch : CharaBase, IStun
     public bool UseTask { set { m_useTask = value; } }
     GameObject m_camera = null;
 
-    float m_time = 0;
     float mp;
 
     private void Start()
@@ -126,17 +123,7 @@ public class Witch : CharaBase, IStun
                 StartCoroutine(nameof(Attack));
             }
         }
-        if (v != 0)
-        {
-            m_time += Time.fixedDeltaTime;
-            if (m_time > m_setTPTime)
-            {
-                m_time = 0;
-                FindObjectOfType<TeleportManager>().HierarchyTP(v, transform);
-            }
-        }
-        else
-            m_time = 0;
+        
         //if (m_specter)
         //{
         //    m_witchCamera.CameraMove(h);

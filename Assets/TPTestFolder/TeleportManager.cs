@@ -12,7 +12,7 @@ public class TeleportManager : MonoBehaviour
         None,
     }
 
-    [SerializeField] float m_moveZ = 20;
+    [SerializeField] float m_coolTime;
     [SerializeField] ColliderType m_type = ColliderType.None;
     [SerializeField] GameObject m_paticleObj = null;
     [SerializeField] Material m_defM = default;
@@ -22,7 +22,7 @@ public class TeleportManager : MonoBehaviour
     int m_groupID = 0;
     int m_individualID;
     bool m_setUp = false;
-    bool _request = false;
+    bool m_request = false;
 
     List<Dictionary<int, Transform>> m_tGroupID = new List<Dictionary<int, Transform>>();
     
@@ -59,8 +59,8 @@ public class TeleportManager : MonoBehaviour
     /// <param name="target">移動するObject</param>
     public void TPRequest(int key, int individualID, GameObject target)
     {
-        if (_request) return;
-        _request = true;
+        if (m_request) return;
+        m_request = true;
         List<Transform> targets = new List<Transform>(m_tGroupID[key].Values);
         bool set = false;
        
@@ -76,38 +76,10 @@ public class TeleportManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 階層移動
-    /// </summary>
-    /// <param name="v">Virtical</param>
-    /// <param name="target">移動させるObject</param>
-    public void HierarchyTP(float v, Transform target)
-    {
-        Vector3 set = target.position;
-        if (v < 0)
-        {
-            if (set.z + m_moveZ * -1 < -40)
-            {
-                target.position = new Vector3(set.x, set.y, 0);
-                return;
-            }
-            target.position = new Vector3(set.x, set.y,set.z + m_moveZ * -1);
-        }
-        else
-        {
-            if (set.z + m_moveZ > 0)
-            {
-                target.position = new Vector3(set.x, set.y, -40);
-                return;
-            }
-            target.position = new Vector3(set.x, set.y, set.z + m_moveZ);
-        }
-    }
-
     IEnumerator CoolTime()
     {
-        yield return new WaitForSeconds(0.2f);
-        _request = false;
+        yield return new WaitForSeconds(m_coolTime);
+        m_request = false;
     }
 
     void SetPointer(Setter s)
@@ -140,14 +112,14 @@ public class TeleportManager : MonoBehaviour
         switch (m_type)
         {
             case ColliderType.Box:
-                BoxCollider2D bCol = p.AddComponent<BoxCollider2D>();
+                BoxCollider bCol = p.AddComponent<BoxCollider>();
                 bCol.isTrigger = true;
-                bCol.size = Vector2.one * (m_radius * 2);
+                bCol.size = Vector3.one * (m_radius * 2);
                 break;
             case ColliderType.Circle:
-                CircleCollider2D cCol = p.AddComponent<CircleCollider2D>();
-                cCol.isTrigger = true;
-                cCol.radius = m_radius;
+                SphereCollider sCol = p.AddComponent<SphereCollider>();
+                sCol.isTrigger = true;
+                sCol.radius = m_radius;
                 break;
         }
 
