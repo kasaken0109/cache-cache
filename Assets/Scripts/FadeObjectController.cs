@@ -24,14 +24,14 @@ public class FadeObjectController : MonoBehaviour
 
     IEnumerator FadeRoof(float alpha)
     {
-        while (m_sr.color.a - alpha > 0.01f || m_sr.color.a - alpha < -0.01f)
+        while (m_sr.material.color.a - alpha > 0.01f || m_sr.material.color.a - alpha < -0.01f)
         {
-            m_setColor.a += (alpha - m_sr.color.a) / 100f * m_speed;
-            m_sr.color = m_setColor;
+            m_setColor.a += (alpha - m_sr.material.color.a) / 100f * m_speed;
+            m_sr.material.color = m_setColor;
             yield return null;
         }
         m_setColor.a = alpha;
-        m_sr.color = m_setColor;
+        m_sr.material.color = m_setColor;
 
     }
 
