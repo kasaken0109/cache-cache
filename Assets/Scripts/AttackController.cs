@@ -9,7 +9,12 @@ public class AttackController : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.CompareTag("Animal") && m_isHunter) GetComponentInParent<Hunter>().PlayStun();
-        else if (collision.CompareTag("Hunter") && !m_isHunter)collision.GetComponentInParent<Hunter>().PlayStun();
+        if (collision.CompareTag("Rock") && !m_isHunter && IsFirst)
+        {
+            collision.GetComponent<PortalGimmicController>().Damage();
+            IsFirst = false;
+        }
+        else if (collision.CompareTag("Hunter") && !m_isHunter) collision.GetComponentInParent<Hunter>().PlayStun();
         else if (collision.CompareTag("Witch") && IsFirst)
         {
             //collision.GetComponent<Witch>().OnHit();
