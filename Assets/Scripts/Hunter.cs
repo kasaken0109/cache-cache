@@ -74,9 +74,8 @@ public class Hunter : CharaBase, IStun
     public override void Move(float h, float v)
     {
         m_rb.velocity = new Vector3(h,0, v).normalized * Speed * m_speedUpRate;
-        //m_rb.constraints = m_rb.velocity == Vector3.zero ? RigidbodyConstraints.FreezePosition
-        //    | RigidbodyConstraints.FreezeRotation : RigidbodyConstraints.FreezeRotation;
-        //m_anim.SetBool("IsWalk", h + v != 0 ? true : false);
+        m_anim.SetBool("IsWalk", (h == 0 && v == 0) ? false : true);
+        m_anim.SetBool("IsRight", h > 0 ?true : false);
     }
 
     public void SetDirection(float h, float v)

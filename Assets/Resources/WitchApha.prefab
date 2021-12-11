@@ -203,7 +203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &519018465
 Transform:
   m_ObjectHideFlags: 0
@@ -5160,6 +5160,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b63577f3873a6547bf261de1ef5c3c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &138470600214732062
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5573417706437090116}
+  - component: {fileID: 3399720089364468972}
+  - component: {fileID: 1313669687275082725}
+  m_Layer: 9
+  m_Name: AttackCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &5573417706437090116
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138470600214732062}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8566126618917774019}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3399720089364468972
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138470600214732062}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1313669687275082725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138470600214732062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d2739433944b1544aa1c3b38b8b5488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_isHunter: 0
 --- !u!1 &867521646487755570
 GameObject:
   m_ObjectHideFlags: 0
@@ -5870,6 +5928,7 @@ Transform:
   - {fileID: 1606280504166301051}
   - {fileID: 1628913497}
   - {fileID: 519018465}
+  - {fileID: 5573417706437090116}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -10, z: 0}
@@ -6045,6 +6104,7 @@ MonoBehaviour:
   m_mpUI: {fileID: 499298689524967416}
   m_cacheRangeObject: {fileID: 4933701410050530631}
   m_stunEffectObject: {fileID: 519018464}
+  m_attackObject: {fileID: 138470600214732062}
   m_lightObject: {fileID: 867521646487755570}
   m_stunTime: 3
   m_chargeSpeed: 0.1
