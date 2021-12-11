@@ -35,6 +35,10 @@ public class Witch : CharaBase, IStun
     GameObject m_stunEffectObject = default;
 
     [SerializeField]
+    [Tooltip("アタックコライダー")]
+    GameObject m_attackObject = default;
+
+    [SerializeField]
     [Tooltip("ライト範囲のコライダー")]
     GameObject m_lightObject = default;
 
@@ -94,8 +98,7 @@ public class Witch : CharaBase, IStun
 
     private void Update()
     {
-        var speed = m_useTask ? m_mpSpeed + m_chargeSpeed : m_mpSpeed;
-        mp = IsChangerd ? (mp - speed > 0 ? mp - speed : 0) : (m_useTask ? mp - m_chargeSpeed : (mp + m_mpSpeed < m_mp ? mp + m_mpSpeed : m_mp));
+        mp = IsChangerd ? (mp - m_mpSpeed > 0 ? mp - m_mpSpeed : 0) : (mp + m_mpSpeed < m_mp ? mp + m_mpSpeed : m_mp);
         if (mp <= 0.01f)
         {
             m_view.RPC("SetAnimator", RpcTarget.All, false);
@@ -109,9 +112,16 @@ public class Witch : CharaBase, IStun
         if (!m_view || !m_view.IsMine) return;      // 自分が生成したものだけ処理する
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        if (Input.GetButtonDown("Fire1") && mp == m_mp)
+        if (Input.GetButtonDown("Fire1"))
         {
-            StartCoroutine("UseLight");
+            if (!IsChangerd && mp == m_mp) 
+            {
+                StartCoroutine("UseLight");
+            }
+            else if (IsChangerd && CanAttack)
+            {
+                StartCoroutine(nameof(Attack));
+            }
         }
         
         //if (m_specter)
@@ -135,6 +145,17 @@ public class Witch : CharaBase, IStun
         m_view.RPC(nameof(PunSetActive), RpcTarget.All, false);
     }
 
+    bool CanAttack = true;
+    IEnumerator Attack()
+    {
+        CanAttack = false;
+        m_attackObject.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        m_attackObject.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        CanAttack = true;
+    }
+
     [PunRPC]
     void PunSetActive(bool value)
     {
@@ -153,6 +174,7 @@ public class Witch : CharaBase, IStun
     {
         if (h == 0 && v == 0) return;
         m_cacheRangeObject.transform.localPosition = new Vector3(h * 1.5f, 0, v * 1.5f);
+        m_attackObject.transform.localPosition = new Vector3(h * 1.5f, 0, v * 1.5f);
     }
 
     [PunRPC]
