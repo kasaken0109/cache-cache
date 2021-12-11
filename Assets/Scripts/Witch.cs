@@ -177,6 +177,11 @@ public class Witch : CharaBase, IStun
         m_attackObject.transform.localPosition = new Vector3(h * 1.5f, 0, v * 1.5f);
     }
 
+    public void SetMp(float mpValue)
+    {
+        mp += mpValue;
+    }
+
     [PunRPC]
     public void OnHit()
     {
