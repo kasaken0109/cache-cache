@@ -17,8 +17,6 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     GameObject m_checkButton;
     public int HunterCapacity { get => m_hunterCapacity; }
     public int WitchCapacity { get => m_witchCapacity; }
-    RaiseEventOptions raiseEventoptions;
-    SendOptions sendOptions;
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -98,9 +96,9 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
         {
             Debug.Log("Closing Room");
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            raiseEventoptions = new RaiseEventOptions();
-            raiseEventoptions.Receivers = ReceiverGroup.MasterClient;
-            sendOptions = new SendOptions();
+            RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
+            raiseEventoptions.Receivers = ReceiverGroup.All;
+            SendOptions sendOptions = new SendOptions();
             PhotonNetwork.RaiseEvent((byte)NetworkEvents.Lobby, null, raiseEventoptions, sendOptions);
         }
     }
@@ -178,33 +176,6 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     /// <summary>部屋から退室した時</summary>
     public override void OnLeftRoom()
     {
-        var chara = new List<CharaBase>(FindObjectsOfType<CharaBase>());
-        PhotonView view;
-        foreach (var item in chara)
-        {
-            view = item.gameObject.GetComponent<PhotonView>();
-            view.RPC("Disconnected", RpcTarget.All);
-            if (view.IsMine)
-            {
-                if (item.CompareTag("Witch"))
-                {
-                    var witch = FindObjectOfType<Witch>();
-                    if (!witch.IsDead)
-                    {
-                        GameManager gameManager = GetComponent<GameManager>();
-                        gameManager.WitchDieCount++;
-                        witch.gameObject.SetActive(false);
-                    }
-                }
-                else
-                {
-                    raiseEventoptions = new RaiseEventOptions();
-                    raiseEventoptions.Receivers = ReceiverGroup.All;
-                    sendOptions = new SendOptions();
-                    PhotonNetwork.RaiseEvent((byte)NetworkEvents.Win, null, raiseEventoptions, sendOptions);
-                }
-            }
-        }
         Debug.Log("OnLeftRoom");
     }
 
@@ -214,14 +185,42 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
         Debug.Log("OnPlayerEnteredRoom: " + newPlayer.NickName);
         CheckPlayerCountAndStartGame();
     }
-
     /// <summary>自分のいる部屋から他のプレイヤーが退室した時</summary>
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         //自分がハンターかウィッチかの判定と自分が死んだかの判定をかく
-        Debug.Log("OnPlayerLeftRoom: " + otherPlayer.NickName);
+        //退室したプレイヤーのオーナーIDが一致しているオブジェクトを呼び出したい
+        //マスタークライアントが抜けた場合どうするか
+        if (PhotonNetwork.IsMasterClient)
+        {
+            var chara = new List<CharaBase>(FindObjectsOfType<CharaBase>());
+            PhotonView view;
+            foreach (var item in chara)
+            {
+                view = item.GetComponent<PhotonView>();
+                if (otherPlayer.ActorNumber == view.OwnerActorNr)
+                {
+                    if (item.CompareTag("Hunter"))
+                    {
+                        RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
+                        raiseEventoptions.Receivers = ReceiverGroup.All;
+                        SendOptions sendOptions = new SendOptions();
+                        PhotonNetwork.RaiseEvent((byte)NetworkEvents.Win, null, raiseEventoptions, sendOptions);
+                    }
+                    else
+                    {
+                        var witch = item.GetComponent<Witch>();
+                        if (!witch.IsDead)
+                        {
+                            var gameManager = GetComponent<GameManager>();
+                            gameManager.WitchDieCount++;
+                        }
+                    }
+                }
+            }
+            Debug.Log("OnPlayerLeftRoom: " + otherPlayer.NickName);
+        }
     }
-
     /// <summary>マスタークライアントが変わった時</summary>
     public override void OnMasterClientSwitched(Player newMasterClient)
     {

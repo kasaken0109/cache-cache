@@ -2,14 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using Photon.Pun;
 public class SceneLoader : MonoBehaviour
 {
-    [SerializeField]
-    string m_sceneName;
-    [SerializeField]
-    int m_sceneIndex;
-
     public IEnumerator LoadScene(string sceneName)
     {
         var scene = SceneManager.LoadSceneAsync(sceneName);
@@ -24,18 +19,8 @@ public class SceneLoader : MonoBehaviour
         yield return new WaitForSeconds(1);
         scene.allowSceneActivation = true;
     }
-    public IEnumerator LoadSceneName()
+    public void StartLoadScene(string methodName,int sceneIndex)
     {
-        var scene = SceneManager.LoadSceneAsync(m_sceneName);
-        scene.allowSceneActivation = false;
-        yield return new WaitForSeconds(1);
-        scene.allowSceneActivation = true;
-    }
-    public IEnumerator LoadSceneIndex()
-    {
-        var scene = SceneManager.LoadSceneAsync(m_sceneIndex);
-        scene.allowSceneActivation = false;
-        yield return new WaitForSeconds(1);
-        scene.allowSceneActivation = true;
+        StartCoroutine(methodName,sceneIndex);
     }
 }
