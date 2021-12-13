@@ -6,25 +6,24 @@ using Photon.Pun;
 public class AttackController : MonoBehaviour
 {
     [SerializeField] bool m_isHunter = true;
+    [SerializeField] bool m_isLight = false;
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.CompareTag("Animal") && m_isHunter) GetComponentInParent<Hunter>().PlayStun();
-        if (collision.CompareTag("Rock") && !m_isHunter && IsFirst)
+        if (collision.CompareTag("Animal") && m_isHunter && !m_isLight) GetComponentInParent<Hunter>().PlayStun();
+        if (collision.CompareTag("Rock") && !m_isHunter && IsFirst && !m_isLight)
         {
             collision.GetComponent<PortalGimmicController>().Damage();
             IsFirst = false;
         }
-        else if (collision.CompareTag("Hunter") && !m_isHunter) collision.GetComponentInParent<Hunter>().PlayStun();
-        else if (collision.CompareTag("Witch") && IsFirst)
+        else if (collision.CompareTag("Hunter") && !m_isHunter && m_isLight) collision.GetComponentInParent<Hunter>().PlayStun();
+        else if (collision.CompareTag("Witch") && IsFirst && !m_isLight)
         {
-            //collision.GetComponent<Witch>().OnHit();
             PhotonView view = collision.gameObject.GetComponent<PhotonView>();
 
             if (view)
             {
                 view.RPC("OnHit", RpcTarget.All);
             }
-            Debug.Log("HunterAttack");
             IsFirst = false;
         }
     }

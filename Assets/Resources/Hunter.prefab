@@ -5513,6 +5513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_isHunter: 1
+  m_isLight: 0
 --- !u!65 &3796600629301437659
 BoxCollider:
   m_ObjectHideFlags: 0

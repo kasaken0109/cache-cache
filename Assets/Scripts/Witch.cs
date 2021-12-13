@@ -50,8 +50,12 @@ public class Witch : CharaBase, IStun
     float m_chargeSpeed = 0.5f;
 
     [SerializeField]
-    [Tooltip("MPがないときにチャージするスピード")]
-    private float m_emptySpeed = 0.2f;
+    [Tooltip("攻撃ヒット時に減らすMP量")]
+    float m_attackMPAmount = 30f;
+
+    [SerializeField]
+    [Tooltip("MPがないときにチャージまでにかかる時間")]
+    private float m_emptyTime = 5f;
 
     [SerializeField]
     [Tooltip("向きの点")]
@@ -64,7 +68,6 @@ public class Witch : CharaBase, IStun
     [SerializeField]
     WitchCamera m_witchCamera = default;    
 
-    public float GetMpSpeed => mp < 1f? m_emptySpeed : m_chargeSpeed;
     public int Hp => m_hp;
     public bool IsDead { get; set; }
     HpDisplay hpDisplay = default;
@@ -98,11 +101,12 @@ public class Witch : CharaBase, IStun
 
     private void Update()
     {
-        mp = IsChangerd ? (mp - m_mpSpeed > 0 ? mp - m_mpSpeed : 0) : (mp + m_mpSpeed < m_mp ? mp + m_mpSpeed : m_mp);
+        if(!IsStopMp)mp = IsChangerd ? (mp - m_mpSpeed > 0 ? mp - m_mpSpeed : 0) : (mp + m_mpSpeed < m_mp ? mp + m_mpSpeed : m_mp);
         if (mp <= 0.01f)
         {
             m_view.RPC("SetAnimator", RpcTarget.All, false);
             IsChangerd = false;
+            StartCoroutine(nameof(StopMp));
         }
         m_mpUI.fillAmount = mp / m_mp;
         m_view.RPC("ChangeSprite", RpcTarget.All);
@@ -129,7 +133,6 @@ public class Witch : CharaBase, IStun
         //    m_witchCamera.CameraMove(h);
         //    return;
         //}
-
         if (CanMove) Move(h, v);
         SetDirection(h, v);
     }
@@ -143,6 +146,15 @@ public class Witch : CharaBase, IStun
             yield return null;
         }
         m_view.RPC(nameof(PunSetActive), RpcTarget.All, false);
+    }
+
+
+    bool IsStopMp = false;
+    IEnumerator StopMp()
+    {
+        IsStopMp = true;
+        yield return new WaitForSeconds(m_emptyTime);
+        IsStopMp = false;
     }
 
     bool CanAttack = true;
@@ -165,8 +177,6 @@ public class Witch : CharaBase, IStun
     public override void Move(float h, float v)
     {
         m_rb.velocity = new Vector3(h, 0, v).normalized * Speed;
-        //m_rb.constraints = m_rb.velocity == Vector2.zero ? RigidbodyConstraints2D.FreezePosition 
-        //    | RigidbodyConstraints2D.FreezeRotation : RigidbodyConstraints2D.FreezeRotation;
         m_anim.SetBool("IsWalk", h == 0 && v == 0 ? false : true);
     }
 
@@ -187,6 +197,8 @@ public class Witch : CharaBase, IStun
     {
         if (!m_view.IsMine) return;
         m_hp--; //1ずつ減らす
+        SetMp(-m_attackMPAmount);
+        m_view.RPC("SetAnimator", RpcTarget.All, false);
 
         if (m_hp < 1 && !IsDead) //魔法使いの体力が1未満になったら呼び出す
         {
@@ -200,7 +212,6 @@ public class Witch : CharaBase, IStun
             IsDead = true;
         }
         hpDisplay.UpdateHp(m_hp);
-
     }
 
     /// <summary>
@@ -270,7 +281,6 @@ public class Witch : CharaBase, IStun
 
     IEnumerator Stun()
     {
-        float timer = 0;
         CanMove = false;
         m_stunEffectObject.SetActive(true);
         yield return new WaitForSeconds(m_stunTime);
