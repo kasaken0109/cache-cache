@@ -12,7 +12,7 @@ public class MpController : MonoBehaviour
         if (other.CompareTag("Witch"))
         {
             other.GetComponent<Witch>().SetMp(m_cureMp);
-            Destroy(gameObject, 1f);
+            Destroy(gameObject, 0.1f);
         }
     }
 }
