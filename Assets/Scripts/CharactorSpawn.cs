@@ -5,30 +5,31 @@ using Photon.Pun;
 
 public class CharactorSpawn : MonoBehaviour
 {
+    enum CharaPosition
+    {
+        Hunter,
+        Witch
+    }
     [SerializeField, Tooltip("キャラクターの生成場所")]
     Transform[] m_charaPositions;
-    //ハンターは魔法使い狩り
     [SerializeField]
     string m_hunterPrefabName = "PrefabName";
     [SerializeField]
     string m_witchPrefabName = "PrefabName";
     public Transform[] CharaPositions { get => m_charaPositions; }
-    public GameObject Player { get; private set; }
-
-    /// <summary>ハンターを生成するメソッド</summary>
-    public void HunterSpawn(int number)
+    [PunRPC]
+    public void CharaSpawn()
     {
-        Transform spawnPoint = CharaPositions[PhotonNetwork.LocalPlayer.ActorNumber - 1];
-        // プレイヤーを生成し、他のクライアントと同期する
-        Player = PhotonNetwork.Instantiate(m_hunterPrefabName, spawnPoint.position, spawnPoint.rotation);
-        Player.GetComponent<PhotonView>().TransferOwnership(number);
-    }
-    /// <summary>ウィッチを生成するメソッド</summary>
-    public void WitchSpawn(int number)
-    {
-        Transform spawnPoint = CharaPositions[PhotonNetwork.LocalPlayer.ActorNumber - 1];
-        // プレイヤーを生成し、他のクライアントと同期する
-        Player = PhotonNetwork.Instantiate(m_witchPrefabName, spawnPoint.position, spawnPoint.rotation);
-        Player.GetComponent<PhotonView>().TransferOwnership(number);
+        Debug.Log(13);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Transform spawnPoint = CharaPositions[(int)CharaPosition.Hunter];
+            PhotonNetwork.Instantiate(m_hunterPrefabName, spawnPoint.position, spawnPoint.rotation);
+        }
+        else
+        {
+            Transform spawnPoint = CharaPositions[(int)CharaPosition.Witch];
+            PhotonNetwork.Instantiate(m_witchPrefabName, spawnPoint.position, spawnPoint.rotation);
+        }
     }
 }

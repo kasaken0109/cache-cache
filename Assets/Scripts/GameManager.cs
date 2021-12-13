@@ -55,15 +55,24 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         switch (photonEvent.Code)
         {
             case (byte)NetworkEvents.Lobby:
+                //マスタークライアントを変えることでハンターをランダムにできる
+                PhotonNetwork.CurrentRoom.IsOpen = true;
+                if (PhotonNetwork.CurrentRoom.PlayerCount > PhotonNetwork.CurrentRoom.MaxPlayers - 1)
+                {
+                    Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
+                    Debug.Log(PhotonNetwork.CurrentRoom.MaxPlayers);
+                    int hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers;
+                    randomNumber = Random.Range(0, hunterNumber);
+                    var player = PhotonNetwork.PlayerList[randomNumber];
+                    PhotonNetwork.SetMasterClient(player);
+                    PhotonNetwork.CurrentRoom.IsOpen = false;
+                }
                 break;
             case (byte)NetworkEvents.GameStart:
-                int hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers + 1;
-                randomNumber = Random.Range(1, hunterNumber);
                 scene = GameObject.Find("SceneLoader").GetComponent<SceneLoader>();
-                StartCoroutine(scene.LoadScene(1));
-                //scene.LoadScene(1);
+                //StartCoroutine(scene.LoadScene(1));
+                StartCoroutine(SpawnLoadScene(randomNumber, 1));
                 Debug.Log(scene);
-                //SceneManager.LoadScene(1);
                 break;
             case (byte)NetworkEvents.Win:
                 Debug.Log("魔女の勝利");
@@ -96,9 +105,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         ShowTextCtrl.Show(events);
         yield return new WaitForSeconds(2f);
         yield return new WaitUntil(() => ShowTextCtrl.GetLogData() != null);
-        //SceneManager.LoadScene(2);
-        //scene.LoadScene(2);
-        scene = GameObject.Find("SceneLoader").GetComponent<SceneLoader>();
+        scene = GetComponent<SceneLoader>();
         StartCoroutine(scene.LoadScene(2));
     }
     public void OnReady()
@@ -127,20 +134,21 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             var animalManager = GameObject.Find("AnimalManager").GetComponent<AnimalManager>();
             animalManager.StartSpawn();
             ItemManager.Instance.SpawnItem(4);
-            var charactorSpawn = GameObject.Find("CharactorSpawn").GetComponent<CharactorSpawn>();
-            for (int i = 0; i < PhotonNetwork.CurrentRoom.MaxPlayers; i++)
-            {
-                if (randomNumber != i + 1)
-                {
-                    Debug.Log("Witch");
-                    charactorSpawn.WitchSpawn(i + 1);
-                }
-                else
-                {
-                    Debug.Log("Hunter");
-                    charactorSpawn.HunterSpawn(i + 1);
-                }
-            }
+        }
+    }
+    //ゲームシーンに遷移するときに使う
+    IEnumerator SpawnLoadScene(int randomNumber, int sceneIndex)
+    {
+        var scene = SceneManager.LoadSceneAsync(sceneIndex);
+        scene.allowSceneActivation = false;
+        yield return new WaitForSeconds(2);
+        scene.allowSceneActivation = true;
+        yield return new WaitForSeconds(0.1f);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            var chara = GameObject.Find("CharactorSpawn").GetComponent<CharactorSpawn>();
+            var view = chara.GetComponent<PhotonView>();
+            view.RPC(nameof(chara.CharaSpawn), RpcTarget.All);
         }
     }
 }

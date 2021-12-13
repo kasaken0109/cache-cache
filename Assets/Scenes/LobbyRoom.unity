@@ -822,6 +822,7 @@ GameObject:
   - component: {fileID: 1927390991}
   - component: {fileID: 1927390990}
   - component: {fileID: 1927390992}
+  - component: {fileID: 1927390993}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -870,8 +871,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_debugMode: 0
   m_hunterCapacity: 1
-  m_witchCapacity: 1
+  m_witchCapacity: 2
   m_checkButton: {fileID: 1567684922}
+--- !u!114 &1927390993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927390989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd910a5f98e985042807f2a4ccab512b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2093191169
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,8 +1005,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd910a5f98e985042807f2a4ccab512b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_sceneName: 
-  m_sceneIndex: 0
 --- !u!4 &2134509796
 Transform:
   m_ObjectHideFlags: 0
