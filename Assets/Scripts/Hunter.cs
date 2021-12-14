@@ -2,10 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class Hunter : CharaBase, IStun
 {
     [SerializeField] Rigidbody m_rb;
+
+
+    [SerializeField]
+    [Tooltip("開始時に待つ時間")]
+    float m_waitTime = 20f;
+
+    [SerializeField]
+    [Tooltip("開始時に待つ時間を表示するUI")]
+    Text m_waitDisplay = default;
 
     [SerializeField]
     [Tooltip("スタンする時間")]
@@ -38,18 +48,27 @@ public class Hunter : CharaBase, IStun
     private void Start()
     {
         m_anim = GetComponent<Animator>();
-        //StartCoroutine(CameraCreate());
+        StartCoroutine(CountDown());
     }
-    IEnumerator CameraCreate()
+    IEnumerator CountDown()
     {
-        yield return new WaitForSeconds(0.5f);
-        if (!m_view || !m_view.IsMine) yield break;
-        m_camera = Instantiate(m_hunterCamera, this.transform).GetComponent<HunterCamera>();
-        m_camera.Rotation(0, 1);
+        CanMove = false;
+        int time = 0;
+        while (time <= m_waitTime)
+        {
+            m_waitDisplay.text = (m_waitTime - time).ToString();
+            yield return new WaitForSeconds(1f);
+            time++;
+        }
+        m_waitDisplay.text = "スタート！";
+        CanMove = true;
+        yield return new WaitForSeconds(1f);
+        m_waitDisplay.text = null;
+
     }
     private void Update()
     {
-        if (!m_view || !m_view.IsMine) return;
+        if (!m_view || !m_view.IsMine && !CanMove) return;
         if (Input.GetButtonDown("Fire1")) StartCoroutine(nameof(Attack));
         if (Input.GetButtonDown("Jump") && CanUseItem) GetComponent<Item>().UseItem();
     }
