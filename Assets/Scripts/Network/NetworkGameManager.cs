@@ -94,8 +94,6 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
          * **************************************************/
         if (m_debugMode || PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount > PhotonNetwork.CurrentRoom.MaxPlayers - 1)
         {
-            Debug.Log("Closing Room");
-            PhotonNetwork.CurrentRoom.IsOpen = false;
             RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
             raiseEventoptions.Receivers = ReceiverGroup.All;
             SendOptions sendOptions = new SendOptions();
@@ -191,35 +189,31 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
         //自分がハンターかウィッチかの判定と自分が死んだかの判定をかく
         //退室したプレイヤーのオーナーIDが一致しているオブジェクトを呼び出したい
         //マスタークライアントが抜けた場合どうするか
-        if (PhotonNetwork.IsMasterClient)
+        if (otherPlayer.IsMasterClient)
+        {
+            RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
+            raiseEventoptions.Receivers = ReceiverGroup.All;
+            SendOptions sendOptions = new SendOptions();
+            PhotonNetwork.RaiseEvent((byte)NetworkEvents.Win, null, raiseEventoptions, sendOptions);
+        }
+        else
         {
             var chara = new List<CharaBase>(FindObjectsOfType<CharaBase>());
             PhotonView view;
             foreach (var item in chara)
             {
                 view = item.GetComponent<PhotonView>();
-                if (otherPlayer.ActorNumber == view.OwnerActorNr)
+                var witch = item.GetComponent<Witch>();
+                if (!witch.IsDead)
                 {
-                    if (item.CompareTag("Hunter"))
-                    {
-                        RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
-                        raiseEventoptions.Receivers = ReceiverGroup.All;
-                        SendOptions sendOptions = new SendOptions();
-                        PhotonNetwork.RaiseEvent((byte)NetworkEvents.Win, null, raiseEventoptions, sendOptions);
-                    }
-                    else
-                    {
-                        var witch = item.GetComponent<Witch>();
-                        if (!witch.IsDead)
-                        {
-                            var gameManager = GetComponent<GameManager>();
-                            gameManager.WitchDieCount++;
-                        }
-                    }
+                    RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
+                    raiseEventoptions.Receivers = ReceiverGroup.All;
+                    SendOptions sendOptions = new SendOptions();
+                    PhotonNetwork.RaiseEvent((byte)NetworkEvents.Die, null, raiseEventoptions, sendOptions);
                 }
             }
-            Debug.Log("OnPlayerLeftRoom: " + otherPlayer.NickName);
         }
+        Debug.Log("OnPlayerLeftRoom: " + otherPlayer.NickName);
     }
     /// <summary>マスタークライアントが変わった時</summary>
     public override void OnMasterClientSwitched(Player newMasterClient)
