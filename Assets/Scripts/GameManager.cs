@@ -27,7 +27,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     PhotonView m_view;
     [SerializeField]
     GameObject m_checkImage;
-
+    SceneLoader scene;
+    JudgementController judge;
+    NetworkGameManager netManager;
+    int randomNumber;
+    bool IsFirst = true;
+    bool FirstDeath = true;
     void Awake()
     {
         if (m_isExists)
@@ -40,12 +45,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             DontDestroyOnLoad(this.gameObject);
         }
     }
-    SceneLoader scene;
-    JudgementController judge;
-    NetworkGameManager netManager;
-    int randomNumber;
-    bool IsFirst = true;
-    bool FirstDeath = true;
     private void Start()
     {
         SceneManager.sceneLoaded += Spawn;
@@ -55,23 +54,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         switch (photonEvent.Code)
         {
             case (byte)NetworkEvents.Lobby:
-                //マスタークライアントを変えることでハンターをランダムにできる
-                PhotonNetwork.CurrentRoom.IsOpen = true;
-                if (PhotonNetwork.CurrentRoom.PlayerCount > PhotonNetwork.CurrentRoom.MaxPlayers - 1)
-                {
-                    Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount);
-                    Debug.Log(PhotonNetwork.CurrentRoom.MaxPlayers);
-                    int hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers;
-                    randomNumber = Random.Range(0, hunterNumber);
-                    var player = PhotonNetwork.PlayerList[randomNumber];
-                    PhotonNetwork.SetMasterClient(player);
-                    PhotonNetwork.CurrentRoom.IsOpen = false;
-                }
+                
                 break;
             case (byte)NetworkEvents.GameStart:
-                scene = GameObject.Find("SceneLoader").GetComponent<SceneLoader>();
-                //StartCoroutine(scene.LoadScene(1));
-                StartCoroutine(SpawnLoadScene(randomNumber, 1));
+                scene = GetComponent<SceneLoader>();
+                StartCoroutine(SpawnLoadScene(1));
                 Debug.Log(scene);
                 break;
             case (byte)NetworkEvents.Win:
@@ -137,13 +124,24 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         }
     }
     //ゲームシーンに遷移するときに使う
-    IEnumerator SpawnLoadScene(int randomNumber, int sceneIndex)
+    IEnumerator SpawnLoadScene(int sceneIndex)
     {
         var scene = SceneManager.LoadSceneAsync(sceneIndex);
         scene.allowSceneActivation = false;
         yield return new WaitForSeconds(2);
         scene.allowSceneActivation = true;
         yield return new WaitForSeconds(0.1f);
+        //マスタークライアントを変えることでハンターをランダムにできる
+        int hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers;
+        randomNumber = Random.Range(0, hunterNumber);
+        var player = PhotonNetwork.PlayerList[randomNumber];
+        Debug.Log(player.ActorNumber);
+        PhotonNetwork.SetMasterClient(player);
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        while (!player.IsMasterClient)
+        {
+            yield return null;
+        }
         if (PhotonNetwork.IsMasterClient)
         {
             var chara = GameObject.Find("CharactorSpawn").GetComponent<CharactorSpawn>();
