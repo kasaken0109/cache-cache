@@ -30,6 +30,10 @@ public class Hunter : CharaBase, IStun
     GameObject m_attackObject = default;
 
     [SerializeField]
+    [Tooltip("攻撃のエフェクト")]
+    string m_attackEffect = default;
+
+    [SerializeField]
     [Tooltip("攻撃判定が発生する時間")]
     float m_attackTime = 0.2f;
 
@@ -42,6 +46,7 @@ public class Hunter : CharaBase, IStun
     HunterCamera m_camera = default;
 
     bool CanUseItem = true;
+    SpriteRenderer m_sr;
     Animator m_anim;
     [SerializeField] PhotonView m_view;
 
@@ -95,6 +100,7 @@ public class Hunter : CharaBase, IStun
         m_rb.velocity = new Vector3(h,0, v).normalized * Speed * m_speedUpRate;
         m_anim.SetBool("IsWalk", (h == 0 && v == 0) ? false : true);
         m_anim.SetBool("IsRight", h > 0 ?true : false);
+        
     }
 
     public void SetDirection(float h, float v)
@@ -106,7 +112,9 @@ public class Hunter : CharaBase, IStun
     IEnumerator Attack()
     {
         m_attackObject.SetActive(true);
-        m_anim.SetTrigger("Attack");
+        PhotonNetwork.Instantiate(m_attackEffect,transform.position + new Vector3(m_attackObject.transform.localPosition.x/2,0, 0),
+            (m_attackObject.transform.localPosition.x < 0 ? Quaternion.Euler(0, 0, 180) : Quaternion.Euler(0, 0, 0)));
+        //m_anim.SetTrigger("Attack");
         yield return new WaitForSeconds(m_attackTime);
         m_attackObject.SetActive(false);
     }
