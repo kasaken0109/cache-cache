@@ -31,7 +31,7 @@ public class Animal : MonoBehaviour
     RaycastHit hit = default;
     Vector3Int m_direction = new Vector3Int();
     bool m_action = false;
-    int m_mask = 1 << 11;
+    int m_mask = 1 << 13;
 
     public void Start()
     {
@@ -132,6 +132,7 @@ public class Animal : MonoBehaviour
 
     private void MoveStop()
     {
+        Debug.Log("a");
         m_timer = 0;
         m_action = false;
         m_anim.SetBool("IsWalk", false);

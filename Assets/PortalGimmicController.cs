@@ -23,7 +23,7 @@ public class PortalGimmicController : MonoBehaviour
 
     [SerializeField]
     [Tooltip("体力UI")]
-    private Image[] m_ui = default;
+    private SpriteRenderer[] m_ui = default;
 
     SpriteRenderer m_sr;
     PhotonView m_view;

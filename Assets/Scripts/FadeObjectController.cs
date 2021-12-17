@@ -37,16 +37,6 @@ public class FadeObjectController : MonoBehaviour
 
     private void Update()
     {
-        if(Camera.main.transform.position.z   > transform.position.z - m_fadeDistance)
-        {
-            StopAllCoroutines();
-            StartCoroutine(FadeRoof(0.2f));
-        }
-        else
-        {
-            StopAllCoroutines();
-            StartCoroutine(FadeRoof(1));
-        }
     }
     private void OnTriggerEnter(Collider collision)
     {

@@ -77,7 +77,7 @@ public class AnimalManager : MonoBehaviour
                 }
                 if (samePos) continue;
 
-                animals.Add(PhotonNetwork.Instantiate(m_spownAnimals[i].animal.ToString(), new Vector3(pos, 0, m_mapPos[m_spownAnimals[i].mapNum]), Quaternion.identity).GetComponent<Animal>());
+                animals.Add(PhotonNetwork.Instantiate(m_spownAnimals[i].animal.ToString(), new Vector3(pos, 0.9f, m_mapPos[Random.Range(0,m_mapPos.Length)]), Quaternion.identity).GetComponent<Animal>());
                 n++;
             }
         }

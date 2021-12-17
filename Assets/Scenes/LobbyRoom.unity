@@ -871,7 +871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_debugMode: 0
   m_hunterCapacity: 1
-  m_witchCapacity: 2
+  m_witchCapacity: 0
   m_checkButton: {fileID: 1567684922}
 --- !u!114 &1927390993
 MonoBehaviour:
