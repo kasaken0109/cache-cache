@@ -114,4 +114,16 @@ public class TimeManager : MonoBehaviour
 			yield return null;
 		}
 	}
+
+	public void DecreaseTime(int time)
+    {
+        while (time > 60)
+        {
+			m_minute--;
+			time -= 60;
+        }
+		m_minute -= m_seconds - time < 0 ? 1 : 0;
+		m_seconds -= m_seconds - time < 0 ? m_seconds - time : time;
+
+	}
 }
