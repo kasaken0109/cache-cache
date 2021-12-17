@@ -15,6 +15,14 @@ public class Witch : CharaBase, IStun
     private int m_hp = 3; //魔法使いの体力
 
     [SerializeField]
+    [Tooltip("魔女が攻撃された時の加速スピード")]
+    private float m_runSpeed = 9f;
+
+    [SerializeField]
+    [Tooltip("魔女が攻撃された時の効果時間")]
+    private float m_godTime = 3f;
+
+    [SerializeField]
     [Tooltip("魔女の魔力")]
     private float m_mp = 100;
 
@@ -74,6 +82,7 @@ public class Witch : CharaBase, IStun
     Collider m_change;
     SpriteRenderer m_sr;
     bool m_contactFlag = false;
+    bool m_isGod = false;
     bool m_specter = false;
     bool m_useTask = false;
     public bool UseTask { set { m_useTask = value; } }
@@ -167,6 +176,12 @@ public class Witch : CharaBase, IStun
         yield return new WaitForSeconds(1f);
         CanAttack = true;
     }
+    IEnumerator ChangeGod()
+    {
+        m_isGod = true;
+        yield return new WaitForSeconds(m_godTime);
+        m_isGod = false;
+    }
 
     [PunRPC]
     void PunSetActive(bool value)
@@ -176,7 +191,7 @@ public class Witch : CharaBase, IStun
 
     public override void Move(float h, float v)
     {
-        m_rb.velocity = new Vector3(h, 0, v).normalized * Speed;
+        m_rb.velocity = new Vector3(h, 0, v).normalized * (m_isGod ? m_runSpeed : Speed);
         m_anim.SetBool("IsWalk", h == 0 && v == 0 ? false : true);
     }
 
@@ -195,7 +210,7 @@ public class Witch : CharaBase, IStun
     [PunRPC]
     public void OnHit()
     {
-        if (!m_view.IsMine) return;
+        if (!m_view.IsMine || m_isGod) return;
         m_hp--; //1ずつ減らす
         SetMp(-m_attackMPAmount);
         m_view.RPC("SetAnimator", RpcTarget.All, false);
