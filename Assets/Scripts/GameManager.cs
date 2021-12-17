@@ -45,16 +45,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             DontDestroyOnLoad(this.gameObject);
         }
     }
-    private void Start()
-    {
-        SceneManager.sceneLoaded += Spawn;
-    }
     public void OnEvent(EventData photonEvent)
     {
         switch (photonEvent.Code)
         {
             case (byte)NetworkEvents.Lobby:
-                
+                PhotonNetwork.CurrentRoom.IsOpen = true;
                 break;
             case (byte)NetworkEvents.GameStart:
                 scene = GetComponent<SceneLoader>();
@@ -114,15 +110,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             m_checkImage.SetActive(false);
         }
     }
-    private void Spawn(Scene scene, LoadSceneMode mode)
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            var animalManager = GameObject.Find("AnimalManager").GetComponent<AnimalManager>();
-            animalManager.StartSpawn();
-            ItemManager.Instance.SpawnItem(4);
-        }
-    }
+    Player m_player;
     //ゲームシーンに遷移するときに使う
     IEnumerator SpawnLoadScene(int sceneIndex)
     {
@@ -130,23 +118,25 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         scene.allowSceneActivation = false;
         yield return new WaitForSeconds(2);
         scene.allowSceneActivation = true;
-        yield return new WaitForSeconds(0.1f);
         //マスタークライアントを変えることでハンターをランダムにできる
         int hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers;
         randomNumber = Random.Range(0, hunterNumber);
-        var player = PhotonNetwork.PlayerList[randomNumber];
-        Debug.Log(player.ActorNumber);
-        PhotonNetwork.SetMasterClient(player);
-        PhotonNetwork.CurrentRoom.IsOpen = false;
-        while (!player.IsMasterClient)
+        m_player = PhotonNetwork.PlayerList[randomNumber];
+        PhotonNetwork.SetMasterClient(m_player);
+        Debug.Log(randomNumber + 1);
+        while (!m_player.IsMasterClient)
         {
+            Debug.Log("マスタークライアントが変更されていない");
             yield return null;
         }
-        if (PhotonNetwork.IsMasterClient)
+        if (m_player.IsMasterClient)
         {
-            var chara = GameObject.Find("CharactorSpawn").GetComponent<CharactorSpawn>();
+            var chara = FindObjectOfType<CharactorSpawn>();
             var view = chara.GetComponent<PhotonView>();
             view.RPC(nameof(chara.CharaSpawn), RpcTarget.All);
+            var animalManager = FindObjectOfType<AnimalManager>();
+            animalManager.StartSpawn();
+            ItemManager.Instance.SpawnItem(4);
         }
     }
 }
