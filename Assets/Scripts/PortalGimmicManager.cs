@@ -12,6 +12,10 @@ public class PortalGimmicManager : MonoBehaviour
     [Tooltip("発生させる出口")]
     GameObject m_gate = default;
 
+    [SerializeField]
+    [Tooltip("減少させる時間")]
+    int m_decreaseTime = 120;
+
     PortalGimmicController[] gimmic;
 
     PhotonView m_view;
@@ -36,6 +40,7 @@ public class PortalGimmicManager : MonoBehaviour
     [PunRPC]
     public void Check()
     {
-        m_gate.SetActive(gimmic.All(x => x.Complete));
+        //m_gate.SetActive(gimmic.All(x => x.Complete));
+        GameObject.FindObjectOfType<TimeManager>().DecreaseTime(m_decreaseTime);
     }
 }
