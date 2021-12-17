@@ -128,6 +128,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         }
         yield return new WaitForSeconds(2);
         scene.allowSceneActivation = true;
+        yield return new WaitForSeconds(1);
         //マスタークライアントを変えることでハンターをランダムにできる
         if (PhotonNetwork.IsMasterClient)
         {
