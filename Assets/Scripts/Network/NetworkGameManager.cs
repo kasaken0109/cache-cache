@@ -94,6 +94,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
          * **************************************************/
         if (m_debugMode || PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount > PhotonNetwork.CurrentRoom.MaxPlayers - 1)
         {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
             RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
             raiseEventoptions.Receivers = ReceiverGroup.All;
             SendOptions sendOptions = new SendOptions();
