@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             yield return null;  
         }
         yield return new WaitForSeconds(0.1f);
-        if (player.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient)
         {
             var chara = FindObjectOfType<CharactorSpawn>();
             var view = chara.GetComponent<PhotonView>();
