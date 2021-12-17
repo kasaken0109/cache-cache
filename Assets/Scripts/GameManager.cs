@@ -126,8 +126,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         while (!player.IsMasterClient)
         {
             Debug.Log("マスタークライアントが変更されていない");
-            yield return null;
+            yield return null;  
         }
+        yield return new WaitForSeconds(0.1f);
         if (player.IsMasterClient)
         {
             var chara = FindObjectOfType<CharactorSpawn>();
