@@ -34,13 +34,12 @@ public class PortalGimmicManager : MonoBehaviour
 
     public void CheckTask()
     {
-        m_view.RPC("Check",RpcTarget.All);
+        GameObject.FindObjectOfType<TimeManager>().DecreaseTime(m_decreaseTime);
     }
 
     [PunRPC]
     public void Check()
     {
         //m_gate.SetActive(gimmic.All(x => x.Complete));
-        GameObject.FindObjectOfType<TimeManager>().DecreaseTime(m_decreaseTime);
     }
 }

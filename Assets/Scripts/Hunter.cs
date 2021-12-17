@@ -14,6 +14,10 @@ public class Hunter : CharaBase, IStun
     float m_waitTime = 20f;
 
     [SerializeField]
+    [Tooltip("攻撃の時間")]
+    float m_waitAttackTime = 1f;
+
+    [SerializeField]
     [Tooltip("開始時に待つ時間を表示するUI")]
     Text m_waitDisplay = default;
 
@@ -74,7 +78,7 @@ public class Hunter : CharaBase, IStun
     private void Update()
     {
         if (!m_view || !m_view.IsMine && !CanMove) return;
-        if (Input.GetButtonDown("Fire1")) StartCoroutine(nameof(Attack));
+        if (Input.GetButtonDown("Fire1") && CanAttack) StartCoroutine(nameof(Attack));
         if (Input.GetButtonDown("Jump") && CanUseItem) GetComponent<Item>().UseItem();
     }
     private void FixedUpdate()
@@ -109,14 +113,18 @@ public class Hunter : CharaBase, IStun
         m_attackObject.transform.localPosition = new Vector3(h * 1.5f, 0, v * 1.5f);
     }
 
+    bool CanAttack = true;
     IEnumerator Attack()
     {
+        CanAttack = false;
         m_attackObject.SetActive(true);
         PhotonNetwork.Instantiate(m_attackEffect,transform.position + new Vector3(m_attackObject.transform.localPosition.x/2,0, 0),
             (m_attackObject.transform.localPosition.x < 0 ? Quaternion.Euler(0, 0, 180) : Quaternion.Euler(0, 0, 0)));
         //m_anim.SetTrigger("Attack");
         yield return new WaitForSeconds(m_attackTime);
         m_attackObject.SetActive(false);
+        yield return new WaitForSeconds(m_waitAttackTime);
+        CanAttack = true;
     }
 
     public void PlayStun()

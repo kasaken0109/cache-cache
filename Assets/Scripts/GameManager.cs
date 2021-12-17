@@ -27,10 +27,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     PhotonView m_view;
     [SerializeField]
     GameObject m_checkImage;
-    SceneLoader scene;
-    JudgementController judge;
-    NetworkGameManager netManager;
-    int randomNumber;
+    SceneLoader m_scene;
+    JudgementController m_judge;
+    NetworkGameManager m_netManager;
+    int m_randomNumber;
     bool IsFirst = true;
     bool FirstDeath = true;
     void Awake()
@@ -45,21 +45,17 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             DontDestroyOnLoad(this.gameObject);
         }
     }
-    private void Start()
-    {
-        SceneManager.sceneLoaded += Spawn;
-    }
     public void OnEvent(EventData photonEvent)
     {
         switch (photonEvent.Code)
         {
             case (byte)NetworkEvents.Lobby:
-                
+                PhotonNetwork.CurrentRoom.IsOpen = true;
                 break;
             case (byte)NetworkEvents.GameStart:
-                scene = GetComponent<SceneLoader>();
+                m_scene = GetComponent<SceneLoader>();
                 StartCoroutine(SpawnLoadScene(1));
-                Debug.Log(scene);
+                Debug.Log(m_scene);
                 break;
             case (byte)NetworkEvents.Win:
                 Debug.Log("魔女の勝利");
@@ -78,10 +74,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         FirstDeath = false;
         yield return new WaitForSeconds(0.2f);
-        judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
-        netManager = GameObject.Find("GameManager").GetComponent<NetworkGameManager>();
+        m_judge = GameObject.Find("JudgementController").GetComponent<JudgementController>();
+        m_netManager = GameObject.Find("GameManager").GetComponent<NetworkGameManager>();
         WitchDieCount++;
-        judge.LoseJudge(WitchDieCount, netManager.WitchCapacity);
+        m_judge.LoseJudge(WitchDieCount, m_netManager.WitchCapacity);
         Debug.Log("魔女が死んだ");
         FirstDeath = true;
     }
@@ -92,8 +88,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         ShowTextCtrl.Show(events);
         yield return new WaitForSeconds(2f);
         yield return new WaitUntil(() => ShowTextCtrl.GetLogData() != null);
-        scene = GetComponent<SceneLoader>();
-        StartCoroutine(scene.LoadScene(2));
+        m_scene = GetComponent<SceneLoader>();
+        StartCoroutine(m_scene.LoadScene(2));
     }
     public void OnReady()
     {
@@ -114,15 +110,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             m_checkImage.SetActive(false);
         }
     }
-    private void Spawn(Scene scene, LoadSceneMode mode)
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            var animalManager = GameObject.Find("AnimalManager").GetComponent<AnimalManager>();
-            animalManager.StartSpawn();
-            ItemManager.Instance.SpawnItem(4);
-        }
-    }
     //ゲームシーンに遷移するときに使う
     IEnumerator SpawnLoadScene(int sceneIndex)
     {
@@ -130,23 +117,26 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         scene.allowSceneActivation = false;
         yield return new WaitForSeconds(2);
         scene.allowSceneActivation = true;
-        yield return new WaitForSeconds(0.1f);
         //マスタークライアントを変えることでハンターをランダムにできる
         int hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers;
-        randomNumber = Random.Range(0, hunterNumber);
-        var player = PhotonNetwork.PlayerList[randomNumber];
-        Debug.Log(player.ActorNumber);
+        m_randomNumber = Random.Range(0, hunterNumber);
+        var player = PhotonNetwork.PlayerList[m_randomNumber];
         PhotonNetwork.SetMasterClient(player);
-        PhotonNetwork.CurrentRoom.IsOpen = false;
+        Debug.Log(m_randomNumber + 1);
         while (!player.IsMasterClient)
         {
-            yield return null;
+            Debug.Log("マスタークライアントが変更されていない");
+            yield return null;  
         }
-        if (PhotonNetwork.IsMasterClient)
+        yield return new WaitForSeconds(0.1f);
+        if (player.IsMasterClient)
         {
-            var chara = GameObject.Find("CharactorSpawn").GetComponent<CharactorSpawn>();
+            var chara = FindObjectOfType<CharactorSpawn>();
             var view = chara.GetComponent<PhotonView>();
             view.RPC(nameof(chara.CharaSpawn), RpcTarget.All);
+            var animalManager = FindObjectOfType<AnimalManager>();
+            animalManager.StartSpawn();
+            ItemManager.Instance.SpawnItem(4);
         }
     }
 }

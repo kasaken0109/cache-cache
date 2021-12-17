@@ -20,7 +20,7 @@ public class CharactorSpawn : MonoBehaviour
     [PunRPC]
     public void CharaSpawn()
     {
-        Debug.Log(13);
+        Debug.Log("キャラの生成");
         if (PhotonNetwork.IsMasterClient)
         {
             Transform spawnPoint = CharaPositions[(int)CharaPosition.Hunter];
