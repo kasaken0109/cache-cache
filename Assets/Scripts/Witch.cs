@@ -211,6 +211,7 @@ public class Witch : CharaBase, IStun
     public void OnHit()
     {
         if (!m_view.IsMine || m_isGod) return;
+        StartCoroutine("ChangeGod");
         m_hp--; //1ずつ減らす
         SetMp(-m_attackMPAmount);
         m_view.RPC("SetAnimator", RpcTarget.All, false);

@@ -5219,6 +5219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isHunter: 0
   m_isLight: 0
+  m_stunTime: 0
 --- !u!1 &718839968764825676
 GameObject:
   m_ObjectHideFlags: 0
@@ -5415,6 +5416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isHunter: 0
   m_isLight: 1
+  m_stunTime: 0
 --- !u!1 &2533855445854602527
 GameObject:
   m_ObjectHideFlags: 0
@@ -6127,6 +6129,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: IsWalk
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsDead
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
@@ -6148,6 +6153,8 @@ MonoBehaviour:
   m_rb: {fileID: 4047259916495919390}
   m_view: {fileID: 181245493197337478}
   m_hp: 3
+  m_runSpeed: 9
+  m_godTime: 3
   m_mp: 100
   m_mpSpeed: 0.1
   m_mpUI: {fileID: 499298689524967416}

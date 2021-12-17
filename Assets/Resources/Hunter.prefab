@@ -5419,6 +5419,7 @@ MonoBehaviour:
   CanMove: 1
   m_rb: {fileID: 6462337103317593353}
   m_waitTime: 5
+  m_waitAttackTime: 1
   m_waitDisplay: {fileID: 882712931383143387}
   m_stunTime: 3
   m_attackObject: {fileID: 8262366189142254732}
@@ -5597,6 +5598,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_isHunter: 1
   m_isLight: 0
+  m_stunTime: 0
 --- !u!65 &3796600629301437659
 BoxCollider:
   m_ObjectHideFlags: 0

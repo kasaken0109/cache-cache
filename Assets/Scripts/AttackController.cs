@@ -7,6 +7,7 @@ public class AttackController : MonoBehaviour
 {
     [SerializeField] bool m_isHunter = true;
     [SerializeField] bool m_isLight = false;
+    [SerializeField] float m_stunTime = 0;
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.CompareTag("Animal") && m_isHunter && !m_isLight) GetComponentInParent<Hunter>().PlayStun();
