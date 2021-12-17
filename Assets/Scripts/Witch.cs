@@ -204,11 +204,11 @@ public class Witch : CharaBase, IStun
         {
             m_hp = 0;
             Debug.Log("HPが0になった。");
+            Spectating();
             RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
             raiseEventoptions.Receivers = ReceiverGroup.All;
             SendOptions sendOptions = new SendOptions();
             PhotonNetwork.RaiseEvent((byte)NetworkEvents.Die, null, raiseEventoptions, sendOptions);
-            Spectating();
             IsDead = true;
         }
         hpDisplay.UpdateHp(m_hp);
@@ -219,11 +219,15 @@ public class Witch : CharaBase, IStun
     /// </summary>
     void Spectating()
     {
-        // ここでanimationでspriteを消す
-
         gameObject.GetComponent<BoxCollider>().enabled = false;
-        //m_witchCamera.WitchT = this.transform;
+        //m_view.RPC("SetAnimator", RpcTarget.All, false);
+        m_anim.SetBool("IsDead", true);
         m_specter = true;
+    }
+
+    public void SetDisable()
+    {
+        m_sr.enabled = false;
     }
 
     bool IsChangerd = false;

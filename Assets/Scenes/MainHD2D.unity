@@ -259,6 +259,12 @@ PrefabInstance:
       propertyPath: m_timerText
       value: 
       objectReference: {fileID: 1123859697}
+    - target: {fileID: 3897017893996780458, guid: 9402113461e41be48be6862ccdb019db,
+        type: 3}
+      propertyPath: m_items.Array.data[2]
+      value: 
+      objectReference: {fileID: 6010810000129148488, guid: e0954a1990f9a6e4483d85d6dcbfeb62,
+        type: 3}
     - target: {fileID: 3897017894292691729, guid: 9402113461e41be48be6862ccdb019db,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -3461,6 +3467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_gate: {fileID: 821711189}
+  m_decreaseTime: 120
 --- !u!114 &1689819414
 MonoBehaviour:
   m_ObjectHideFlags: 0
