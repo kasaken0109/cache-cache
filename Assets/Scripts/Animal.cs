@@ -132,7 +132,6 @@ public class Animal : MonoBehaviour
 
     private void MoveStop()
     {
-        Debug.Log("a");
         m_timer = 0;
         m_action = false;
         m_anim.SetBool("IsWalk", false);

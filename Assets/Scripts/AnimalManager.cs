@@ -15,22 +15,24 @@ public class AnimalManager : MonoBehaviour
     {
         [SerializeField]
         public AnimalList animal;
+        //[SerializeField]
+        //public int mapNum;
         [SerializeField]
-        public int mapNum;
+        public Vector3 CenterPos;
         [SerializeField]
-        public int right;
-        [SerializeField]
-        public int left;
+        public Vector3 Range;
+        //[SerializeField]
+        //public int right;
+        //[SerializeField]
+        //public int left;
         [SerializeField]
         public int spownNum;
     }
     List<Animal> animals = new List<Animal>();
 
-    [SerializeField, Header("mapのz座標")]
-    int[] m_mapPos = new int[] { 0, -20, -40};
-
     [SerializeField, Header("出現させる動物")]
     SpownAnimal[] m_spownAnimals = new SpownAnimal[] { };
+
 
     public void StartSpawn()
     {
@@ -57,27 +59,41 @@ public class AnimalManager : MonoBehaviour
     private void Spawn()
     {
         bool samePos = false;
-        int pos;
+        float posX;
+        float posZ;
+        int count;// 無限ループをさせない
         for (int i = 0; i < m_spownAnimals.Length; i++)
         {
-            if (m_spownAnimals[i].spownNum > m_spownAnimals[i].right - m_spownAnimals[i].left) 
-            {
-                Debug.LogError(m_spownAnimals[i].animal.ToString() + ": 設定している数を生成できません");
-                continue;
-            }
+            count = 0;
             // spownNumの数spownさせる
             for (int n = 0; n < m_spownAnimals[i].spownNum; samePos = false)
             {
-                pos = Random.Range(m_spownAnimals[i].left, m_spownAnimals[i].right);
+                count++;
+                if (count >= 10) 
+                {
+                    break; 
+                }
+
+                posX = Random.Range(m_spownAnimals[i].CenterPos.x, m_spownAnimals[i].Range.x);
+                posZ = Random.Range(m_spownAnimals[i].CenterPos.z, m_spownAnimals[i].Range.z);
+
+                Vector3 pos = new Vector3(posX, m_spownAnimals[i].CenterPos.y, posZ);
                 // 同じ位置にならないようにする
                 for (int k = 0; k < animals.Count; k++)
                 {
-                    if (animals[k].gameObject.transform.position.z == m_mapPos[m_spownAnimals[i].mapNum] &&
-                        pos == animals[k].gameObject.transform.position.x) samePos = true;
+                    Vector3 a = animals[k].gameObject.transform.position;
+                    BoxCollider c = animals[k].gameObject.GetComponent<BoxCollider>();
+                    a += c.center;
+                    if (a.x + c.size.x > pos.x && a.x - c.size.x < pos.x &&
+                        a.z + c.size.z > pos.z && a.z - c.size.z < pos.z)
+                    {
+                        samePos = true;
+                        break;
+                    }
                 }
                 if (samePos) continue;
 
-                animals.Add(PhotonNetwork.Instantiate(m_spownAnimals[i].animal.ToString(), new Vector3(pos, 0.9f, m_mapPos[Random.Range(0,m_mapPos.Length)]), Quaternion.identity).GetComponent<Animal>());
+                animals.Add(PhotonNetwork.Instantiate(m_spownAnimals[i].animal.ToString(), new Vector3(posX, m_spownAnimals[i].CenterPos.y, posZ), Quaternion.identity).GetComponent<Animal>());
                 n++;
             }
         }
