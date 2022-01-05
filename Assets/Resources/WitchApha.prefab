@@ -6022,7 +6022,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 76fc73d46ca03a847a732a8a7938f1be, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b04dd7f72fdbcaf4db2aa530c7569bc2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6132,6 +6132,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: IsDead
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsRight
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
