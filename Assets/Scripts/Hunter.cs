@@ -120,7 +120,7 @@ public class Hunter : CharaBase, IStun
         m_attackObject.SetActive(true);
         PhotonNetwork.Instantiate(m_attackEffect,transform.position + new Vector3(m_attackObject.transform.localPosition.x/2,0, 0),
             (m_attackObject.transform.localPosition.x < 0 ? Quaternion.Euler(0, 0, 180) : Quaternion.Euler(0, 0, 0)));
-        //m_anim.SetTrigger("Attack");
+        m_anim.SetTrigger("Attack");
         yield return new WaitForSeconds(m_attackTime);
         m_attackObject.SetActive(false);
         yield return new WaitForSeconds(m_waitAttackTime);
