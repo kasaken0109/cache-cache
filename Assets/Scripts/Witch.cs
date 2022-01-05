@@ -193,6 +193,7 @@ public class Witch : CharaBase, IStun
     {
         m_rb.velocity = new Vector3(h, 0, v).normalized * (m_isGod ? m_runSpeed : Speed);
         m_anim.SetBool("IsWalk", h == 0 && v == 0 ? false : true);
+        m_anim.SetBool("IsRight", h > 0 ? true : false);
     }
 
     public void SetDirection(float h, float v)
