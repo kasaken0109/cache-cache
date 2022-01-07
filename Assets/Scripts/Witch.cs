@@ -270,11 +270,13 @@ public class Witch : CharaBase, IStun
             {
                 m_view.RPC("SetAnimator", RpcTarget.All, true);
                 IsChangerd = true;
+                gameObject.layer = 8;
             }
             else if (IsChangerd)
             {
                 m_view.RPC("SetAnimator", RpcTarget.All, false);
                 IsChangerd = false;
+                gameObject.layer = 9;
             }
         }
     }
