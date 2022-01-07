@@ -11,6 +11,7 @@ public class NewTextDisplay : MonoBehaviour
     [SerializeField] Text m_hunterName;
     [SerializeField] Image m_resultDisplay;
     [SerializeField] Sprite[] m_resultImage;
+    [SerializeField] GameObject[] m_result;
 
     void Start()
     {
@@ -26,6 +27,13 @@ public class NewTextDisplay : MonoBehaviour
         {
             m_witchesName.text += text + "\n";
         }
+
+        foreach (var item in m_result)
+        {
+            item.SetActive(false);
+        }
+
+
     }
 
     void Init()
