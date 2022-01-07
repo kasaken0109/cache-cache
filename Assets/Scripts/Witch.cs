@@ -189,9 +189,20 @@ public class Witch : CharaBase, IStun
         m_lightObject.SetActive(value);
     }
 
+    bool IsSetPos = false;
     public override void Move(float h, float v)
     {
         m_rb.velocity = new Vector3(h, 0, v).normalized * (m_isGod ? m_runSpeed : Speed);
+        if (IsChangerd && !IsSetPos)
+        {
+            transform.position += new Vector3(0, 0.75f, 0);
+            IsSetPos = true;
+        }
+        if (!IsChangerd && IsSetPos)
+        {
+            transform.position += new Vector3(0, -0.75f, 0);
+            IsSetPos = false;
+        }
         m_anim.SetBool("IsWalk", h == 0 && v == 0 ? false : true);
         m_anim.SetBool("IsRight", h > 0 ? true : false);
     }
