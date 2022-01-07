@@ -38,7 +38,7 @@ public class Animal : MonoBehaviour
         //m_trigger.gameObject.SetActive(false);
         m_rb = GetComponent<Rigidbody>();
         m_anim = GetComponent<Animator>();
-        m_halfSize = GetComponent<BoxCollider>().size / 2;
+        m_halfSize = GetComponent<BoxCollider>().size / 2 - GetComponent<BoxCollider>().center;
         //m_shadowAnim = transform.GetChild(0).GetComponent<Animator>();
 
         if (SelfSupport)
@@ -72,7 +72,7 @@ public class Animal : MonoBehaviour
                 //else if (transform.rotation.y == 1) direction = - 1;
 
                 Ray ray = GroundCheck();
-
+                Debug.DrawRay(ray.origin, ray.direction * 0.5f, Color.white);
                 if (!Physics.Raycast(ray, out hit, 0.5f, m_mask))
                 {
                     MoveStop();
@@ -124,9 +124,14 @@ public class Animal : MonoBehaviour
     /// </summary>
     public void Move(float h, float z)
     {
+        if (!m_rb || !m_anim)
+        {
+            m_rb = GetComponent<Rigidbody>();
+            m_anim = GetComponent<Animator>();
+        }
+        m_rb.constraints = RigidbodyConstraints.None;
+        m_rb.constraints = RigidbodyConstraints.FreezeRotation;
         m_rb.velocity = new Vector3(h, 0, z).normalized * m_speed;
-        m_rb.constraints = m_rb.velocity == Vector3.zero ? RigidbodyConstraints.FreezePosition 
-            | RigidbodyConstraints.FreezeRotation : RigidbodyConstraints.FreezeRotation;
         m_anim.SetBool("IsWalk", true);
     }
 
@@ -137,6 +142,7 @@ public class Animal : MonoBehaviour
         m_anim.SetBool("IsWalk", false);
         //m_shadowAnim.SetBool("IsWalk", false);
         m_rb.velocity = Vector2.zero;
+        m_rb.constraints =  RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
     }
 
 
@@ -151,7 +157,7 @@ public class Animal : MonoBehaviour
 
     Ray GroundCheck()
     {
-        Vector3 rayPosition = gameObject.transform.position + new Vector3((m_halfSize.x + 0.001f) * m_direction.x, -m_halfSize.y - 0.001f, 0.5f + m_direction.z);
+        Vector3 rayPosition = gameObject.transform.position + new Vector3((m_halfSize.x + 0.001f) * m_direction.x, -m_halfSize.y + 0.1f, 0.5f + m_direction.z);
         return new Ray(rayPosition, new Vector3(m_direction.x, -1, m_direction.z));
         //Debug.DrawRay(rayPosition, ray.direction * 0.5f, Color.black);
     }

@@ -26,12 +26,12 @@ public class AnimalManager : MonoBehaviour
         //[SerializeField]
         //public int left;
         [SerializeField]
-        public int spownNum;
+        public int spawnNum;
     }
     List<Animal> animals = new List<Animal>();
 
     [SerializeField, Header("出現させる動物")]
-    SpownAnimal[] m_spownAnimals = new SpownAnimal[] { };
+    SpownAnimal[] m_spawnAnimals = new SpownAnimal[] { };
 
 
     public void StartSpawn()
@@ -62,11 +62,11 @@ public class AnimalManager : MonoBehaviour
         float posX;
         float posZ;
         int count;// 無限ループをさせない
-        for (int i = 0; i < m_spownAnimals.Length; i++)
+        for (int i = 0; i < m_spawnAnimals.Length; i++)
         {
             count = 0;
             // spownNumの数spownさせる
-            for (int n = 0; n < m_spownAnimals[i].spownNum; samePos = false)
+            for (int n = 0; n < m_spawnAnimals[i].spawnNum; samePos = false)
             {
                 count++;
                 if (count >= 10) 
@@ -74,10 +74,10 @@ public class AnimalManager : MonoBehaviour
                     break; 
                 }
 
-                posX = Random.Range(m_spownAnimals[i].CenterPos.x, m_spownAnimals[i].Range.x);
-                posZ = Random.Range(m_spownAnimals[i].CenterPos.z, m_spownAnimals[i].Range.z);
+                posX = Random.Range(m_spawnAnimals[i].CenterPos.x, m_spawnAnimals[i].Range.x);
+                posZ = Random.Range(m_spawnAnimals[i].CenterPos.z, m_spawnAnimals[i].Range.z);
 
-                Vector3 pos = new Vector3(posX, m_spownAnimals[i].CenterPos.y, posZ);
+                Vector3 pos = new Vector3(posX, m_spawnAnimals[i].CenterPos.y, posZ);
                 // 同じ位置にならないようにする
                 for (int k = 0; k < animals.Count; k++)
                 {
@@ -93,7 +93,7 @@ public class AnimalManager : MonoBehaviour
                 }
                 if (samePos) continue;
 
-                animals.Add(PhotonNetwork.Instantiate(m_spownAnimals[i].animal.ToString(), new Vector3(posX, m_spownAnimals[i].CenterPos.y, posZ), Quaternion.identity).GetComponent<Animal>());
+                animals.Add(PhotonNetwork.Instantiate(m_spawnAnimals[i].animal.ToString(), new Vector3(posX, m_spawnAnimals[i].CenterPos.y + 2, posZ), Quaternion.identity).GetComponent<Animal>());
                 n++;
             }
         }
