@@ -6,7 +6,11 @@ using Photon.Pun;
 
 public class PortalGimmicManager : MonoBehaviour
 {
-    public static PortalGimmicManager Instance { get; private set; } 
+    public static PortalGimmicManager Instance { get; private set; }
+
+    [SerializeField]
+    [Tooltip("ギミック")]
+    PortalGimmicController[] m_gimmics;
 
     [SerializeField]
     [Tooltip("発生させる出口")]
@@ -15,8 +19,6 @@ public class PortalGimmicManager : MonoBehaviour
     [SerializeField]
     [Tooltip("減少させる時間")]
     int m_decreaseTime = 120;
-
-    PortalGimmicController[] gimmic;
 
     PhotonView m_view;
 
@@ -27,9 +29,9 @@ public class PortalGimmicManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gimmic = GameObject.FindObjectsOfType<PortalGimmicController>();
         m_view = GetComponent<PhotonView>();
         m_gate.SetActive(false);
+        m_gimmics[Random.Range(0, m_gimmics.Length)].IsGenuine = false;
     }
 
     public void CheckTask()
