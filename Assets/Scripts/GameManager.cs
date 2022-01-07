@@ -115,9 +115,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         var scene = SceneManager.LoadSceneAsync(sceneIndex);
         scene.allowSceneActivation = false;
-        yield return new WaitForSeconds(2);
-        scene.allowSceneActivation = true;
-        //マスタークライアントを変えることでハンターをランダムにできる
+
         int hunterNumber = PhotonNetwork.CurrentRoom.MaxPlayers;
         m_randomNumber = Random.Range(0, hunterNumber);
         var player = PhotonNetwork.PlayerList[m_randomNumber];
@@ -126,9 +124,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         while (!player.IsMasterClient)
         {
             Debug.Log("マスタークライアントが変更されていない");
-            yield return null;  
+            yield return null;
         }
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(2);
+        scene.allowSceneActivation = true;
+        yield return new WaitForSeconds(1);
+        //マスタークライアントを変えることでハンターをランダムにできる
         if (PhotonNetwork.IsMasterClient)
         {
             var chara = FindObjectOfType<CharactorSpawn>();
