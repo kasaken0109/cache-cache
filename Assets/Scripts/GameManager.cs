@@ -85,9 +85,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     IEnumerator ShowResult(NetworkEvents events)
     {
         IsFirst = false;
-        ShowTextCtrl.Show(events);
+        ResultUIData.RequestSetDatas(events);
+        //ShowTextCtrl.Show(events);
         yield return new WaitForSeconds(2f);
-        yield return new WaitUntil(() => ShowTextCtrl.GetLogData() != null);
+        //yield return new WaitUntil(() => ShowTextCtrl.GetLogData() != null);
         m_scene = GetComponent<SceneLoader>();
         StartCoroutine(m_scene.LoadScene(2));
     }
