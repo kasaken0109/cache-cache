@@ -3,6 +3,14 @@ using UnityEngine;
 
 namespace Sounds
 {
+    public enum SoundType
+    {
+        BGM,
+        SE,
+
+        None,
+    }
+
     [CreateAssetMenu(fileName = "SEDatas")]
     public class SEDataBase : ScriptableObject
     {
@@ -15,6 +23,7 @@ namespace Sounds
     {
         public string Name;
         public int ID;
+        public SoundType Type;
         public AudioClip Clip;
         [Range(0, 10)] public float Volume;
         [Range(0, 1)] public float SpatialBrend;
