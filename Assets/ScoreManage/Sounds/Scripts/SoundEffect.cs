@@ -16,14 +16,14 @@ namespace Sounds
 
             if (_source != null)
             {
-                _source.volume = _data.Volume / SoundMaster.Instance.MasterVolumeRate;
+                _source.volume = _data.Volume * SoundMaster.Instance.MasterVolumeRate;
                 switch (_data.Type)
                 {
                     case SoundType.BGM:
-                        _source.volume /= SoundMaster.Instance.BGMVoluumeRate;
+                        _source.volume *= SoundMaster.Instance.BGMVoluumeRate;
                         break;
                     case SoundType.SE:
-                        _source.volume /= SoundMaster.Instance.SEVoluumeRate;
+                        _source.volume *= SoundMaster.Instance.SEVoluumeRate;
                         break;
                     case SoundType.None:
                         break;
@@ -38,14 +38,14 @@ namespace Sounds
             _source = GetComponent<AudioSource>();
             _source.clip = data.Clip;
 
-            _source.volume = data.Volume / SoundMaster.Instance.MasterVolumeRate;
+            _source.volume = data.Volume * SoundMaster.Instance.MasterVolumeRate;
             switch (data.Type)
             {
                 case SoundType.BGM:
-                    _source.volume /= SoundMaster.Instance.BGMVoluumeRate;
+                    _source.volume *= SoundMaster.Instance.BGMVoluumeRate;
                     break;
                 case SoundType.SE:
-                    _source.volume /= SoundMaster.Instance.SEVoluumeRate;
+                    _source.volume *= SoundMaster.Instance.SEVoluumeRate;
                     break;
                 case SoundType.None:
                     break;
