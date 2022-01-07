@@ -10,6 +10,10 @@ public class ResultUIData
     private static ResultUIData m_instance = new ResultUIData();
     public static ResultUIData Instance => m_instance;
 
+    public bool IsPlayerWin => m_isPlayerWin;
+
+    private bool m_isPlayerWin;
+
     string m_resultWitch = null;
     public static string GetResultWitch => Instance.m_resultWitch;
 
@@ -27,19 +31,27 @@ public class ResultUIData
 
     void SetDatas(NetworkEvents events)
     {
+        var charas = GameObject.FindObjectsOfType<CharaBase>()
+            .Where(c => c.gameObject.CompareTag("Witch") || c.gameObject.CompareTag("Hunter"));
         if (events == NetworkEvents.Win)
         {
             m_resultWitch = "Win";
             m_resultHunter = "Lose";
+            var player = GameObject.FindObjectsOfType<Witch>()
+            .Where(c => c.gameObject.GetComponent<PhotonView>().IsMine);
+            m_isPlayerWin = player != null ? true : false;
+            Debug.Log(m_isPlayerWin);
         }
         else if (events == NetworkEvents.Lose)
         {
             m_resultWitch = "Lose";
             m_resultHunter = "Win";
+            
+            m_isPlayerWin = GameObject.FindObjectOfType<Hunter>().GetComponent<PhotonView>().IsMine ? true : false;
+            Debug.Log(m_isPlayerWin);
         }
 
-        var charas = GameObject.FindObjectsOfType<CharaBase>()
-            .Where(c => c.gameObject.CompareTag("Witch") || c.gameObject.CompareTag("Hunter"));
+        
 
         foreach (var id in ScoreManager.Instance.PlayersScore)
         {

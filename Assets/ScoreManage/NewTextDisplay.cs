@@ -9,6 +9,8 @@ public class NewTextDisplay : MonoBehaviour
     [SerializeField] Text m_witchesName;
     [SerializeField] Text m_hunterResult;
     [SerializeField] Text m_hunterName;
+    [SerializeField] Image m_resultDisplay;
+    [SerializeField] Sprite[] m_resultImage;
 
     void Start()
     {
@@ -17,7 +19,9 @@ public class NewTextDisplay : MonoBehaviour
         m_witchesResurt.text = ResultUIData.GetResultWitch;
         m_hunterResult.text = ResultUIData.GetResultHunter;
         m_hunterName.text = ResultUIData.GetHunterText;
-        
+        m_resultDisplay.sprite = ResultUIData.Instance.IsPlayerWin ? m_resultImage[0] : m_resultImage[1];
+
+
         foreach (var text in ResultUIData.GetWitchText)
         {
             m_witchesName.text += text + "\n";
