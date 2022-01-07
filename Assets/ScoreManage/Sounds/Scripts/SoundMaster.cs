@@ -14,11 +14,20 @@ namespace Sounds
         [SerializeField] List<SEDataBase> _dataBases;
 
         ObjectPool<SoundEffect> _pool;
-        public float MasterVolumeRate { get => _volumRate; }
+        public float MasterVolumeRate { get => _volumRate; set { _volumRate = value * 100; } }
 
         void Awake()
         {
-            _instance = this;
+            if (_instance == null)
+            {
+                _instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
             _pool = new ObjectPool<SoundEffect>();
             _pool.SetUp(_se, transform);
         }
