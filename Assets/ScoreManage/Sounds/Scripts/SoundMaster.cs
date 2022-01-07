@@ -8,17 +8,17 @@ namespace Sounds
         private static SoundMaster _instance = null;
         public static SoundMaster Instance => _instance;
 
-        [SerializeField, Range(0, 100)] float _volumRate = 100;
-        [SerializeField, Range(0, 100)] float _bgmVolumRate = 100;
-        [SerializeField, Range(0, 100)] float _seVolumRate = 100;
+        [SerializeField, Range(0, 1)] float _volumRate = 1;
+        [SerializeField, Range(0, 1)] float _bgmVolumRate = 1;
+        [SerializeField, Range(0, 1)] float _seVolumRate = 1;
 
         [SerializeField] SoundEffect _se;
         [SerializeField] List<SEDataBase> _dataBases;
 
         ObjectPool<SoundEffect> _pool;
-        public float MasterVolumeRate { get => _volumRate; set { _volumRate = value * 100; } }
-        public float BGMVoluumeRate { get => _bgmVolumRate; set { _bgmVolumRate = value * 100; } }
-        public float SEVoluumeRate { get => _seVolumRate; set { _seVolumRate = value * 100; } }
+        public float MasterVolumeRate { get => _volumRate; set { _volumRate = value; } }
+        public float BGMVoluumeRate { get => _bgmVolumRate; set { _bgmVolumRate = value; } }
+        public float SEVoluumeRate { get => _seVolumRate; set { _seVolumRate = value; } }
 
         void Awake()
         {
@@ -44,6 +44,7 @@ namespace Sounds
         /// <param name="groupID">SEDataBase‚ÌID</param>
         public static void Request(Transform user, int id, int groupID = 0)
         {
+            Debug.Log("fa");
             SEDataBase dataBase = Instance._dataBases[groupID];
             foreach (SEData se in dataBase.GetData)
             {

@@ -25,7 +25,7 @@ namespace Sounds
         public int ID;
         public SoundType Type;
         public AudioClip Clip;
-        [Range(0, 10)] public float Volume;
+        [Range(0, 1)] public float Volume;
         [Range(0, 1)] public float SpatialBrend;
         public bool Loop;
     }
