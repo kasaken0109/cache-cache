@@ -9,16 +9,29 @@ namespace Sounds
         public static SoundMaster Instance => _instance;
 
         [SerializeField, Range(0, 100)] float _volumRate = 100;
+        [SerializeField, Range(0, 100)] float _bgmVolumRate = 100;
+        [SerializeField, Range(0, 100)] float _seVolumRate = 100;
 
         [SerializeField] SoundEffect _se;
         [SerializeField] List<SEDataBase> _dataBases;
 
         ObjectPool<SoundEffect> _pool;
-        public float MasterVolumeRate { get => _volumRate; }
+        public float MasterVolumeRate { get => _volumRate; set { _volumRate = value * 100; } }
+        public float BGMVoluumeRate { get => _bgmVolumRate; set { _bgmVolumRate = value * 100; } }
+        public float SEVoluumeRate { get => _seVolumRate; set { _seVolumRate = value * 100; } }
 
         void Awake()
         {
-            _instance = this;
+            if (_instance == null)
+            {
+                _instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
             _pool = new ObjectPool<SoundEffect>();
             _pool.SetUp(_se, transform);
         }
