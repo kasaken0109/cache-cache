@@ -25,6 +25,12 @@ public class PortalGimmicController : MonoBehaviour
     [Tooltip("体力UI")]
     private SpriteRenderer[] m_ui = default;
 
+    [SerializeField]
+    [Tooltip("本物のギミックかどうか")]
+    private bool m_isGenuine = true;
+
+    public bool IsGenuine { get => m_isGenuine; set { m_isGenuine = value; } }
+
     SpriteRenderer m_sr;
     PhotonView m_view;
 
@@ -42,6 +48,15 @@ public class PortalGimmicController : MonoBehaviour
     [PunRPC]
     public void SetMP()
     {
+        if (!IsGenuine)
+        {
+            foreach (var item in m_ui)
+            {
+                item.enabled = false;
+                m_sr.color = new Color(0, 0, 0, 255);
+                Instantiate(m_destroyEffect, new Vector3(transform.position.x, transform.position.y, transform.position.z - 1), transform.rotation);
+            }
+        }
         if (m_gimmicHP[index] == 1)
         {
             if(index == gimmicNum - 1)
