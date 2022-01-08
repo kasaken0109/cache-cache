@@ -31,6 +31,7 @@ public class GateController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag("Hunter")) return;
         if (other.CompareTag("Witch"))
         {
             eacapeNum++;

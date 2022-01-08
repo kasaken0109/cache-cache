@@ -53,7 +53,7 @@ public class PortalGimmicController : MonoBehaviour
             foreach (var item in m_ui)
             {
                 item.enabled = false;
-                m_sr.color = new Color(0, 0, 0, 255);
+                m_sr.material.color = new Color(0, 0, 0, 255);
                 Instantiate(m_destroyEffect, new Vector3(transform.position.x, transform.position.y, transform.position.z - 1), transform.rotation);
             }
         }
