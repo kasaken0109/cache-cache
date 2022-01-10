@@ -113,6 +113,7 @@ public class Witch : CharaBase, IStun
         if(!IsStopMp)mp = IsChangerd ? (mp - m_mpSpeed > 0 ? mp - m_mpSpeed : 0) : (mp + m_mpSpeed < m_mp ? mp + m_mpSpeed : m_mp);
         if (mp <= 0.01f)
         {
+            if (gameObject.layer == 8) gameObject.layer = 9;
             m_view.RPC("SetAnimator", RpcTarget.All, false);
             IsChangerd = false;
             StartCoroutine(nameof(StopMp));
