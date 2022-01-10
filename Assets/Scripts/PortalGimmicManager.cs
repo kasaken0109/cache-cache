@@ -21,6 +21,7 @@ public class PortalGimmicManager : MonoBehaviour
     int m_decreaseTime = 120;
 
     PhotonView m_view;
+    PortalGimmicController[] gimmic;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class PortalGimmicManager : MonoBehaviour
     void Start()
     {
         m_view = GetComponent<PhotonView>();
+        gimmic = GameObject.FindObjectsOfType<PortalGimmicController>();
         m_gate.SetActive(false);
         m_gimmics[Random.Range(0, m_gimmics.Length)].IsGenuine = false;
     }
@@ -37,11 +39,12 @@ public class PortalGimmicManager : MonoBehaviour
     public void CheckTask()
     {
         GameObject.FindObjectOfType<TimeManager>().DecreaseTime(m_decreaseTime);
+        m_view.RPC(nameof(Check), RpcTarget.All);
     }
 
     [PunRPC]
     public void Check()
     {
-        //m_gate.SetActive(gimmic.All(x => x.Complete));
+        m_gate.SetActive(gimmic.Where(x => x.Complete).Count() + 1 == gimmic.Length);
     }
 }
