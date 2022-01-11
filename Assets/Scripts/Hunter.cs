@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 
-public class Hunter : CharaBase, IStun
+public class Hunter : CharaBase
 {
     [SerializeField] Rigidbody m_rb;
 
@@ -25,6 +25,10 @@ public class Hunter : CharaBase, IStun
     [Tooltip("スタンする時間")]
     float m_stunTime = 3f;
 
+    [SerializeField]
+    [Tooltip("スタン時に表示される魔法陣")]
+    GameObject m_stunMagic = default;
+
     private float m_speedUpRate = 1f;
 
     public float SpeedUpRate { set { m_speedUpRate = value; } }
@@ -32,6 +36,8 @@ public class Hunter : CharaBase, IStun
     [SerializeField]
     [Tooltip("攻撃のコライダー")]
     GameObject m_attackObject = default;
+
+    
 
     [SerializeField]
     [Tooltip("攻撃のエフェクト")]
@@ -78,7 +84,7 @@ public class Hunter : CharaBase, IStun
     private void Update()
     {
         if (!m_view || !m_view.IsMine || !CanMove) return;
-        if (Input.GetButtonDown("Fire1") && CanAttack) StartCoroutine(nameof(Attack));
+        if (Input.GetButtonDown("Fire1") && CanAttack) m_anim.SetTrigger("Attack");
         if (Input.GetButtonDown("Jump") && CanUseItem) GetComponent<Item>().UseItem();
     }
     private void FixedUpdate()
@@ -110,36 +116,59 @@ public class Hunter : CharaBase, IStun
     public void SetDirection(float h, float v)
     {
         if (h == 0 && v == 0) return;
-        m_attackObject.transform.localPosition = new Vector3(h * 1.5f, 0, v * 1.5f);
+        m_attackObject.transform.localPosition = new Vector3(h * 1.5f, 0, 0);
     }
 
     bool CanAttack = true;
     IEnumerator Attack()
     {
-        CanAttack = false;
-        m_attackObject.SetActive(true);
-        PhotonNetwork.Instantiate(m_attackEffect,transform.position + new Vector3(m_attackObject.transform.localPosition.x/2,0, 0),
-            (m_attackObject.transform.localPosition.x < 0 ? Quaternion.Euler(0, 0, 180) : Quaternion.Euler(0, 0, 0)));
-        m_anim.SetTrigger("Attack");
-        yield return new WaitForSeconds(m_attackTime);
         m_attackObject.SetActive(false);
         yield return new WaitForSeconds(m_waitAttackTime);
         CanAttack = true;
     }
 
-    public void PlayStun()
+    public void AttackStart()
     {
-        StartCoroutine(nameof(Stun));
+        CanAttack = false;
+        m_attackObject.SetActive(true);
     }
 
-    IEnumerator Stun()
+    public void AttackEnd()
+    {
+        StartCoroutine(Attack());
+    }
+
+    public void SpawnEffect()
+    {
+        PhotonNetwork.Instantiate(m_attackEffect + (m_attackObject.transform.localPosition.x < 0 ? "Left" : ""), transform.position + new Vector3(m_attackObject.transform.localPosition.x, 0, 0),
+            (Quaternion.Euler(0, 0, 0)));
+    }
+
+    /// <summary>
+    /// スタンさせる、trueの時は魔法陣を表示する
+    /// </summary>
+    /// <param name="isStun"></param>
+    /// 
+    public void PlayStun(bool isStun)
+    {
+        StartCoroutine(Stun(isStun));
+    }
+
+    IEnumerator Stun(bool isStun)
     {
         float timer = 0;
         CanMove = false;
-        m_stunEffectObject.SetActive(true);
+        m_view.RPC(nameof(SetEffect), RpcTarget.All,true ,isStun);
         yield return new WaitForSeconds(m_stunTime);
-        m_stunEffectObject.SetActive(false);
+        m_view.RPC(nameof(SetEffect), RpcTarget.All, false, isStun);
         CanMove = true;
+    }
+
+    [PunRPC]
+    private void SetEffect(bool isActive ,bool isStun)
+    {
+        m_stunMagic.SetActive(isStun && isActive);
+        m_stunEffectObject.SetActive(isActive);
     }
 
     public void PlayWaitCoolDown(float time)
