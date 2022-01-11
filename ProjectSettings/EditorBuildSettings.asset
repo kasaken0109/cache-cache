@@ -9,9 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/LobbyRoom.unity
     guid: 325df454e4701b442b052fd0b90232d6
   - enabled: 1
-    path: Assets/Scenes/PlayerSyncTestKasai.unity
-    guid: 9157d7df286f59b4d8e90695093da1d3
+    path: Assets/Scenes/MainHD2DKasai.unity
+    guid: 6721183be4091364baf391ab69ac8f77
+  - enabled: 0
+    path: Assets/Scenes/MainHD2D.unity
+    guid: 780682c271c635047a827a66db39e42e
   - enabled: 1
-    path: Assets/Scenes/TestResult.unity
-    guid: 1f1e2cb5c0d132f448811b6bcf2966c6
+    path: Assets/ScoreManage/NewTestResult.unity
+    guid: 3f6dad14812a5a141ae25ecc722234d4
   m_configObjects: {}
