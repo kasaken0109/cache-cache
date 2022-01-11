@@ -43,6 +43,10 @@ public class Witch : CharaBase, IStun
     GameObject m_stunEffectObject = default;
 
     [SerializeField]
+    [Tooltip("ライトエフェクト")]
+    GameObject m_lightEffectObject = default;
+
+    [SerializeField]
     [Tooltip("アタックコライダー")]
     GameObject m_attackObject = default;
 
@@ -149,7 +153,7 @@ public class Witch : CharaBase, IStun
 
     IEnumerator UseLight()
     {
-        while (mp > 0)
+        while (mp > 0 && !IsChangerd)
         {
             m_view.RPC(nameof(PunSetActive),RpcTarget.All,true);
             mp -= m_mpSpeed * 2f;
@@ -188,6 +192,7 @@ public class Witch : CharaBase, IStun
     void PunSetActive(bool value)
     {
         m_lightObject.SetActive(value);
+        m_lightEffectObject.SetActive(value);
     }
 
     bool IsSetPos = false;
@@ -227,6 +232,7 @@ public class Witch : CharaBase, IStun
         StartCoroutine("ChangeGod");
         m_hp--; //1ずつ減らす
         SetMp(-m_attackMPAmount);
+        m_anim.Play("Witch_Damage");
         m_view.RPC("SetAnimator", RpcTarget.All, false);
 
         if (m_hp < 1 && !IsDead) //魔法使いの体力が1未満になったら呼び出す
@@ -271,6 +277,7 @@ public class Witch : CharaBase, IStun
             {
                 m_view.RPC("SetAnimator", RpcTarget.All, true);
                 IsChangerd = true;
+                m_view.RPC(nameof(PunSetActive), RpcTarget.All, false);
                 gameObject.layer = 8;
             }
             else if (IsChangerd)
