@@ -10,13 +10,13 @@ public class AttackController : MonoBehaviour
     [SerializeField] float m_stunTime = 0;
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.CompareTag("Animal") && m_isHunter && !m_isLight) GetComponentInParent<Hunter>().PlayStun();
+        if (collision.CompareTag("Animal") && m_isHunter && !m_isLight) GetComponentInParent<Hunter>().PlayStun(false);
         if (collision.CompareTag("Rock") && !m_isHunter && IsFirst && !m_isLight)
         {
             collision.GetComponent<PortalGimmicController>().Damage();
             IsFirst = false;
         }
-        else if (collision.CompareTag("Hunter") && !m_isHunter && m_isLight) collision.GetComponentInParent<Hunter>().PlayStun();
+        else if (collision.CompareTag("Hunter") && !m_isHunter && m_isLight) collision.GetComponentInParent<Hunter>().PlayStun(true);
         else if (collision.CompareTag("Witch") && IsFirst && !m_isLight)
         {
             PhotonView view = collision.gameObject.GetComponent<PhotonView>();
