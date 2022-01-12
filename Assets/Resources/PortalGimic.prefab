@@ -121,7 +121,7 @@ MonoBehaviour:
   - {fileID: 2238952502148581359}
   - {fileID: 5557354017419173068}
   - {fileID: 5975965031491619788}
-  IsGenuine: 1
+  m_isGenuine: 1
 --- !u!114 &2943599171082642319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,7 +141,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 1
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &3659816371956464501
