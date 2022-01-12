@@ -44,7 +44,6 @@ namespace Sounds
         /// <param name="groupID">SEDataBase‚ÌID</param>
         public static void Request(Transform user, int id, int groupID = 0)
         {
-            Debug.Log("fa");
             SEDataBase dataBase = Instance._dataBases[groupID];
             foreach (SEData se in dataBase.GetData)
             {
