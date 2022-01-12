@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f00feafcf0675cd47a48f83ae42b06d4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a08534e14bf70ae4fb39c1090dbd2376, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -146,8 +146,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
+    pivot: {x: 0.34280103, y: 0.47677743}
+    oldSize: {x: 2, y: 1.3333334}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -166,7 +166,7 @@ Animator:
   m_GameObject: {fileID: 3809457088735838456}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 64dc602461102e94f97501b2253c2e3b, type: 2}
+  m_Controller: {fileID: 9100000, guid: 862e099ffa6eed64e8510daf9c8b1aa3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -250,6 +250,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: IsWalk
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsRight
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -269,8 +272,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -0.14166689}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
+    pivot: {x: 0.34280103, y: 0.47677743}
+    oldSize: {x: 2, y: 1.3333334}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

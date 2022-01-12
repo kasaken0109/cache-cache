@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a4123beb3efdcd94c825ced242715de3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 270d68cb6fbc3fb42b8c16be87f5db05, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -183,6 +183,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: IsWalk
+  - Type: 4
+    SynchronizeType: 0
+    Name: IsRight
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -209,7 +212,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4997042308272347402}
-  m_Material: {fileID: 13400000, guid: c84b1023ed3eaea40bf500e8d0f00d3d, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
