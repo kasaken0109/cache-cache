@@ -31,7 +31,7 @@ public class ItemManager : MonoBehaviour
         for (int i = 0; i < m_spawnPos.Length; i++)
         {
             m_isExist[i] = false;
-            m_existCount[i] = 2;
+            m_existCount[i] = m_count;
         }
     }
 
