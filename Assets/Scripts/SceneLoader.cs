@@ -23,4 +23,9 @@ public class SceneLoader : MonoBehaviour
     {
         StartCoroutine(methodName,sceneIndex);
     }
+
+    public void IndexLoad(int index)
+    {
+        SceneManager.LoadScene(index);
+    }
 }
