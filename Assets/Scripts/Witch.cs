@@ -232,7 +232,7 @@ public class Witch : CharaBase, IStun
         StartCoroutine("ChangeGod");
         m_hp--; //1ずつ減らす
         SetMp(-m_attackMPAmount);
-        m_anim.Play("Witch_Damage");
+        m_anim.SetTrigger("Damage");
         m_view.RPC("SetAnimator", RpcTarget.All, false);
 
         if (m_hp < 1 && !IsDead) //魔法使いの体力が1未満になったら呼び出す
@@ -276,6 +276,7 @@ public class Witch : CharaBase, IStun
             if (m_contactFlag && m_change.gameObject.CompareTag("Animal") && !IsChangerd)
             {
                 m_view.RPC("SetAnimator", RpcTarget.All, true);
+                ScoreManager.RequestAddScore(ActionScore.ChangeAnimal);
                 IsChangerd = true;
                 m_view.RPC(nameof(PunSetActive), RpcTarget.All, false);
                 gameObject.layer = 8;
