@@ -10166,7 +10166,7 @@ MonoBehaviour:
   - {fileID: 1036953466909245406}
   - {fileID: 6068266849398883197}
   - {fileID: 9063500509045569681}
-  sceneViewId: 8
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &1036953466909245406
@@ -10315,12 +10315,15 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: IsWalk
-  - Type: 9
-    SynchronizeType: 2
-    Name: Attack
   - Type: 4
     SynchronizeType: 2
     Name: IsRight
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack_R
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack_L
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0

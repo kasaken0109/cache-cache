@@ -40,13 +40,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7999349445097275110}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 652053fcc7890a74aaba2a6fd993f023, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a3f01619adb65c44ad5f52ced034d35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_poolCount: 2
-  m_datas:
-  - Name: 
-    ID: 0
-    Clip: {fileID: 8300000, guid: c9f0bac1308dd1346bd26bb3b9a7c691, type: 3}
-    Vol: 1
-    IsLoop: 0
+  _volumRate: 1
+  _bgmVolumRate: 1
+  _seVolumRate: 1
+  _se: {fileID: 0}
+  _dataBases: []

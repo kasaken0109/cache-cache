@@ -899,9 +899,23 @@ MonoBehaviour:
   m_speed: 2
   m_name: 
   CanMove: 1
+  m_rb: {fileID: 0}
+  m_view: {fileID: 0}
   m_hp: 3
+  m_runSpeed: 9
+  m_godTime: 3
+  m_mp: 100
+  m_mpSpeed: 0.2
+  m_mpUI: {fileID: 0}
   m_cacheRangeObject: {fileID: 4933701410050530631}
+  m_stunEffectObject: {fileID: 0}
+  m_lightEffectObject: {fileID: 0}
+  m_attackObject: {fileID: 0}
+  m_lightObject: {fileID: 0}
   m_stunTime: 3
+  m_chargeSpeed: 0.5
+  m_attackMPAmount: 30
+  m_emptyTime: 5
   m_directionPoints:
   - {fileID: 4539313423471725849}
   - {fileID: 4453879028951683268}
@@ -935,7 +949,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: -2008839317392027905}
   - {fileID: 8438248041929454205}
-  sceneViewId: 1
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &-2008839317392027905

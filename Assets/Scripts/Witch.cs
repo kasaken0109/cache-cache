@@ -102,6 +102,7 @@ public class Witch : CharaBase, IStun
         hpDisplay = GetComponent<HpDisplay>();
         m_origin = m_anim.runtimeAnimatorController;
         mp = m_mp;
+        transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         //StartCoroutine(CameraCreate());
     }
 
@@ -201,12 +202,10 @@ public class Witch : CharaBase, IStun
         m_rb.velocity = new Vector3(h, 0, v).normalized * (m_isGod ? m_runSpeed : Speed);
         if (IsChangerd && !IsSetPos)
         {
-            transform.position += new Vector3(0, 0.75f, 0);
             IsSetPos = true;
         }
         if (!IsChangerd && IsSetPos)
         {
-            transform.position += new Vector3(0, -0.75f, 0);
             IsSetPos = false;
         }
         m_anim.SetBool("IsWalk", h == 0 && v == 0 ? false : true);
@@ -309,7 +308,7 @@ public class Witch : CharaBase, IStun
 
     [PunRPC]
     public void SpawnAlarm(int id)
-        => Instantiate(m_alart[id], transform.position, transform.rotation,transform);
+        => Instantiate(m_alart[id], transform.position, Quaternion.Euler(0,0,90),transform);
 
     void Dead()
     {
