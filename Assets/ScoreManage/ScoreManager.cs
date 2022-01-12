@@ -41,7 +41,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public static void RequestAddScore(EventType type)
+    public static void RequestAddScore(ActionScore type)
     {
         foreach (ScoreEventData data in Instance.m_eventDatas)
         {
@@ -88,14 +88,20 @@ public class ScoreManager : MonoBehaviour
 [System.Serializable]
 public class ScoreEventData
 {
-    public EventType Type;
+    public ActionScore Type;
     public float Score;
 }
 
-public enum EventType
+public enum ActionScore
 {
-    A,
-    B,
+    AttackHit,
+    HuntWitch,
+    UseItem,
+    ChangeAnimal,
+    DestroyStone,
+    Escape,
+    AttackStone,
+    HitLight,
 
     None,
 }

@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
                 break;
             case (byte)NetworkEvents.GameStart:
                 m_scene = GetComponent<SceneLoader>();
-                StartCoroutine(SpawnLoadScene(1));
+                StartCoroutine(SpawnLoadScene(2));
                 Debug.Log(m_scene);
                 break;
             case (byte)NetworkEvents.Win:
@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         m_netManager = GameObject.Find("GameManager").GetComponent<NetworkGameManager>();
         WitchDieCount++;
         m_judge.LoseJudge(WitchDieCount, m_netManager.WitchCapacity);
+        ScoreManager.RequestAddScore(ActionScore.HuntWitch);
         Debug.Log("魔女が死んだ");
         FirstDeath = true;
     }
@@ -90,7 +91,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         yield return new WaitForSeconds(2f);
         //yield return new WaitUntil(() => ShowTextCtrl.GetLogData() != null);
         m_scene = GetComponent<SceneLoader>();
-        StartCoroutine(m_scene.LoadScene(2));
+        StartCoroutine(m_scene.LoadScene(3));
     }
     public void OnReady()
     {

@@ -21,6 +21,7 @@ public class GateController : MonoBehaviour
     {
         if (PhotonNetwork.CurrentRoom.MaxPlayers - GameObject.FindObjectOfType<GameManager>().WitchDieCount - 1 == eacapeNum && IsFirst)
         {
+            ScoreManager.RequestAddScore(ActionScore.Escape);
             RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
             raiseEventoptions.Receivers = ReceiverGroup.All;
             SendOptions sendOptions = new SendOptions();

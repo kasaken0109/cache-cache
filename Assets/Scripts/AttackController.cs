@@ -14,9 +14,14 @@ public class AttackController : MonoBehaviour
         if (collision.CompareTag("Rock") && !m_isHunter && IsFirst && !m_isLight)
         {
             collision.GetComponent<PortalGimmicController>().Damage();
+            ScoreManager.RequestAddScore(ActionScore.AttackStone);
             IsFirst = false;
         }
-        else if (collision.CompareTag("Hunter") && !m_isHunter && m_isLight) collision.GetComponentInParent<Hunter>().PlayStun(true);
+        else if (collision.CompareTag("Hunter") && !m_isHunter && m_isLight)
+        {
+            collision.GetComponentInParent<Hunter>().PlayStun(true);
+            ScoreManager.RequestAddScore(ActionScore.HitLight);
+        }
         else if (collision.CompareTag("Witch") && IsFirst && !m_isLight)
         {
             PhotonView view = collision.gameObject.GetComponent<PhotonView>();
@@ -25,6 +30,7 @@ public class AttackController : MonoBehaviour
             {
                 view.RPC("OnHit", RpcTarget.All);
             }
+            ScoreManager.RequestAddScore(ActionScore.AttackHit);
             IsFirst = false;
         }
     }

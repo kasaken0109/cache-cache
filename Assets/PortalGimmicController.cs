@@ -63,6 +63,7 @@ public class PortalGimmicController : MonoBehaviour
             {
                 m_sr.color = new Color(255, 255, 255, 255);
                 m_complete = true;
+                ScoreManager.RequestAddScore(ActionScore.DestroyStone);
                 PortalGimmicManager.Instance.CheckTask();
                 m_ui[index].enabled = false;
                 Instantiate(m_destroyEffect, new Vector3(transform.position.x, transform.position.y, transform.position.z - 1), transform.rotation);

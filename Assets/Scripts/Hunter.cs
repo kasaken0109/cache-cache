@@ -85,7 +85,11 @@ public class Hunter : CharaBase
     {
         if (!m_view || !m_view.IsMine || !CanMove) return;
         if (Input.GetButtonDown("Fire1") && CanAttack) m_anim.SetTrigger("Attack");
-        if (Input.GetButtonDown("Jump") && CanUseItem) GetComponent<Item>().UseItem();
+        if (Input.GetButtonDown("Jump") && CanUseItem)
+        {
+            GetComponent<Item>().UseItem();
+            ScoreManager.RequestAddScore(ActionScore.UseItem);
+        }
     }
     private void FixedUpdate()
     {

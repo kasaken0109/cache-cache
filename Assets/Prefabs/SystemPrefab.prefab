@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7166974f7871c842bb16b1569d52c7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_gimmics: []
   m_gate: {fileID: 0}
   m_decreaseTime: 120
 --- !u!114 &1689819414
@@ -65,7 +66,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 4
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &3897017893643655929
@@ -171,15 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57694113d23490341b97a80e1ad6091d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_spownAnimals:
-  - animal: 1
-    CenterPos: {x: 0, y: 0, z: 0}
-    Range: {x: 0, y: 0, z: 0}
-    spownNum: 6
-  - animal: 2
-    CenterPos: {x: 0, y: 0, z: 0}
-    Range: {x: 0, y: 0, z: 0}
-    spownNum: 6
+  m_spawnAnimals: []
 --- !u!1 &3897017893996780455
 GameObject:
   m_ObjectHideFlags: 0
@@ -322,7 +315,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 2
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &3897017894292691730
@@ -858,6 +851,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SoundManage
+      objectReference: {fileID: 0}
+    - target: {fileID: 7999349445097275110, guid: 4de5c0ef30b393a42a54c43ed049c88c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4de5c0ef30b393a42a54c43ed049c88c, type: 3}
