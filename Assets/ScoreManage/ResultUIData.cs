@@ -35,8 +35,8 @@ public class ResultUIData
             .Where(c => c.gameObject.CompareTag("Witch") || c.gameObject.CompareTag("Hunter"));
         if (events == NetworkEvents.Win)
         {
-            m_resultWitch = "Win";
-            m_resultHunter = "Lose";
+            m_resultWitch = "<color=#D9FA3C>Win!!!</color>";
+            m_resultHunter = "<color=#7430D9>Lose...</color>";
             var player = GameObject.FindObjectsOfType<Witch>()
             .Where(c => c.gameObject.GetComponent<PhotonView>().IsMine);
             m_isPlayerWin = player != null ? true : false;
@@ -44,8 +44,8 @@ public class ResultUIData
         }
         else if (events == NetworkEvents.Lose)
         {
-            m_resultWitch = "Lose";
-            m_resultHunter = "Win";
+            m_resultWitch = "<color=#7430D9>Lose...</color>";
+            m_resultHunter = "<color=#D9FA3C>Win!!!</color>";
             
             m_isPlayerWin = GameObject.FindObjectOfType<Hunter>().GetComponent<PhotonView>().IsMine ? true : false;
             Debug.Log(m_isPlayerWin);
@@ -60,17 +60,17 @@ public class ResultUIData
                 if (c.gameObject.GetComponent<PhotonView>().OwnerActorNr == id.GetID)
                 {
                     string name;
-                    if (c.GetComponent<PhotonView>().IsMine) name = "My";
+                    if (c.GetComponent<PhotonView>().IsMine) name = "You";
                     else name = "Other";
 
                     if (c.gameObject.CompareTag("Witch"))
                     {
-                        string set = $"Name {name}: Score {id.GetScore}";
+                        string set = $"{name}: {id.GetScore}";
                         m_witchesText.Add(set);
                     }
                     else
                     {
-                        m_hunterText = $"Name {name}: Score {id.GetScore}";
+                        m_hunterText = $"{name}: {id.GetScore}";
                     }
                     continue;
                 }
