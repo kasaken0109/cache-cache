@@ -59,7 +59,7 @@ public class Hunter : CharaBase
     SpriteRenderer m_sr;
     Animator m_anim;
     [SerializeField] PhotonView m_view;
-
+    float h, v;
     private void Start()
     {
         m_anim = GetComponent<Animator>();
@@ -84,7 +84,17 @@ public class Hunter : CharaBase
     private void Update()
     {
         if (!m_view || !m_view.IsMine || !CanMove) return;
-        if (Input.GetButtonDown("Fire1") && CanAttack) m_anim.SetTrigger("Attack");
+        if (Input.GetButtonDown("Fire1") && CanAttack)
+        {
+            if (h >= 0)
+            {
+                m_anim.SetTrigger("Attack_R");
+            }
+            else
+            {
+                m_anim.SetTrigger("Attack_L");
+            }
+        }
         if (Input.GetButtonDown("Jump") && CanUseItem)
         {
             GetComponent<Item>().UseItem();
@@ -96,8 +106,8 @@ public class Hunter : CharaBase
         if (!m_view || !m_view.IsMine) return;      // 自分が生成したものだけ処理する
         if (CanMove)
         {
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
+            h = Input.GetAxisRaw("Horizontal");
+            v = Input.GetAxisRaw("Vertical");
             Move(h, v);
             SetDirection(h, v);
             //m_camera.Rotation(h, v);
