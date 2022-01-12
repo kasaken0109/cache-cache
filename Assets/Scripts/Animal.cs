@@ -132,7 +132,9 @@ public class Animal : MonoBehaviour
         m_rb.constraints = RigidbodyConstraints.None;
         m_rb.constraints = RigidbodyConstraints.FreezeRotation;
         m_rb.velocity = new Vector3(h, 0, z).normalized * m_speed;
-        m_anim.SetBool("IsWalk", true);
+        m_anim.SetBool("IsWalk", (m_direction.x == 0 && m_direction.z == 0) ? false : true);
+        m_anim.SetBool("IsRight", m_direction.x > 0 ? true : false);
+        //m_anim.SetBool("IsWalk", true);
     }
 
     private void MoveStop()
