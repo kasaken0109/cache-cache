@@ -207,7 +207,6 @@ public class Hunter : CharaBase
         None,
         Enforcealarm,
         Trap,
-        Enforcevisibility,
         Enforcespeed,
     }
 
@@ -228,9 +227,6 @@ public class Hunter : CharaBase
             case HaveItemType.Trap:
                 gameObject.AddComponent<Trap>();
                 break;
-            case HaveItemType.Enforcevisibility:
-                gameObject.AddComponent<EnhancedVisibility>();
-                break;
             case HaveItemType.Enforcespeed:
                 gameObject.AddComponent<SpeedUp>();
                 break;
@@ -247,8 +243,7 @@ public class Hunter : CharaBase
             SetItem(item.ItemType);
             ItemManager.Instance.ResetItem(item.ID);
             ItemManager.Instance.SpawnItem(1);
-            collision.gameObject.GetComponent<PhotonView>().TransferOwnership(m_view.OwnerActorNr);
-            PhotonNetwork.Destroy(collision.gameObject);
+            Destroy(collision.gameObject);
         }
     }
 }
