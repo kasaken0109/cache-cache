@@ -183,6 +183,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: IsWalk
+  - Type: 4
+    SynchronizeType: 2
+    Name: IsRight
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
@@ -213,5 +216,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 4, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 3.0896816, y: 3.1120129, z: 1}
+  m_Center: {x: -1.3452463, y: 1.471734, z: 0}
