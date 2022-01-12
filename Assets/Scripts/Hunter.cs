@@ -86,6 +86,7 @@ public class Hunter : CharaBase
         if (!m_view || !m_view.IsMine || !CanMove) return;
         if (Input.GetButtonDown("Fire1") && CanAttack)
         {
+            if (m_attackObject.activeInHierarchy) m_attackObject.SetActive(false);
             if (h >= 0)
             {
                 m_anim.SetTrigger("Attack_R");
@@ -136,6 +137,7 @@ public class Hunter : CharaBase
     bool CanAttack = true;
     IEnumerator Attack()
     {
+        yield return new WaitForSeconds(m_attackTime);
         m_attackObject.SetActive(false);
         yield return new WaitForSeconds(m_waitAttackTime);
         CanAttack = true;
@@ -181,7 +183,7 @@ public class Hunter : CharaBase
     [PunRPC]
     private void SetEffect(bool isActive ,bool isStun)
     {
-        m_stunMagic.SetActive(isStun && isActive);
+        m_stunMagic.SetActive(isActive ? isStun && isActive : false);
         m_stunEffectObject.SetActive(isActive);
     }
 
