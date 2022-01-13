@@ -12,4 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88285ea6a1ffd7347951d3ea01085d7c, type: 3}
   m_Name: CRIBGMDatas
   m_EditorClassIdentifier: 
-  _datas: []
+  _datas:
+  - CueName: BGM_Game
+    CueSheetName: BGM
+    ID: 0
+    Type: 0
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 1
+  - CueName: BGM_Main
+    CueSheetName: BGM
+    ID: 1
+    Type: 0
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 1
+  - CueName: BGM_Chase
+    CueSheetName: BGM
+    ID: 2
+    Type: 0
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0

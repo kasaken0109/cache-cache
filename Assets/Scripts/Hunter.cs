@@ -86,6 +86,7 @@ public class Hunter : CharaBase
         if (!m_view || !m_view.IsMine || !CanMove) return;
         if (Input.GetButtonDown("Fire1") && CanAttack)
         {
+            Sounds.SoundMaster.Request(transform, 1, 1);
             if (m_attackObject.activeInHierarchy) m_attackObject.SetActive(false);
             if (h >= 0)
             {
@@ -119,10 +120,23 @@ public class Hunter : CharaBase
         }
         Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
     }
-
+    float _timer = 0;
     public override void Move(float h, float v)
     {
         m_rb.velocity = new Vector3(h,0, v).normalized * Speed * m_speedUpRate;
+        if (m_rb.velocity != Vector3.zero)
+        {
+            _timer += Time.deltaTime;
+            if (_timer > 0.25f)
+            {
+                Sounds.SoundMaster.Request(transform, 14, 1);
+                _timer = 0;
+            }
+        }
+        else
+        {
+            _timer = 0;
+        }
         m_anim.SetBool("IsWalk", (h == 0 && v == 0) ? false : true);
         m_anim.SetBool("IsRight", h > 0 ?true : false);
         
@@ -172,7 +186,6 @@ public class Hunter : CharaBase
 
     IEnumerator Stun(bool isStun)
     {
-        float timer = 0;
         CanMove = false;
         m_view.RPC(nameof(SetEffect), RpcTarget.All,true ,isStun);
         yield return new WaitForSeconds(m_stunTime);
@@ -216,6 +229,7 @@ public class Hunter : CharaBase
     {
         itemType = haveItem;
         GetComponent<ItemDisplay>().ChangeItem((int)haveItem);
+        Sounds.SoundMaster.Request(transform, 11, 1);
 
         switch (haveItem)
         {
@@ -239,6 +253,7 @@ public class Hunter : CharaBase
     {
         if (collision.CompareTag("Item") && GetHaveItem == HaveItemType.None)
         {
+            Sounds.SoundMaster.Request(transform, 10, 1);
             var item = collision.GetComponent<ItemTypeGetter>();
             SetItem(item.ItemType);
             ItemManager.Instance.ResetItem(item.ID);

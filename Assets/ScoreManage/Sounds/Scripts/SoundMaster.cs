@@ -12,6 +12,7 @@ namespace Sounds
         [SerializeField, Range(0, 1)] float _bgmVolumRate = 1;
         [SerializeField, Range(0, 1)] float _seVolumRate = 1;
 
+        [SerializeField] int _createCount;
         [SerializeField] SoundEffect _se;
         [SerializeField] List<SEDataBase> _dataBases;
 
@@ -33,7 +34,7 @@ namespace Sounds
             }
 
             _pool = new ObjectPool<SoundEffect>();
-            _pool.SetUp(_se, transform);
+            _pool.SetUp(_se, transform, _createCount);
         }
 
         /// <summary>

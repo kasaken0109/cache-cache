@@ -135,6 +135,7 @@ public class Witch : CharaBase, IStun
         {
             if (!IsChangerd && mp == m_mp) 
             {
+                Sounds.SoundMaster.Request(transform, 12, 1);
                 StartCoroutine("UseLight");
             }
             else if (IsChangerd && CanAttack)
@@ -228,6 +229,7 @@ public class Witch : CharaBase, IStun
     public void OnHit()
     {
         if (!m_view.IsMine || m_isGod) return;
+        Sounds.SoundMaster.Request(transform, 8, 1);
         StartCoroutine("ChangeGod");
         m_hp--; //1ずつ減らす
         SetMp(-m_attackMPAmount);
@@ -272,6 +274,7 @@ public class Witch : CharaBase, IStun
         if (!m_view.IsMine) return;
         if (Input.GetButtonDown("Use"))
         {
+            Sounds.SoundMaster.Request(transform, 4, 1);
             if (m_contactFlag && m_change.gameObject.CompareTag("Animal") && !IsChangerd)
             {
                 m_view.RPC("SetAnimator", RpcTarget.All, true);
@@ -308,7 +311,10 @@ public class Witch : CharaBase, IStun
 
     [PunRPC]
     public void SpawnAlarm(int id)
-        => Instantiate(m_alart[id], transform.position, Quaternion.Euler(0,0,90),transform);
+    {
+        Sounds.SoundMaster.Request(transform, 0, 1);
+        Instantiate(m_alart[id], transform.position, Quaternion.Euler(0, 0, 90), transform);
+    }
 
     void Dead()
     {
