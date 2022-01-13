@@ -13,6 +13,7 @@ public class SetSound : MonoBehaviour
     [SerializeField] BGMType _type;
     void Start()
     {
+        Debug.Log((int)_type);
         Sounds.SoundMaster.Request(null, (int)_type, 0);
     }
 
