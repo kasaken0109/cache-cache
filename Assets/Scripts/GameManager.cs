@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
             view.RPC(nameof(chara.CharaSpawn), RpcTarget.All);
             var animalManager = FindObjectOfType<AnimalManager>();
             animalManager.StartSpawn();
-            ItemManager.Instance.SpawnItem(4);
+            ItemManager.Instance.SpawnItem(12);
         }
     }
 }
