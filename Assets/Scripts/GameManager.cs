@@ -25,8 +25,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public int WitchDieCount { get; set; }
     bool m_readyCheck;
     PhotonView m_view;
-    [SerializeField]
-    GameObject m_checkImage;
     SceneLoader m_scene;
     JudgementController m_judge;
     NetworkGameManager m_netManager;
@@ -92,25 +90,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IOnEventCallback
         //yield return new WaitUntil(() => ShowTextCtrl.GetLogData() != null);
         m_scene = GetComponent<SceneLoader>();
         StartCoroutine(m_scene.LoadScene(3));
-    }
-    public void OnReady()
-    {
-        if (!m_view)
-        {
-            m_view = GameObject.Find("JudgementController").GetComponent<PhotonView>();
-        }
-        if (!m_readyCheck)
-        {
-            m_view.RPC("Check", RpcTarget.All);
-            m_readyCheck = true;
-            m_checkImage.SetActive(true);
-        }
-        else
-        {
-            m_view.RPC("UncChecked", RpcTarget.All);
-            m_readyCheck = false;
-            m_checkImage.SetActive(false);
-        }
     }
     //ゲームシーンに遷移するときに使う
     IEnumerator SpawnLoadScene(int sceneIndex)
