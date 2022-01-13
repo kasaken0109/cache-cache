@@ -67,7 +67,7 @@ namespace Sounds
             SEDataBase dataBase = Instance._dataBases[groupID];
             foreach (SEData se in dataBase.GetData)
             {
-                if (se.Name == name)
+                if (se.CueName == name)
                 {
                     SoundEffect sound = Instance._pool.Respons();
                     sound.Use(se, user);

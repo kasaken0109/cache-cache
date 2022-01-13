@@ -6,6 +6,7 @@ namespace Sounds
     public enum SoundType
     {
         BGM,
+        ME,
         SE,
 
         None,
@@ -21,10 +22,10 @@ namespace Sounds
     [System.Serializable]
     public class SEData
     {
-        public string Name;
+        public string CueName;
+        public string CueSheetName;
         public int ID;
         public SoundType Type;
-        public AudioClip Clip;
         [Range(0, 1)] public float Volume;
         [Range(0, 1)] public float SpatialBrend;
         public bool Loop;

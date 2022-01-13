@@ -4,63 +4,73 @@ namespace Sounds
 {
     public class SoundEffect : MonoBehaviour, IPool
     {
-        AudioSource _source;
-        SEData _data;
         Transform _parent;
+        CriAtomSource _criS;
+        CriAtomExPlayer _cri;
         public bool IsUse { get; private set; }
+
+        void Start()
+        {
+            _criS = GetComponent<CriAtomSource>();
+            _cri = _criS.player;
+        }
 
         void Update()
         {
             if (!IsUse) return;
-            if (!_source.isPlaying) Delete();
 
-            if (_source != null)
+            if (_cri.GetStatus() == CriAtomExPlayer.Status.PlayEnd)
             {
-                _source.volume = _data.Volume * SoundMaster.Instance.MasterVolumeRate;
-                switch (_data.Type)
-                {
-                    case SoundType.BGM:
-                        _source.volume *= SoundMaster.Instance.BGMVoluumeRate;
-                        break;
-                    case SoundType.SE:
-                        _source.volume *= SoundMaster.Instance.SEVoluumeRate;
-                        break;
-                    case SoundType.None:
-                        break;
-                }
+                Delete();
             }
+            //if (_source != null)
+            //{
+            //    _source.volume = _data.Volume * SoundMaster.Instance.MasterVolumeRate;
+            //    switch (_data.Type)
+            //    {
+            //        case SoundType.BGM:
+            //            _source.volume *= SoundMaster.Instance.BGMVoluumeRate;
+            //            break;
+            //        case SoundType.SE:
+            //            _source.volume *= SoundMaster.Instance.SEVoluumeRate;
+            //            break;
+            //        case SoundType.None:
+            //            break;
+            //    }
+            //}
         }
 
         public void Use(SEData data, Transform user)
         {
-            _data = data;
-            transform.SetParent(user);
-            _source = GetComponent<AudioSource>();
-            _source.clip = data.Clip;
+            _criS = GetComponent<CriAtomSource>();
+            _cri = _criS.player;
 
-            _source.volume = data.Volume * SoundMaster.Instance.MasterVolumeRate;
+            transform.SetParent(user);
+            Debug.Log(_criS);
+            _criS.volume = data.Volume * SoundMaster.Instance.MasterVolumeRate;
+            
             switch (data.Type)
             {
                 case SoundType.BGM:
-                    _source.volume *= SoundMaster.Instance.BGMVoluumeRate;
+                    _criS.volume *= SoundMaster.Instance.BGMVoluumeRate;
                     break;
                 case SoundType.SE:
-                    _source.volume *= SoundMaster.Instance.SEVoluumeRate;
+                    _criS.volume *= SoundMaster.Instance.SEVoluumeRate;
                     break;
-                case SoundType.None:
+                case SoundType.ME:
+                    _criS.volume *= SoundMaster.Instance.SEVoluumeRate;
                     break;
             }
-
-            _source.spatialBlend = data.SpatialBrend;
-            _source.loop = data.Loop;
-
-            _source.Play();
+            
+            _criS.loop = data.Loop;
+            _criS.cueSheet = data.CueSheetName;
+            _criS.cueName = data.CueName;
+            _criS.Play();
             IsUse = true;
         }
 
         public void SetUp(Transform parent)
         {
-            _source = gameObject.AddComponent<AudioSource>();
             _parent = parent;
             IsUse = false;
         }
@@ -68,9 +78,11 @@ namespace Sounds
         public void Delete()
         {
             IsUse = false;
-            _source.clip = null;
-            _source = null;
-            _data = null;
+            
+            _criS.volume = 0;
+            _criS.cueName = null;
+            _criS.cueSheet = null;
+            
             transform.SetParent(_parent);
         }
     }
