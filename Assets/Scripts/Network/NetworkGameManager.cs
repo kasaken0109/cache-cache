@@ -13,8 +13,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     int m_hunterCapacity;
     [SerializeField, Tooltip("ウィッチの最大人数")]
     int m_witchCapacity;
-    [SerializeField]
-    GameObject m_checkButton;
+    public bool ReadyFlag { get; set; }
     public int HunterCapacity { get => m_hunterCapacity; }
     public int WitchCapacity { get => m_witchCapacity; }
     private void Awake()
@@ -28,7 +27,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     /// <summary>
     /// Photonに接続する
     /// </summary>
-    private void Connect(string gameVersion)
+    public void Connect(string gameVersion)
     {
         StartCoroutine(ConnectAsync(gameVersion));
     }
@@ -152,7 +151,6 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom");
-        m_checkButton.SetActive(true);
     }
 
     /// <summary>指定した部屋への入室に失敗した時</summary>
@@ -234,6 +232,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     public override void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
         Debug.Log("OnRoomPropertiesUpdate");
+        ReadyFlag = true;
     }
 
     /// <summary>プレイヤープロパティが更新された時</summary>
