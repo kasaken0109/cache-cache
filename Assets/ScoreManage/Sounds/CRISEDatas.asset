@@ -12,4 +12,109 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88285ea6a1ffd7347951d3ea01085d7c, type: 3}
   m_Name: CRISEDatas
   m_EditorClassIdentifier: 
-  _datas: []
+  _datas:
+  - CueName: SE_Alert
+    CueSheetName: SE
+    ID: 0
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Attack_01
+    CueSheetName: SE
+    ID: 1
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Bear_Click
+    CueSheetName: SE
+    ID: 2
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Bird_Click
+    CueSheetName: SE
+    ID: 3
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Change
+    CueSheetName: SE
+    ID: 4
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Character_Click
+    CueSheetName: SE
+    ID: 5
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Click
+    CueSheetName: SE
+    ID: 6
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Fox_Click
+    CueSheetName: SE
+    ID: 7
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Hit_01
+    CueSheetName: SE
+    ID: 8
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Items_1min
+    CueSheetName: SE
+    ID: 9
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Items_Get
+    CueSheetName: SE
+    ID: 10
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Items_Use
+    CueSheetName: SE
+    ID: 11
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Skill_Use
+    CueSheetName: SE
+    ID: 12
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Walk_Animal
+    CueSheetName: SE
+    ID: 13
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
+  - CueName: SE_Walk_Human
+    CueSheetName: SE
+    ID: 14
+    Type: 2
+    Volume: 0.5
+    SpatialBrend: 0
+    Loop: 0
