@@ -10,13 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88285ea6a1ffd7347951d3ea01085d7c, type: 3}
-  m_Name: SampleSEDatas
+  m_Name: CRIBGMDatas
   m_EditorClassIdentifier: 
-  _datas:
-  - Name: Test
-    ID: 0
-    Type: 0
-    Clip: {fileID: 8300000, guid: bf5206329216f994bad36c127d9c186a, type: 3}
-    Volume: 1
-    SpatialBrend: 0
-    Loop: 1
+  _datas: []

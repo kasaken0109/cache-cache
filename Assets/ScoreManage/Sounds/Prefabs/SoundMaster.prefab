@@ -44,6 +44,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _volumRate: 100
+  _bgmVolumRate: 1
+  _seVolumRate: 1
   _se: {fileID: 8476991370387231719, guid: 3dc6cbe679e7c1b49809ad3cc072e617, type: 3}
   _dataBases:
   - {fileID: 11400000, guid: 6ea8bffb65d4adf40a354c9bb733bddf, type: 2}
+  - {fileID: 11400000, guid: c683b05bfb2093d4cbffe47bff9f2a7a, type: 2}
+  - {fileID: 11400000, guid: 774e81cf5496c2c46a372f616f70bb07, type: 2}
