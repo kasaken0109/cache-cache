@@ -7,6 +7,7 @@ namespace Sounds
         Transform _parent;
         CriAtomSource _criS;
         CriAtomExPlayer _cri;
+        SEData _data;
         public bool IsUse { get; private set; }
 
         void Start()
@@ -23,25 +24,26 @@ namespace Sounds
             {
                 Delete();
             }
-            //if (_source != null)
-            //{
-            //    _source.volume = _data.Volume * SoundMaster.Instance.MasterVolumeRate;
-            //    switch (_data.Type)
-            //    {
-            //        case SoundType.BGM:
-            //            _source.volume *= SoundMaster.Instance.BGMVoluumeRate;
-            //            break;
-            //        case SoundType.SE:
-            //            _source.volume *= SoundMaster.Instance.SEVoluumeRate;
-            //            break;
-            //        case SoundType.None:
-            //            break;
-            //    }
-            //}
+            if (_criS != null)
+            {
+                _criS.volume = _data.Volume * SoundMaster.Instance.MasterVolumeRate;
+                switch (_data.Type)
+                {
+                    case SoundType.BGM:
+                        _criS.volume *= SoundMaster.Instance.BGMVoluumeRate;
+                        break;
+                    case SoundType.SE:
+                        _criS.volume *= SoundMaster.Instance.SEVoluumeRate;
+                        break;
+                    case SoundType.None:
+                        break;
+                }
+            }
         }
 
         public void Use(SEData data, Transform user)
         {
+            _data = data;
             _criS = GetComponent<CriAtomSource>();
             _cri = _criS.player;
 
@@ -61,7 +63,7 @@ namespace Sounds
                     _criS.volume *= SoundMaster.Instance.SEVoluumeRate;
                     break;
             }
-            
+
             _criS.loop = data.Loop;
             _criS.cueSheet = data.CueSheetName;
             _criS.cueName = data.CueName;
