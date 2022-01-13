@@ -17,7 +17,7 @@ public class MiniMapController : MonoBehaviour
 
     private IEnumerator SetUp()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(5f);
         m_charas = GameObject.FindObjectsOfType<CharaBase>();
         m_playChara = m_charas.Single(c => (c.gameObject.tag == "Witch" || c.gameObject.tag == "Hunter") && c.gameObject.GetComponent<PhotonView>().IsMine);
         IsWitch = m_playChara as Witch;

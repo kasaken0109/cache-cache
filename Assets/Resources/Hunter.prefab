@@ -10166,7 +10166,7 @@ MonoBehaviour:
   - {fileID: 1036953466909245406}
   - {fileID: 6068266849398883197}
   - {fileID: 9063500509045569681}
-  sceneViewId: 8
+  sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &1036953466909245406
@@ -10217,11 +10217,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_itemImages:
-  - {fileID: 0}
-  - {fileID: -4172587373910319256, guid: a88abe0ca7ddddc4f945116d092ac048, type: 3}
-  - {fileID: 21300000, guid: 04d865fee6670f1459798b982bae5966, type: 3}
-  - {fileID: -4115439610729684787, guid: a88abe0ca7ddddc4f945116d092ac048, type: 3}
-  - {fileID: 3591012416601061280, guid: 270845fb660c9744cbd42af04af77b71, type: 3}
+  - {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 21300000, guid: da7519a507909564bba4d7f9dbdab705, type: 3}
+  - {fileID: 21300000, guid: b70775e9dd9862344978bee09cdbbb52, type: 3}
+  - {fileID: 21300000, guid: 4eb8879d3e0c8d84e8ec337defafaa12, type: 3}
   m_itemdisplay: {fileID: 1681868032}
   m_image: {fileID: 1705301708}
 --- !u!114 &8845560971829952352
@@ -10315,12 +10314,15 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: IsWalk
-  - Type: 9
-    SynchronizeType: 2
-    Name: Attack
   - Type: 4
     SynchronizeType: 2
     Name: IsRight
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack_R
+  - Type: 9
+    SynchronizeType: 0
+    Name: Attack_L
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0

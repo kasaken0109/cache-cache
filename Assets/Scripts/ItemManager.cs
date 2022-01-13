@@ -31,7 +31,7 @@ public class ItemManager : MonoBehaviour
         for (int i = 0; i < m_spawnPos.Length; i++)
         {
             m_isExist[i] = false;
-            m_existCount[i] = 2;
+            m_existCount[i] = m_count;
         }
     }
 
@@ -56,7 +56,7 @@ public class ItemManager : MonoBehaviour
             var pos = m_spawnPos[posNum];
             m_isExist[posNum] = true;
             m_existCount[itemNum]--;
-            var g = PhotonNetwork.Instantiate(itemObj.name, pos.position, Quaternion.identity);
+            var g = Instantiate(itemObj, pos.position, Quaternion.identity);
             g.GetComponent<ItemTypeGetter>().ID = itemNum;
         }
     }
