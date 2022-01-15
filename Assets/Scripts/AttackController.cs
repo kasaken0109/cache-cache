@@ -10,7 +10,15 @@ public class AttackController : MonoBehaviour
     [SerializeField] float m_stunTime = 0;
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.CompareTag("Animal") && m_isHunter && !m_isLight) GetComponentInParent<Hunter>().PlayStun(false);
+        if (collision.CompareTag("Animal") && m_isHunter && !m_isLight)
+        {
+            GetComponentInParent<Hunter>().PlayStun(false);
+            string name = collision.gameObject.name;
+            if (collision.gameObject.name.Contains("くま")) Sounds.SoundMaster.Request(collision.gameObject.transform, 2, 1);
+            else if (collision.gameObject.name.Contains("きつね")) Sounds.SoundMaster.Request(collision.gameObject.transform, 7, 1);
+            else if (collision.gameObject.name.Contains("うし")) Sounds.SoundMaster.Request(collision.gameObject.transform, 2, 1);
+            else if (collision.gameObject.name.Contains("とり")) Sounds.SoundMaster.Request(collision.gameObject.transform, 3, 1);
+        }
         if (collision.CompareTag("Rock") && !m_isHunter && IsFirst && !m_isLight)
         {
             collision.GetComponent<PortalGimmicController>().Damage();
