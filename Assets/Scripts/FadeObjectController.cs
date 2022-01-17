@@ -13,6 +13,10 @@ public class FadeObjectController : MonoBehaviour
     [Tooltip("フェードする距離")]
     float m_fadeDistance = 3f;
 
+    [SerializeField]
+    [Tooltip("カメラがフェードする距離")]
+    float m_fadeCameraDistance = 12f;
+
     SpriteRenderer m_sr = default;
     Color m_setColor;
     // Start is called before the first frame update
@@ -37,6 +41,17 @@ public class FadeObjectController : MonoBehaviour
 
     private void Update()
     {
+        float distance = transform.position.z - Camera.main.transform.position.z;
+        if (distance <= m_fadeCameraDistance && distance >= 0)
+        {
+            StopAllCoroutines();
+            StartCoroutine(FadeRoof(0.2f));
+        }
+        else
+        {
+            StopAllCoroutines();
+            StartCoroutine(FadeRoof(1f));
+        }
     }
     private void OnTriggerEnter(Collider collision)
     {

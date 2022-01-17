@@ -51,7 +51,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 92e825a9f4fff9b4bb1abad3201d36e9, type: 2}
+  - {fileID: 2100000, guid: 24068fe40d6014148bbb732a0b0809ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -110,3 +110,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_speed: 1
   m_fadeDistance: 10
+  m_fadeCameraDistance: 12

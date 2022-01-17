@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShadowMaterial
+  m_Name: ShadowMaterial 1
   m_Shader: {fileID: 4800000, guid: 884ff83933143054cbd724a4875d7b88, type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA _ALPHATEST_ON
   m_LightmapFlags: 4
@@ -61,9 +61,9 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.994
+    - _Glossiness: 0.663
     - _GlossyReflections: 1
-    - _Metallic: 0
+    - _Metallic: 0.728
     - _Mode: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
