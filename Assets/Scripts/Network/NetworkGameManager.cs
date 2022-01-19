@@ -94,6 +94,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
         if (m_debugMode || PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount > PhotonNetwork.CurrentRoom.MaxPlayers - 1)
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
+            Debug.Log("Close");
         }
     }
 
@@ -151,6 +152,7 @@ public class NetworkGameManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom");
+        ReadyFlag = true;
     }
 
     /// <summary>指定した部屋への入室に失敗した時</summary>

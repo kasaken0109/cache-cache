@@ -113,8 +113,8 @@ public class Animal : MonoBehaviour
         Ray ray = GroundCheck();
 
         if ((m_direction.x == 0 && m_direction.z == 0) || !Physics.Raycast(ray, out hit, 0.5f, m_mask)) return; 
-        else if (m_direction.x >= 1) transform.rotation = Quaternion.Euler(0, 0, 0);
-        else if (m_direction.x >= -1) transform.rotation = Quaternion.Euler(0, 180, 0);
+        //else if (m_direction.x >= 1) transform.rotation = Quaternion.Euler(0, 0, 0);
+        //else if (m_direction.x >= -1) transform.rotation = Quaternion.Euler(0, 180, 0);
 
         Move(m_direction.x, m_direction.z);
     }
@@ -141,7 +141,7 @@ public class Animal : MonoBehaviour
     {
         m_timer = 0;
         m_action = false;
-        m_anim.SetBool("IsWalk", false);
+        //m_anim.SetBool("IsWalk", false);
         //m_shadowAnim.SetBool("IsWalk", false);
         m_rb.velocity = Vector2.zero;
         m_rb.constraints =  RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
