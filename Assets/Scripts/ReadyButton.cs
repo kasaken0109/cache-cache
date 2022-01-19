@@ -22,7 +22,6 @@ public class ReadyButton : MonoBehaviour
         while (!m_nW.ReadyFlag)
         {
             yield return null;
-            Debug.Log("まだ");
         }
         yield return new WaitForEndOfFrame();
         Active();
