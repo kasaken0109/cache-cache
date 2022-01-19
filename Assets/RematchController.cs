@@ -20,6 +20,10 @@ public class RematchController : MonoBehaviour
         var net = FindObjectOfType<NetworkGameManager>();
         net.Connect("1.0");
         PhotonNetwork.AutomaticallySyncScene = false;
+        RaiseEventOptions raiseEventoptions = new RaiseEventOptions();
+        raiseEventoptions.Receivers = ReceiverGroup.All;
+        SendOptions sendOptions = new SendOptions();
+        PhotonNetwork.RaiseEvent((byte)NetworkEvents.Lobby, null, raiseEventoptions, sendOptions);
     }
     bool IsActive = true;
     public void SetPanel()
