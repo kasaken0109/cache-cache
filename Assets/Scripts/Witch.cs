@@ -39,6 +39,10 @@ public class Witch : CharaBase, IStun
     GameObject m_cacheRangeObject = default;
 
     [SerializeField]
+    [Tooltip("ポイントライト")]
+    GameObject m_pointLight = default;
+
+    [SerializeField]
     [Tooltip("スタンエフェクト")]
     GameObject m_stunEffectObject = default;
 
@@ -216,8 +220,8 @@ public class Witch : CharaBase, IStun
     public void SetDirection(float h, float v)
     {
         if (h == 0 && v == 0) return;
-        m_cacheRangeObject.transform.localPosition = new Vector3(h * 1.5f, 0, v * 1.5f);
-        m_attackObject.transform.localPosition = new Vector3(h * 1.5f, 0, v * 1.5f);
+        m_cacheRangeObject.transform.localPosition = new Vector3(h * 1.5f, 2, v * 1.5f);
+        m_attackObject.transform.localPosition = new Vector3(h * 1.5f, 2, v * 1.5f);
     }
 
     public void SetMp(float mpValue)
@@ -296,6 +300,7 @@ public class Witch : CharaBase, IStun
     void SetAnimator(bool change)
     {
         m_anim.runtimeAnimatorController = change ? m_change.gameObject.GetComponentInParent<Animator>().runtimeAnimatorController : m_origin;
+        m_pointLight.SetActive(!IsChangerd);
     }
     private void OnTriggerEnter(Collider other)
     {
