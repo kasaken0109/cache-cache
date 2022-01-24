@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5081211440213494505}
   - component: {fileID: 5081211440213494504}
   - component: {fileID: 5081211440213494503}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Alarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -666,7 +666,7 @@ ParticleSystem:
     radiusThickness: 0
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 0, y: 0, z: 0}
+    m_Rotation: {x: 90, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
