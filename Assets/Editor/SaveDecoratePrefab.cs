@@ -15,11 +15,6 @@ public class SaveDecoratePrefab : MonoBehaviour
 
     private string m_objName = "Default";
     private GameObject m_obj;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     public void CreateRandomObject()
     {
