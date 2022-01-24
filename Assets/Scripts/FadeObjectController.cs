@@ -38,10 +38,10 @@ public class FadeObjectController : MonoBehaviour
         m_sr.material.color = m_setColor;
 
     }
-
+    float distance;
     private void Update()
     {
-        float distance = transform.position.z - Camera.main.transform.position.z;
+        distance = transform.position.z - Camera.main.transform.position.z;
         if (distance <= m_fadeCameraDistance && distance >= 0)
         {
             StopAllCoroutines();

@@ -51,14 +51,11 @@ public class Hunter : CharaBase
     [Tooltip("スタンエフェクト")]
     private GameObject m_stunEffectObject;
 
-    [SerializeField, Tooltip("ハンターカメラ")]
-    GameObject m_hunterCamera = default;
-    HunterCamera m_camera = default;
-
+    [SerializeField] PhotonView m_view;
     bool CanUseItem = true;
     SpriteRenderer m_sr;
     Animator m_anim;
-    [SerializeField] PhotonView m_view;
+    
     float h, v;
     private void Start()
     {
@@ -118,7 +115,6 @@ public class Hunter : CharaBase
         {
             m_rb.velocity = Vector3.zero;
         }
-        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
     }
     float _timer = 0;
     public override void Move(float h, float v)
