@@ -137,10 +137,19 @@ public class Witch : CharaBase, IStun
         float v = Input.GetAxisRaw("Vertical");
         if (Input.GetButtonDown("Fire1"))
         {
-            if (!IsChangerd && mp == m_mp) 
+            if (!IsChangerd) 
             {
-                Sounds.SoundMaster.Request(transform, 12, 1);
-                StartCoroutine("UseLight");
+                if (mp == m_mp)
+                {
+                    Sounds.SoundMaster.Request(transform, 12, 1);
+                    m_view.RPC(nameof(PunSetActive), RpcTarget.All, true);
+                    StartCoroutine("UseLight");
+                }
+                else
+                {
+                    m_view.RPC(nameof(PunSetActive), RpcTarget.All, false);
+                }
+                
             }
             else if (IsChangerd && CanAttack)
             {
@@ -161,8 +170,7 @@ public class Witch : CharaBase, IStun
     {
         while (mp > 0 && !IsChangerd)
         {
-            m_view.RPC(nameof(PunSetActive),RpcTarget.All,true);
-            mp -= m_mpSpeed * 2f;
+            mp -= m_lightObject.activeInHierarchy ? m_mpSpeed * 2f : 0f;
             yield return null;
         }
         m_view.RPC(nameof(PunSetActive), RpcTarget.All, false);
@@ -199,6 +207,12 @@ public class Witch : CharaBase, IStun
     {
         m_lightObject.SetActive(value);
         m_lightEffectObject.SetActive(value);
+    }
+
+    [PunRPC]
+    void PunlightActive(bool value)
+    {
+        m_pointLight.SetActive(value);
     }
 
     bool IsSetPos = false;
@@ -285,11 +299,13 @@ public class Witch : CharaBase, IStun
                 ScoreManager.RequestAddScore(ActionScore.ChangeAnimal);
                 IsChangerd = true;
                 m_view.RPC(nameof(PunSetActive), RpcTarget.All, false);
+                m_view.RPC(nameof(PunlightActive), RpcTarget.All, false);
                 gameObject.layer = 8;
             }
             else if (IsChangerd)
             {
                 m_view.RPC("SetAnimator", RpcTarget.All, false);
+                m_view.RPC(nameof(PunlightActive), RpcTarget.All, true);
                 IsChangerd = false;
                 gameObject.layer = 9;
             }
@@ -300,7 +316,6 @@ public class Witch : CharaBase, IStun
     void SetAnimator(bool change)
     {
         m_anim.runtimeAnimatorController = change ? m_change.gameObject.GetComponentInParent<Animator>().runtimeAnimatorController : m_origin;
-        m_pointLight.SetActive(!IsChangerd);
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -318,7 +333,7 @@ public class Witch : CharaBase, IStun
     public void SpawnAlarm(int id)
     {
         Sounds.SoundMaster.Request(transform, 0, 1);
-        Instantiate(m_alart[id], transform.position, Quaternion.Euler(0, 0, 90), transform);
+        Instantiate(m_alart[id], transform.position, Quaternion.Euler(0, 0, 0), transform);
     }
 
     void Dead()

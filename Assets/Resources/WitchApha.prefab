@@ -5168,7 +5168,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1628913495}
   m_LocalRotation: {x: 0.17337826, y: -0.054887723, z: 0.009678186, w: 0.983277}
-  m_LocalPosition: {x: -0.00000047683716, y: 3, z: -11.999999}
+  m_LocalPosition: {x: 0.00000047683716, y: 3, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 835652060}
@@ -11103,6 +11103,7 @@ MonoBehaviour:
   m_mpSpeed: 0.06
   m_mpUI: {fileID: 499298689524967416}
   m_cacheRangeObject: {fileID: 4933701410050530631}
+  m_pointLight: {fileID: 2157019888581346045}
   m_stunEffectObject: {fileID: 519018464}
   m_lightEffectObject: {fileID: 1844824396084324790}
   m_attackObject: {fileID: 138470600214732062}
@@ -11430,6 +11431,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c91b217f11a58934097650c328cf947b, type: 3}
+--- !u!1 &2157019888581346045 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5857517247042388978, guid: c91b217f11a58934097650c328cf947b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5522911570809028879}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2157019888581346047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5857517247042388976, guid: c91b217f11a58934097650c328cf947b,
