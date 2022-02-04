@@ -40,6 +40,8 @@ public class ResultUIData
             var player = GameObject.FindObjectsOfType<Witch>()
             .Where(c => c.gameObject.GetComponent<PhotonView>().IsMine);
             m_isPlayerWin = player != null ? true : false;
+            m_isPlayerWin = player.Count() == 1 ? true : false;
+            Debug.Log(player.Count());
             Debug.Log(m_isPlayerWin);
         }
         else if (events == NetworkEvents.Lose)
